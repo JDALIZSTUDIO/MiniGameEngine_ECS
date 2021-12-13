@@ -1,16 +1,25 @@
 return {
-  new = function()
+  new = function(_pECS)
     local CC = p_Component.new("characterController")
+          CC.GameObject = _pECS or nil
     
-      function CC:Load(_pOwner)
+      function CC:Load(_pEntity)
         
       end
       
-      function CC:Update(dt, _pOwner)
+      function CC:OnEntityCollision(_pEntity, _pTable)        
         
       end
       
-      function CC:Draw(_pOwner)
+      function CC:OnTileCollision(_pEntity, _pTileID)        
+        
+      end
+      
+      function CC:Update(dt, _pEntity)
+        
+      end
+      
+      function CC:Draw(_pEntity)
         
       end
     

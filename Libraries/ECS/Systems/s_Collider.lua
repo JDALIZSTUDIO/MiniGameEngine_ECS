@@ -1,69 +1,263 @@
 return {
-  new = function(_pEntities)
-    local system    = p_System.new({"transform", "boundingBox"})
-    system.entities = _pEntities or {}
+  new = function()
+    local system = p_System.new({"transform", "boxCollider"})
     
+    local entities   = {}
+    local layer      = {}
+    local tileWidth  = 0
+    local tileHeight = 0
+    local deltaTime  = 0
+    
+    ----------
+    -- Load --
+    ----------
     function system:Load(_pEntity)
       if(debug) then print("Systems, loaded:      s_Collider by ".._pEntity.name) end
     end
+        
+    ---------------
+    -- GetTileAt --
+    ---------------
+    function system:GetTileAt(_pX, _pY)
+      local col    = math.floor(_pX / tileWidth ) + 1
+      local lig    = math.floor(_pY / tileHeight) + 1
+      local length = #layer.data
+      
+      if(col > 0 and col <= layer.width and lig > 0 and lig <= layer.height) then
+        local index = ((lig-1) * layer.width) + col
+        return layer.data[index]
+      else
+        return 0
+      end
+    end
     
+    -----------
+    -- Align --
+    -----------
+    function system:Align(_pEntity, _pOther, _pSX, _pSY)
+      
+            
+    end
+    
+    ----------------
+    -- Intersects --
+    ----------------
     function system:Intersects(_pEntity, _pOther)
-      local bb = "boundingBox"
+      local bb    = "boxCollider"
       local bBoxA = _pEntity:GetComponent(bb)
       local bBoxB = _pOther:GetComponent(bb)
       
-      if((bBoxB.position.x >= bBoxA.right)      or
-         (bBoxB.right      <= bBoxA.position.x) or
-         (bBoxB.position.y >= bBoxA.bottom)     or
-         (bBoxB.bottom     <= bBoxA.position.y)) then
+      if(bBoxB == nil) then return false end
+      
+      local dX  = bBoxA.position.x - bBoxB.position.x
+      local dY  = bBoxA.position.y - bBoxB.position.y
+      local aDX = math.abs(dX)
+      local aDY = math.abs(dY)
+      
+      local sHW = (bBoxA.width*0.5)  + (bBoxB.width*0.5)
+      local sHH = (bBoxA.height*0.5) + (bBoxB.height*0.5)
+      
+      if(aDX >= sHW or aDY >= sHH) then
         return false
         
       else
-        return true
         
+        if(bBoxA.isTrigger) then return true end
+        
+        local sX = sHW - aDX
+        local sY = sHH - aDY
+        
+        if(sX < sY) then
+          if(sX > 0) then
+            sY = 0
+          end
+        else
+          if(sY > 0) then
+            sX = 0            
+          end          
+        end
+        
+        if(dX < 0) then
+          sX = -sX          
+        end        
+        if(dY < 0) then
+          sY = -sY
+        end   
+        
+        
+        local transformA = _pEntity:GetComponent("transform")
+        local transformB = _pOther:GetComponent("transform")
+           
+        
+        local distance = math.sqrt(sX * sX + sY * sY)
+        local nX , nY  = sX / distance, sY / distance
+        
+        local dtVXA  = transformA.velocity.x * deltaTime
+        local dtVYA  = transformA.velocity.y * deltaTime
+        
+        local dtVXB  = transformB.velocity.x * deltaTime
+        local dtVYB  = transformB.velocity.y * deltaTime
+        
+        local vX, vY = dtVXA - (dtVXB or 0), dtVXB - (dtVXB or 0)
+        
+        local pS     = vX * nX + vY * nY
+        
+        if(pS <= 0) then
+          
+          transformA.position.x = transformA.position.x + sX
+          transformA.position.y = transformA.position.y + sY 
+          
+          local reflector = _pEntity:GetComponent("entityReflector")
+          if(reflector ~= nil) then 
+            reflector:Reflect(_pEntity, _pOther)
+          else
+            if(sX ~= 0) then 
+              transformA.velocity:Set(0, transformA.velocity.y)
+            end
+            if(sY ~= 0) then 
+              transformA.velocity:Set(transformA.velocity.x, 0)
+            end
+          end
+        end
+        
+        return true        
       end
+      
     end
     
+    -----------------
+    -- SetEntities --
+    -----------------
+    function system:SetEntities(_pEntities)
+      entities = _pEntities
+    end
+    
+    ------------------
+    -- SetTileLayer --
+    ------------------
+    function system:SetTileLayer(_pTilemap)      
+      layer      = _pTilemap:GetCollisions()
+      tileWidth  = _pTilemap.mapData.tilewidth
+      tileHeight = _pTilemap.mapData.tileheight
+    end
+    
+    ------------
+    -- Update --
+    ------------
     function system:Update(dt, _pEntity)
-      system:UpdateboundingBox(_pEntity)
-      system:UpdateCollisions(_pEntity)
+      deltaTime = dt
+      system:UpdateBoxCollider(_pEntity)
+      system:EntityCollisions(_pEntity)
+      system:LayerCollisons(_pEntity)
     end
     
-    function system:UpdateboundingBox(_pEntity)
+    ------------------------
+    -- UpdateBoxCollider --
+    ------------------------
+    function system:UpdateBoxCollider(_pEntity)
       local transform = _pEntity:GetComponent("transform")
-      local bBox      = _pEntity:GetComponent("boundingBox")    
-      bBox.position.x = transform.position.x + bBox.offset.x
-      bBox.position.y = transform.position.y + bBox.offset.y
-      bBox.top        = bBox.position.y - (bBox.height * 0.5)
-      bBox.bottom     = bBox.position.y + (bBox.height * 0.5)
-      bBox.left       = bBox.position.x - (bBox.width  * 0.5)
-      bBox.right      = bBox.position.x + (bBox.width  * 0.5)
+      local bBox      = _pEntity:GetComponent("boxCollider")    
+      bBox.position.x = Round(transform.position.x + bBox.offset.x)
+      bBox.position.y = Round(transform.position.y + bBox.offset.y)
+      bBox.top        = Round(bBox.position.y - ((bBox.height * 0.5) * transform.scale.y))
+      bBox.bottom     = Round(bBox.position.y + ((bBox.height * 0.5) * transform.scale.y))
+      bBox.left       = Round(bBox.position.x - ((bBox.width  * 0.5) * transform.scale.x))
+      bBox.right      = Round(bBox.position.x + ((bBox.width  * 0.5) * transform.scale.x))
     end
     
-    function system:UpdateCollisions(_pEntity)
-      local length = #system.entities
-      if(length < 2) then return end
+    ----------------------
+    -- EntityCollisions --
+    ----------------------
+    function system:EntityCollisions(_pEntity)
+      local length = #entities
+      if(length < 2) then print("no_entities_to_collide_with") return end
       
-      -- clear the collisions table
-      local bbox = _pEntity:GetComponent("boundingBox")
-      for i = 1, #bbox.collisions do
-        bbox.collisions[i] = nil
-      end
+      local result = {}
       
-      -- find entities to collide with    
       for i = length, 1, -1 do
-        other = system.entities[i]        
+        other = entities[i]        
         if(other ~= _pEntity      and 
            other.expired == false and
            other.active  == true) then
            
-          if(system:Match(other)) then              
-            if(system:Intersects(_pEntity, other)) then              
-                table.insert(bbox.collisions, other)
+          if(system:Match(other)) then
+            if(system:Intersects(_pEntity, other)) then 
+                table.insert(result, other)
             end
           end
         end
-      end    
+      end 
+      
+      local charC = _pEntity:GetComponent("characterController")
+      if(charC ~= nil) then charC:OnEntityCollision(_pEntity, result) end
+      
+    end
+    
+    ----------------------
+    -- TilemapCollisons --
+    ----------------------
+    function system:LayerCollisons(_pEntity)
+      
+      local length = #layer.data
+      if(length < 1) then return end
+      
+      local transform = _pEntity:GetComponent("transform")
+      local bBox      = _pEntity:GetComponent("boxCollider")
+      
+      local posX, posY
+      
+      ----------------
+      -- horizontal --
+      ----------------      
+      local collide = false
+      if(transform.velocity.x > 0) then
+        if(self:GetTileAt(bBox.right, transform.position.y) ~= 0) then
+          transform.velocity.x = 0
+          transform.position.x = ((math.floor(transform.position.x / tileWidth) + 1) * tileWidth) - Round(bBox.width*0.5)
+          collide = true
+          
+        end
+        
+      elseif(transform.velocity.x < 0) then
+        if(self:GetTileAt(bBox.left, transform.position.y) == tileID) then
+          transform.velocityPre:Set(transform.velocity.x, transform.velocity.y)
+          transform.velocity.x = 0
+          transform.position.x = ((math.floor(transform.position.x / tileWidth) + 1) * tileWidth) - Round(bBox.width*0.5)
+          collide = true
+          
+        end
+        
+      end
+      
+      ----------------
+      -- vertical --
+      ----------------
+      if(transform.velocity.y > 0) then
+        if(self:GetTileAt(transform.position.x, bBox.bottom) ~= 0) then
+          transform.velocityPre:Set(transform.velocity.x, transform.velocity.y)
+          transform.velocity.y = 0
+          transform.position.y = ((math.floor((transform.position.y+1) / tileHeight) + 1) * tileHeight) - Round(bBox.height*0.5)
+          collide = true
+          
+        end
+        
+      elseif(transform.velocity.y < 0) then
+        if(self:GetTileAt(transform.position.x, bBox.top) ~= 0) then
+          transform.velocityPre:Set(transform.velocity.x, transform.velocity.y)
+          transform.velocity.y = 0
+          transform.position.y = (math.floor((transform.position.y-1) / tileHeight) * tileHeight) + Round(bBox.height*0.5) - 1
+          collide = true
+          
+        end
+        
+      end
+      
+      if(collide) then
+        local charC = _pEntity:GetComponent("characterController")
+              charC:OnTileCollision(_pEntity, nil)
+        
+      end
+      
     end
     
     return system

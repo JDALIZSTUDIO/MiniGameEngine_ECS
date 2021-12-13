@@ -24,6 +24,7 @@ p_System             = nil
 Resolution           = nil
 Camera               = nil
 Input                = nil
+Helpers              = nil
 StateMachine         = nil
 SceneController      = nil
 Timers               = nil
@@ -33,56 +34,27 @@ Vector2              = nil
 debug                = false
 local surface, vignette
 
--- Functions
-
-function Dump(o)
-   if type(o) == 'table' then
-      local s = '{ '
-      for k,v in pairs(o) do
-         if type(k) ~= 'number' then k = '"'..k..'"' end
-         s = s .. '['..k..'] = ' .. Dump(v) .. ','
-      end
-      return s .. '} '
-   else
-      return tostring(o)
-   end
-end
-
-function Lerp(initial_value, target_value, speed)
-	local result = (1-speed) * initial_value + speed*target_value
-	return result
-end
-
-function Pow(pA, pB)
-    return pA ^ pB
-end
-
-function Round(num, idp)
-  local mult = 10^(idp or 0)
-  return math.floor(num * mult + 0.5) / mult
-end
-
-function SmoothAngle(current, goal, speed, dt)
-    local diff = (goal-current+math.pi)%(2*math.pi)-math.pi
-    return current + (diff * speed) * dt
-end
-
-function Cos(pA) return math.cos(math.rad(pA)) end
-function Sin(pA) return math.sin(math.rad(pA)) end
-
+----------------
+-- LoadScenes --
+----------------
 function LoadScenes()
-  --SceneController:Add("intro",      'Scenes/Scene_Intro')
-  --SceneController:Add("menu",       'Scenes/Scene_Menu')
+  SceneController:Add("intro",      'Scenes/Scene_Intro')
+  --SceneController:Add("title",      'Scenes/Scene_Title')
+  SceneController:Add("menu",       'Scenes/Scene_Menu')
   SceneController:Add("gameplay",   'Scenes/Scene_Gameplay')
   SceneController:Add("gameOver",   'Scenes/Scene_Game_Over')
   SceneController:Add("highScores", 'Scenes/Scene_HighScores')
   SceneController:Start()
 end
 
--- Load / Update / Draw
 
+----------
+-- load --
+----------
 function love.load()
   love.window.setTitle(GAME_NAME)
+    
+  Helpers = require("Libraries/Helpers").new()
   
   -- ECS
   p_Entity             = require 'Libraries/ECS/Parents/p_Entity'
@@ -122,13 +94,23 @@ function love.load()
   LoadScenes()
 end
 
+------------
+-- update --
+------------
 function love.update(dt)
+  --if(debug) then
+    if(love.keyboard.isDown("escape")) then love.event.quit() end
+  --end
+  
   Input:Update(dt)
   SceneController:Update(dt)
   TransitionController:Update(dt)
   Camera:Update(dt)
 end
 
+----------
+-- draw --
+----------
 function love.draw()  
   Resolution:Set()
     love.graphics.setBackgroundColor(0.5, 0.5, 0.5, 1)

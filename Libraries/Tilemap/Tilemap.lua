@@ -1,17 +1,17 @@
 return {
   new = function(_pPath)
-    local Tilemap = {
-      debug       = true,
-      image       = nil,
-      quads       = nil,
-      mapData     = nil,
-      tileLayers  = {
-        back      = {},
-        front     = {},
-        collisons = nil,
+    local Tilemap  = {
+      debug        = true,
+      image        = nil,
+      quads        = nil,
+      mapData      = nil,
+      tileLayers   = {
+        back       = {},
+        front      = {},
+        collisions = {},
       },
-      objects     = {},
-      position    = {
+      objects      = {},
+      position     = {
         x = 0,
         y = 0
       }
@@ -39,7 +39,7 @@ return {
       local imagePath = self.mapData.tilesets[1].image:sub(3)
       self.image      = love.graphics.newImage("Libraries/Tilemap"..imagePath)
       
-      self.quads = self:ReturnQuads(self.image)
+      self.quads      = self:ReturnQuads(self.image)
       if(debug) then print("Tilemap, loaded:      "..tostring(#self.quads).." quads") end
       
       self:ParseLayers()
@@ -99,13 +99,14 @@ return {
     end    
     
     -------------------
-    -- SetCollisions --
+    -- GetCollisions --
     -------------------
-    function Tilemap:SetCollisions(_pColID)
-      local layer
-      for i = #_pLayers, 1, -1 do
-        layer = _pLayers[i]
-        if(layer.name == _pColID) then       
+    function Tilemap:GetCollisions()
+      local layer, solid
+      for i = #self.mapData.layers, 1, -1 do
+        layer = self.mapData.layers[i]
+        solid = layer.properties["Solid"]
+        if(solid == true) then
           return layer
         end    
       end

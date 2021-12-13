@@ -10,12 +10,30 @@ return {
     end
     
     function system:Draw(_pEntity)
-      local transform = _pEntity:GetComponent("transform")
-      local renderer  = _pEntity:GetComponent("spriteRenderer")
+      local dropShadow = _pEntity:GetComponent("dropShadow")
+      local transform  = _pEntity:GetComponent("transform")
+      local renderer   = _pEntity:GetComponent("spriteRenderer")
       
       if(renderer.shader ~= nil) then 
         if(renderer.shader.active) then renderer.shader:Set() end 
       end
+      
+      if(dropShadow ~= nil) then
+        love.graphics.setColor(0, 0, 0, dropShadow.alpha)
+      
+        love.graphics.draw(renderer.sprite, 
+                           transform.position.x + dropShadow.offset.x, 
+                           transform.position.y + dropShadow.offset.y, 
+                           math.rad(transform.rotation), 
+                           transform.scale.x, 
+                           transform.scale.y, 
+                           renderer.halfW, 
+                           renderer.halfH,
+                           0,
+                           0)
+      end
+      
+      love.graphics.setColor(1, 1, 1, renderer.alpha)
       
       love.graphics.draw(renderer.sprite, 
                          transform.position.x, 

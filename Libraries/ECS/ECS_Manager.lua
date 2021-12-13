@@ -27,6 +27,7 @@ end
 
 function ECS_Manager:Register(_pSystem)
   table.insert(self.systems, _pSystem)
+  return _pSystem
 end
 
 function ECS_Manager:Update(dt)
