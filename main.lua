@@ -5,7 +5,7 @@ love.window.maximize(false)
 math.randomseed(os.time())
 
 GAME_NAME = "my new game"
-tileSize     = 16
+--tileSize     = 16
 
 -- Window size
 fullscreen   = false
