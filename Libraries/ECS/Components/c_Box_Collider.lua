@@ -10,8 +10,8 @@ return {
           bBox.right         = 0
           bBox.width         = _pWidth or 0
           bBox.height        = _pHeight or 0
-          bBox.offset        = Vector2:New(_pOffsetX or 0, _pOffsetY or 0)
-          bBox.position      = Vector2:New(0, 0)
+          bBox.offset        = Vector2.new(_pOffsetX or 0, _pOffsetY or 0)
+          bBox.position      = Vector2.new(0, 0)
     
     return bBox  
   end

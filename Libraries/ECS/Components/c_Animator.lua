@@ -22,7 +22,7 @@ return {
             frameWidth    = _pW or imageWidth,
             frameHeight   = _pH or imageHeight,
             name          = _pID,
-            offset        = Vector2:New(-_pOffsetX or 0, -_pOffsetY or 0),
+            offset        = Vector2.new(-_pOffsetX or 0, -_pOffsetY or 0),
             quadData      = {},
             speed         = 7
       }

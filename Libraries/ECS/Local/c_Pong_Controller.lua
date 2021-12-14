@@ -4,7 +4,7 @@ return {
   new = function(_pECS)
     local component = CController.new(_pECS)
     
-    local inputDir  = Vector2:New(8)
+    local inputDir  = Vector2.new(8)
     local state     = nil
     local maxSpeed  = 180
     local steering  = nil
@@ -13,7 +13,7 @@ return {
     -- Custom_Load --
     -----------------
     function component:Custom_Load()
-      state = require('Libraries/StateMachine').new({"START", "GAMEPLAY", "END", "REPOSITION", "RESTART"})
+      state = require('Libraries/State_Machine').new({"START", "GAMEPLAY", "END", "REPOSITION", "RESTART"})
       state:Set("START")
       
       steering = self.gameObject:GetComponent("steering")

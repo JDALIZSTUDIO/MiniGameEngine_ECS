@@ -2,7 +2,7 @@ return {
   new = function()
     local P = {
       active = true,
-      origin = Vector2:New(0, 0),
+      origin = Vector2.new(0, 0),
       speed  = 1,
       layers = {}
     }
@@ -12,11 +12,11 @@ return {
       local width  = image:getWidth()
       local height = image:getHeight()
       local layer  = {
-        direction  = Vector2:New(_pDirX or 0, _pDirY or 0),
+        direction  = Vector2.new(_pDirX or 0, _pDirY or 0),
         image      = image,
-        position   = Vector2:New(_pX or 0, _pY or 0),
-        scale      = Vector2:New(Resolution.screen.width / width  * 0.5,
-                                Resolution.screen.height / height * 0.5),
+        position   = Vector2.new(_pX or 0, _pY or 0),
+        scale      = Vector2.new(Aspect.screen.width / width  * 0.5,
+                                Aspect.screen.height / height * 0.5),
         speed      = _pSpeed,
         visible    = true,
         width      = width,

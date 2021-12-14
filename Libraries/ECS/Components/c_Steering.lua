@@ -14,10 +14,10 @@ return {
           component.maxVelocity    = 400
           component.radiusArrive   = 48
           component.radiusFlocking = 48
-          component.steeringForce  = Vector2:New(0, 0)
-          component.velocity       = Vector2:New(0, 0)
+          component.steeringForce  = Vector2.new(0, 0)
+          component.velocity       = Vector2.new(0, 0)
           component.rotationLocked = false
-          component.zero           = Vector2:New(0, 0)
+          component.zero           = Vector2.new(0, 0)
           component.precision      = 0.1
       
       local transform = nil
@@ -33,7 +33,7 @@ return {
       -- Private_Arrive --
       --------------------
       function component:Private_Arrive(_pTarget)
-        if(transform.position:Distance(_pTarget) < self.precision) then return Vector2:New(0, 0) end        
+        if(transform.position:Distance(_pTarget) < self.precision) then return Vector2.new(0, 0) end        
         
         local force = Vector2:Subtract(_pTarget, transform.position)
         
@@ -64,7 +64,7 @@ return {
       -- Private_Seek --
       ------------------
       function component:Private_Seek(_pTarget)        
-        if(transform.position:Distance(_pTarget) < self.precision) then return Vector2:New(0, 0) end
+        if(transform.position:Distance(_pTarget) < self.precision) then return Vector2.new(0, 0) end
         
         local force = Vector2:Subtract(_pTarget, transform.position)
         force:Normalize()

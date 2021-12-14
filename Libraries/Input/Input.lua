@@ -8,17 +8,15 @@ return {
       }
       
     function Input:Load()  
-      self.keyboard = require('Libraries/Input/KeyboardInput').new()
-      self.gamepad  = require('Libraries/Input/GamepadInput')
+      self.keyboard = require('Libraries/Input/Keyboard').new()
+      self.gamepad  = require('Libraries/Input/Gamepad')
     end
 
     function Input:Update(dt)
       self.keyboard:Update(dt)
     end
 
-    function Input:Draw()
-      
-    end
+    Input:Load()
 
     return Input
   end

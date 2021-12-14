@@ -1,30 +1,60 @@
-local Scene = require('Scenes/Scene_Parent')
+return {
+  new = function(_pName)
+      local Scene = require('Libraries/Scenes/Scene_Parent').new(_pName)
 
-function Scene:Load()
-  
-  local fnIntro = function()
-    SceneController:Next()
+      ----------------------
+      -- PUBLIC FUNCTIONS --
+      ----------------------
+
+      -----------
+      -- Awake --
+      ----------- 
+      function Scene:Awake()
+
+      end
+
+      ------------
+      -- Unload --
+      ------------
+      function Scene:Unload()
+
+      end
+
+      ---------------
+      -- PreUnload --
+      ---------------
+      function Scene:PreUnload()
+
+      end
+
+      ----------
+      -- Load --
+      ----------
+      function Scene:Load()
+
+      end
+
+      ------------
+      -- Update --
+      ------------
+      function Scene:Update(dt)
+
+      end
+
+      ----------
+      -- Draw --
+      ----------
+      function Scene:Draw()
+
+      end
+
+      -------------
+      -- Draw_GUI --
+      -------------
+      function Scene:Draw_GUI()
+          
+      end
+
+      return Scene
   end
-
-  TransitionController:Start(fnIntro)
-  
-  if (debug) then print("Scenes,  loaded:      "..Scene.name) end
-end
-
-function Scene:Unload()
-  if (debug) then print("Scenes,  unLoaded:    "..Scene.name) end
-end
-
-function Scene:Update(dt)
-
-end
-
-function Scene:Draw()
-
-end
-
-function Scene:DrawGUI()
-  
-end
-
-return Scene
+}

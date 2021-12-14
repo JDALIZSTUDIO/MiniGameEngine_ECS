@@ -1,39 +1,60 @@
-local Scene = require('Scenes/Scene_Parent')
+return {
+  new = function(_pName)
+      local Scene = require('Libraries/Scenes/Scene_Parent').new(_pName)
 
-local finished = false
-local Title    = nil
+      ----------------------
+      -- PUBLIC FUNCTIONS --
+      ----------------------
 
-local fNext = function()
-  SceneController:Next()
-end
+      -----------
+      -- Awake --
+      ----------- 
+      function Scene:Awake()
 
-function Scene:Load()
-  Title = require('Objects/obj_Title').new()
-  Title:Load()
-  
-  if (debug) then print("Scenes,  loaded:      "..Scene.name) end
-end
+      end
 
-function Scene:Unload()
-  if (debug) then print("Scenes,  unLoaded:    "..Scene.name) end
-end
+      ------------
+      -- Unload --
+      ------------
+      function Scene:Unload()
 
-function Scene:Update(dt)
-  Logo:Update(dt)
-  
-  if(finished == false and Title.expired) then
-    finished = true
-    TransitionController:Start(fNext)
+      end
+
+      ---------------
+      -- PreUnload --
+      ---------------
+      function Scene:PreUnload()
+
+      end
+
+      ----------
+      -- Load --
+      ----------
+      function Scene:Load()
+
+      end
+
+      ------------
+      -- Update --
+      ------------
+      function Scene:Update(dt)
+
+      end
+
+      ----------
+      -- Draw --
+      ----------
+      function Scene:Draw()
+
+      end
+
+      -------------
+      -- Draw_GUI --
+      -------------
+      function Scene:Draw_GUI()
+          
+      end
+
+      return Scene
   end
-end
-
-function Scene:Draw()
-  Title:Draw()
-  
-end
-
-function Scene:DrawGUI()
-  
-end
-
-return Scene
+}

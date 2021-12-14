@@ -5,7 +5,7 @@ return {
     local component = CController.new(_pECS)
     
     local maxSpeed = 100
-    local radius   = Resolution.screen.width*0.125
+    local radius   = Aspect.screen.width*0.125
     local state    = nil
     local steering = nil
     local target   = nil
@@ -16,7 +16,7 @@ return {
     -- Custom_Load --
     -----------------
     function component:Custom_Load()
-      state    = require('Libraries/StateMachine').new({"START", "GAMEPLAY", "END", "REPOSITION", "RESTART"})
+      state    = require('Libraries/State_Machine').new({"START", "GAMEPLAY", "END", "REPOSITION", "RESTART"})
       state:Set("START")
       
       steering = self.gameObject:GetComponent("steering")
@@ -56,7 +56,7 @@ return {
           local ball  = self.ECS:Find("ball")
           if(ball ~= nil) then target = ball:GetComponent("transform") end
         else          
-          local tarVec    = Vector2:New(transform.position.x, target.position.y)
+          local tarVec    = Vector2.new(transform.position.x, target.position.y)
           local distance  = transform.position:Distance(target.position)
           
           if(distance <= radius) then

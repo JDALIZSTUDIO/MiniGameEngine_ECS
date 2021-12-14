@@ -1,7 +1,7 @@
 local Vector2 = {}
 
 function Vector2:Add(_pVector2A, _pVector2B)
-    return Vector2:New(_pVector2A.x + _pVector2B.x, _pVector2A.y + _pVector2B.y)
+    return Vector2.new(_pVector2A.x + _pVector2B.x, _pVector2A.y + _pVector2B.y)
 end
 
 function Vector2:ClampMagnitude(_pVector2, _pScalar)
@@ -18,29 +18,29 @@ function Vector2:ClampMagnitude(_pVector2, _pScalar)
 end
 
 function Vector2:Subtract(_pVector2A, _pVector2B)
-    return Vector2:New(_pVector2A.x - _pVector2B.x, _pVector2A.y - _pVector2B.y)
+    return Vector2.new(_pVector2A.x - _pVector2B.x, _pVector2A.y - _pVector2B.y)
 end
 
 function Vector2:Multiply(_pVector2A, _pVector2B)
-    return Vector2:New(_pVector2A.x * _pVector2B.x, _pVector2A.y * _pVector2B.y)
+    return Vector2.new(_pVector2A.x * _pVector2B.x, _pVector2A.y * _pVector2B.y)
 end
 
 function Vector2:MultiplyN(_pVector2A, _pScalar)
-    return Vector2:New(_pVector2A.x * _pScalar, _pVector2A.y * _pScalar)
+    return Vector2.new(_pVector2A.x * _pScalar, _pVector2A.y * _pScalar)
 end
 
 function Vector2:Divide(_pVector2A, _pVector2B)
-    return Vector2:New(_pVector2A.x / _pVector2B.x, _pVector2A.y / _pVector2B.y)
+    return Vector2.new(_pVector2A.x / _pVector2B.x, _pVector2A.y / _pVector2B.y)
 end
 
-function Vector2:New(_pX, _pY)
+Vector2.new = function(_pX, _pY)
     local v = {
           x = _pX or 0,
           y = _pY or 0,
     }
 
     function v:Clone()
-        return Vector2:New(v.x, v.y)
+        return Vector2.new(v.x, v.y)
     end
 
     function v:Add(_pVector2)

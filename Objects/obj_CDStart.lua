@@ -17,7 +17,7 @@
         
         function Create_Countdown()
           local imgFont = love.graphics.newImageFont('Libraries/GUI/Sprites/spr_Kromasky.png',' abcdefghijklmnopqrstuvwxyz0123456789!?:;,è./+%ç@à#')
-          countDown     = GUI:Add(GUI:SpriteFont(Round(Resolution.window.width/2) - 16, Round(Resolution.window.height/2), tostring(startCounter), imgFont, 3))
+          countDown     = GUI:Add(GUI:SpriteFont(Round(Aspect.window.width/2) - 16, Round(Aspect.window.height/2), tostring(startCounter), imgFont, 3))
           countDown.sX  = maxScale
           countDown.sY  = maxScale
           
@@ -28,7 +28,7 @@
         ----------
         function CDStart:Load()
           timers = require('Libraries/Timers').new()
-          state  = require('Libraries/StateMachine').new({"WAIT", "COUNT", "FINISH", "END"})          
+          state  = require('Libraries/State_Machine').new({"WAIT", "COUNT", "FINISH", "END"})          
           GUI    = require('Libraries/GUI/GUI_Factory')          
           
           timers:Add("wait",  1)
@@ -91,9 +91,9 @@
         end
 
         -------------
-        -- DrawGUI --
+        -- Draw_GUI --
         -------------
-        function CDStart:DrawGUI()
+        function CDStart:Draw_GUI()
           GUI:Draw()
           
         end

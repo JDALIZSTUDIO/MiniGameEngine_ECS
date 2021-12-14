@@ -22,7 +22,7 @@ return {
       timers     = require('Libraries/Timers').new()
       timers:Add(h_aber, 1)
       
-      self.state = require('Libraries/StateMachine').new({"MOVE", "STOP", "WAIT", "ABERRATION", "TO_NEXT", "DONE"})
+      self.state = require('Libraries/State_Machine').new({"MOVE", "STOP", "WAIT", "ABERRATION", "TO_NEXT", "DONE"})
       self.state:Set("MOVE")  
       
       self.shader_aber = require("Libraries/Shader").new("Shaders/shd_Chromatic_Aberration.fs")
@@ -35,7 +35,7 @@ return {
       self.shader_wave:SetUniform(h_scale,  1)
       
       self.background = {
-        image         = love.graphics.newImage("Images/Logo/Logo_BG.png"),
+        image         = love.graphics.newImage("Images/Logo/BG.png"),
         position      = {
           x           = 0,
           y           = 0,

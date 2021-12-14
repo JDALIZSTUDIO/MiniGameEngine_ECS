@@ -21,10 +21,10 @@ function Steering:New(_pOwner)
         velocity       = 6,
         radiusArrive   = 48,
         radiusFlocking = 48,
-        steeringForce  = Vector2:New(),
-        velocity       = Vector2:New(),
+        steeringForce  = Vector2.new(),
+        velocity       = Vector2.new(),
         rotationLocked = true,
-        zero           = Vector2:New(),
+        zero           = Vector2.new(),
   }
   
   -- Steering Functions

@@ -10,7 +10,7 @@ return {
           function controller:Load(_pOwner)
             steering  = _pOwner:GetComponent("steering")
             transform = _pOwner:GetComponent("transform")
-            target = Vector2:New(transform.position.x, transform.position.y)
+            target = Vector2.new(transform.position.x, transform.position.y)
           end
           
           function controller:Update(dt, _pOwner)

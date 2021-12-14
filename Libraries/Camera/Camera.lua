@@ -1,9 +1,9 @@
 return {
   new = function()
     local Camera   = {
-          position = Vector2:New(0, 0),
+          position = Vector2.new(0, 0),
           rotation = 0,
-          scale    = Vector2:New(1, 1),
+          scale    = Vector2.new(1, 1),
           speed    = 0.2,
           target   = nil,
           timer    = 0,

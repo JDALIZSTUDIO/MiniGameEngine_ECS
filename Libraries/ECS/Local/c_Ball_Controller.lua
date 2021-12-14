@@ -17,7 +17,7 @@ return {
           ------------
           local function Launch(_pTransform)
             local angle
-            local midH     = Resolution.screen.height * (0.5 / Resolution.scale)
+            local midH     = Aspect.screen.height * (0.5 / Aspect.scale)
             local rnd      = math.random()
             
             local rndAngle = math.random(-15, 15)
@@ -52,7 +52,7 @@ return {
           -- Load --
           ----------
           function component:Load()
-            state = require('Libraries/StateMachine').new({"START", "GAMEPLAY", "END"})
+            state = require('Libraries/State_Machine').new({"START", "GAMEPLAY", "END"})
             
             local transform = self.gameObject:GetComponent("transform")
                   transform.scale:Set(scale, scale)

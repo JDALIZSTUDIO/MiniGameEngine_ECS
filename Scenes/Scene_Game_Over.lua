@@ -1,23 +1,60 @@
-local Scene = require 'Scenes/Scene_Parent'
+return {
+  new = function(_pName)
+      local Scene = require('Libraries/Scenes/Scene_Parent').new(_pName)
 
-function Scene:Load()
-  if (debug) then print("Scenes,  loaded:      "..Scene.name) end
-end
+      ----------------------
+      -- PUBLIC FUNCTIONS --
+      ----------------------
 
-function Scene:Unload()
-  if (debug) then print("Scenes,  unLoaded:    "..Scene.name) end
-end
+      -----------
+      -- Awake --
+      ----------- 
+      function Scene:Awake()
 
-function Scene:Update(dt)
+      end
 
-end
+      ------------
+      -- Unload --
+      ------------
+      function Scene:Unload()
 
-function Scene:Draw()
+      end
 
-end
+      ---------------
+      -- PreUnload --
+      ---------------
+      function Scene:PreUnload()
 
-function Scene:DrawGUI()
-  
-end
+      end
 
-return Scene
+      ----------
+      -- Load --
+      ----------
+      function Scene:Load()
+
+      end
+
+      ------------
+      -- Update --
+      ------------
+      function Scene:Update(dt)
+
+      end
+
+      ----------
+      -- Draw --
+      ----------
+      function Scene:Draw()
+
+      end
+
+      -------------
+      -- Draw_GUI --
+      -------------
+      function Scene:Draw_GUI()
+          
+      end
+
+      return Scene
+  end
+}

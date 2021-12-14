@@ -1,4 +1,4 @@
-local Scene = require('Scenes/Scene_Parent')
+local Scene = require('Libraries/Scenes/Scene_Parent')
   
   ------------------
   -- Declarations --
@@ -114,10 +114,10 @@ local Scene = require('Scenes/Scene_Parent')
         player.name  = "player"
         
       elseif(obj.name == "ball1") then      
-        ballPos1 = Vector2:New(obj.x, obj.y)
+        ballPos1 = Vector2.new(obj.x, obj.y)
         
       elseif(obj.name == "ball2") then      
-        ballPos2 = Vector2:New(obj.x, obj.y)
+        ballPos2 = Vector2.new(obj.x, obj.y)
       
     elseif(obj.name == "goal_player") then
         local goal = ECS:Create()
@@ -171,10 +171,10 @@ local Scene = require('Scenes/Scene_Parent')
   -- Load_GUI --
   --------------
   function Load_GUI()
-    local GUI     = Scene.GUI_Controller    
-    local xPlayer = Round(Resolution.window.width  * 0.38)
-    local xEnemy  = Round(Resolution.window.width  * 0.6)
-    local yBoth   = Round(Resolution.window.height * 0.2)    
+    local GUI     = Scene.GUI    
+    local xPlayer = Round(Aspect.window.width  * 0.38)
+    local xEnemy  = Round(Aspect.window.width  * 0.6)
+    local yBoth   = Round(Aspect.window.height * 0.2)    
     labelP        = GUI:Add(GUI:Label(xPlayer, yBoth, tostring(scoreP), 3))
     labelE        = GUI:Add(GUI:Label(xEnemy,  yBoth, tostring(scoreE), 3))
     
@@ -190,7 +190,7 @@ local Scene = require('Scenes/Scene_Parent')
     cdStart:Load()
     
     Timers   = require('Libraries/Timers').new()
-    State    = require('Libraries/StateMachine').new({"NONE", "START", "GAMEPLAY", "END"})
+    State    = require('Libraries/State_Machine').new({"NONE", "START", "GAMEPLAY", "END"})
     Parallax = require('Libraries/Parallax').new()
     Tilemap  = require('Libraries/Tilemap/Tilemap').new()
     
@@ -274,15 +274,15 @@ local Scene = require('Scenes/Scene_Parent')
   end
 
   -------------
-  -- DrawGUI --
+  -- Draw_GUI --
   -------------
-  function Scene:DrawGUI()
-    if(self.GUI_Controller ~= nil) then
-      self.GUI_Controller:Draw()
+  function Scene:Draw_GUI()
+    if(self.GUI ~= nil) then
+      self.GUI:Draw()
       
     end    
     if(State:Compare("NONE")) then
-      cdStart:DrawGUI()
+      cdStart:Draw_GUI()
       
     end    
   end

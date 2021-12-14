@@ -3,7 +3,7 @@ local character_controller = require('Libraries/ECS/Components/c_Character_Contr
 return {
   new = function()
     local Controller = character_controller.new()
-          local state   = require('Libraries/StateMachine').new({"NONE"})
+          local state   = require('Libraries/State_Machine').new({"NONE"})
           local timers  = require('Libraries/Timers')
           local timer   = nil                
           local target  = nil

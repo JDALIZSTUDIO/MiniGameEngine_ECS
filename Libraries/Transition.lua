@@ -1,12 +1,12 @@
 return {
   new = function()
-    local TC = {
+    local Controller = {
       fade   = {},
     }
 
     local debug = false
 
-    function TC:New()
+    function Controller:New()
       local f          = {  
             finished   = false,
             func       = nil,
@@ -16,8 +16,8 @@ return {
             state_pre  = "none",
             state_next = "none",
             alpha      = 1,
-            speed_in   = 1.4,
-            speed_out  = 2.4,
+            speed_in   = 2,
+            speed_out  = 3,
       }
       
       --------------
@@ -87,31 +87,33 @@ return {
     -----------
     -- Start --
     -----------
-    function TC:Start(_pFunc)
-      TC.fade:Start(_pFunc)
+    function Controller:Start(_pFunc)
+      Controller.fade:Start(_pFunc)
     end
 
     ----------
     -- Load --
     ----------
-    function TC:Load()
-      TC.fade = TC:New()
+    function Controller:Load()
+      Controller.fade = Controller:New()
     end
 
     ------------
     -- Update --
     ------------
-    function TC:Update(dt)
-      TC.fade:Update(dt)
+    function Controller:Update(dt)
+      Controller.fade:Update(dt)
     end
 
     ----------
     -- Draw --
     ----------
-    function TC:Draw()
-      TC.fade.Draw()  
+    function Controller:Draw()
+      Controller.fade.Draw()  
     end
 
-    return TC
+    Controller:Load()
+    
+    return Controller
   end
 }
