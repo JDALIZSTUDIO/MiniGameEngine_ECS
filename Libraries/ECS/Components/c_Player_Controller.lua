@@ -2,34 +2,34 @@ local factory  = require('Libraries/ECS/Components/c_Character_Controller')
 local keyboard = require("Libraries/Input/KeyboardInput")
 
 return {
-  new = function()
-    local PC = factory.new()
+  new = function(_pECS)
+    local component = factory.new(_pECS)
           
-    function PC:Custom_Load(_pOwner)  
+    function component:Custom_Load()  
       
     end
     
-    function PC:Process_Input(_pOwner)  
+    function component:Process_Input()  
       
     end
     
-    function PC:Update_Logic(dt, _pOwner)  
+    function component:Update_Logic(dt)  
       
     end
     
-    function PC:Load(_pOwner)
-      PC:Custom_Load(_pOwner)
+    function component:Load()
+      self:Custom_Load()
     end
 
-    function PC:Update(dt, _pOwner)
-      self:Process_Input(dt, _pOwner)
-      self:Update_Logic(dt, _pOwner)
+    function component:Update(dt)
+      self:Process_Input(dt)
+      self:Update_Logic(dt)
     end
     
-    function PC:Draw(_pOwner)
+    function component:Draw()
       
     end
     
-    return PC
+    return component
   end
 }

@@ -9,7 +9,7 @@ return {
           local target  = nil
           local counter = 3
           
-          function Controller:Load(_pOwner)
+          function Controller:Load()
             timer = timers:Add("start", 30)
           end
           
@@ -18,11 +18,11 @@ return {
             
           end
           
-          function Controller:Update(dt, _pOwner)
+          function Controller:Update(dt)
             timers.Update(dt)
           end
           
-          function Controller:Draw(_pOwner)
+          function Controller:Draw()
             love.graphics.print()
           end
   

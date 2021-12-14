@@ -2,11 +2,17 @@ local GUI     = {
   lstElements = {},
 }
 
+---------
+-- Add --
+---------
 function GUI:Add(_pElement)
   table.insert(self.lstElements, _pElement)
   return _pElement
 end
 
+-------------
+-- Element --
+-------------
 function GUI:Element(_pX, _pY)
     local element   = {
           active    = true,
@@ -46,6 +52,9 @@ function GUI:Element(_pX, _pY)
     return element
 end
 
+-----------
+-- Label --
+-----------
 function GUI:Label(_pX, _pY, _pString, _pSize)
     local element = self:Element(_pX, _pY)
           element.font   = love.graphics.newFont(_pSize or 14)
@@ -59,7 +68,7 @@ function GUI:Label(_pX, _pY, _pString, _pSize)
     function element:Draw()
       love.graphics.setFont(element.font)
       love.graphics.push()
-        love.graphics.setColor(0, 0, 0, 0.2 * self.alpha)
+        love.graphics.setColor(0, 0, 0, 0.2 * element.alpha)
           love.graphics.print(element.label, 
                               element.x + element.shadow, 
                               element.y + element.shadow, 
@@ -71,7 +80,7 @@ function GUI:Label(_pX, _pY, _pString, _pSize)
                               0,
                               0)
                             
-        love.graphics.setColor(1, 1, 1, self.alpha)
+        love.graphics.setColor(1, 1, 1, element.alpha)
           love.graphics.print(element.label, 
                               element.x, 
                               element.y, 
@@ -94,6 +103,9 @@ function GUI:Label(_pX, _pY, _pString, _pSize)
     return element
 end
 
+----------------
+-- SpriteFont --
+----------------
 function GUI:SpriteFont(_pX, _pY, _pString, _pFont, _pSize)
   local sf          = self:Element(_pX, _pY)
         sf.label    = _pString
@@ -184,6 +196,9 @@ function GUI:SpriteFont(_pX, _pY, _pString, _pFont, _pSize)
   return sf
 end
 
+-----------
+-- Panel --
+-----------
 function GUI:Panel(_pX, _pY, _pLabel, _pPath)
   local element = self:Label(_pX, _pY, _pLabel)        
         
@@ -275,6 +290,9 @@ function GUI:Panel(_pX, _pY, _pLabel, _pPath)
   return element
 end
 
+------------
+-- Button --
+------------
 function GUI:Button(_pX, _pY, _pLabel, _pPath, _pNbFrames, _pFN)
   local element = self:Panel(_pX, _pY, _pLabel)
   element.func = _pFN
@@ -299,7 +317,6 @@ function GUI:Button(_pX, _pY, _pLabel, _pPath, _pNbFrames, _pFN)
                                                               element.panel.atlas:getDimensions()))
       
     end
-    --print(#element.panel.quads)
   end
   
   element:SetPanel(_pPath, _pNbFrames)    
@@ -418,6 +435,9 @@ function GUI:Button(_pX, _pY, _pLabel, _pPath, _pNbFrames, _pFN)
   return element
 end
 
+------------
+-- Update --
+------------
 function GUI:Update(dt)
   local element
   for i = #self.lstElements, 1, -1 do
@@ -430,10 +450,16 @@ function GUI:Update(dt)
   end
 end
 
+------------
+-- UnLoad --
+------------
 function GUI:UnLoad()
   self.lstElements = {}
 end
 
+----------
+-- Draw --
+----------
 function GUI:Draw()
   for i = 1, #self.lstElements do
     self.lstElements[i].Draw()

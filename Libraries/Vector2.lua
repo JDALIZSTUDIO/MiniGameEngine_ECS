@@ -73,6 +73,13 @@ function Vector2:New(_pX, _pY)
         v.y = v.y * _pScalar
     end
     
+    function v:Clamp(_pScalar)
+      if(v.x > _pScalar) then v.x = _pScalar end
+      if(v.y > _pScalar) then v.y = _pScalar end
+      if(v.x < -_pScalar) then v.x = -_pScalar end
+      if(v.y < -_pScalar) then v.y = -_pScalar end
+    end
+    
     function v:Direction()
         return math.atan2(0 - v.y, 0 - v.x)
     end

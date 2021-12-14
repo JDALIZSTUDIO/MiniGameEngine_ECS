@@ -2,22 +2,30 @@ return {
   new = function() 
     local system = p_System.new({"transform", "steering"})
   
+      ----------
+      -- Load --
+      ----------
     function system:Load(_pEntity)
+      local steering  = _pEntity:GetComponent("steering")
+            steering:Load()
+      
       if(debug) then print("Systems, loaded:      s_Steering by ".._pEntity.name) end
     end
     
+      ------------
+      -- Update --
+      ------------
     function system:Update(dt, _pEntity)
-      local steering  = _pEntity:GetComponent("steering")
-      local transform = _pEntity:GetComponent("transform")
-      
+      local steering = _pEntity:GetComponent("steering")
+      if(steering.active == false) then return end      
+            
       if(steering.friction ~= 0) then
         local frc  = (1 - steering.friction)
         local coef = frc + (frc*0.1)
         steering.velocity:MultiplyN(coef)
       end      
       
-      steering.steeringForce = Vector2:ClampMagnitude(steering.steeringForce, steering.maxForce)
-      
+      steering.steeringForce = Vector2:ClampMagnitude(steering.steeringForce, steering.maxForce)      
       steering.velocity:Add(steering.steeringForce)
       steering.velocity = Vector2:ClampMagnitude(steering.velocity, steering.maxVelocity)
       
@@ -32,12 +40,11 @@ return {
         end
       end
       
-      
-      transform.velocity:Set(steering.velocity.x, steering.velocity.y)      
+      local transform = _pEntity:GetComponent("transform")      
+      transform.velocity:Set(steering.velocity.x, steering.velocity.y) 
       
       steering.steeringForce:Set(0, 0)
-      steering.velocity:Set(0, 0)
-      
+      steering.velocity:Set(0, 0)      
     end
     
     return system 

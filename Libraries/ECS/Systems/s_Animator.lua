@@ -8,6 +8,7 @@ return {
     
     function system:Update(dt, _pEntity)      
       local animator = _pEntity:GetComponent("animator")
+      if(animator.active == false) then return end
       if(animator.currentAnimation == nil) then return end
       
       animator.frameCounter = animator.frameCounter + (dt * animator.currentAnimation.speed)      
@@ -32,6 +33,8 @@ return {
     function system:Draw(_pEntity)
       
       local animator = _pEntity:GetComponent("animator")
+      if(animator.active == false) then return end
+      
       local current  = animator.currentAnimation
       if current == nil then return end      
       

@@ -2,42 +2,84 @@ local CController = require('Libraries/ECS/Components/c_Player_Controller')
 
 return {
   new = function(_pECS)
-    local Controller = CController.new(_pECS)
-          Controller.ready = false
+    local component = CController.new(_pECS)
     
-    local maxSpeed   = 100
-    local inputDir   = Vector2:New(8)
+    local inputDir  = Vector2:New(8)
+    local state     = nil
+    local maxSpeed  = 180
+    local steering  = nil
     
-    local fnt = love.graphics.newFont()
+    -----------------
+    -- Custom_Load --
+    -----------------
+    function component:Custom_Load()
+      state = require('Libraries/StateMachine').new({"START", "GAMEPLAY", "END", "REPOSITION", "RESTART"})
+      state:Set("START")
+      
+      steering = self.gameObject:GetComponent("steering")
+      steering.active = false      
+      
+    end
+    
+    -------------------
+    -- Process_Input --
+    -------------------
+    function component:Process_Input(dt)
+      inputDir:Set(0, 0)
+      
+      if(Input.keyboard:GetAxis("up") == true) then
+        inputDir.y = -1
+        
+      elseif(Input.keyboard:GetAxis("down") == true) then
+        inputDir.y = 1
+        
+      end
+      
+    end
+    
+    -----------
+    -- Start --
+    -----------
+    function component:Start()
+      state:Set("GAMEPLAY")
+      
+    end
+    
+    ----------
+    -- Stop --
+    ----------
+    function component:Stop()
+      state:Set("END")
+      
+    end
+    
+    ------------------
+    -- Update_Logic --
+    ------------------
+    function component:Update_Logic(dt)      
+      local transform = self.gameObject:GetComponent("transform")
+      
+      if(state:Compare("GAMEPLAY")) then
+        transform.velocity.y = inputDir.y * maxSpeed
+        
+      elseif(state:Compare("END")) then
+        steering.active = true
+        state:Set("REPOSITION")
+        
+      elseif(state:Compare("REPOSITION")) then
+        local dist = transform.position:Distance(transform.origin)
+        
+        if(dist > 0.2) then
+          steering:Arrive(transform.origin)
           
-          function Controller:Custom_Load(_pEntity)
-            
-          end
+        else
+          steering.active = false
+          state:Set("START")
           
-          function Controller:Process_Input(dt, _pEntity)
-            inputDir:Set(0, 0)
-            
-            if(Input.keyboard:GetAxis("up") == true) then
-              inputDir.y = -1
-              
-            elseif(Input.keyboard:GetAxis("down") == true) then
-              inputDir.y = 1
-              
-            end
-            
-          end
-          
-          function Controller:Update_Logic(dt, _pEntity)
-            local transform = _pEntity:GetComponent("transform")
-                  transform.velocity.y = inputDir.y * maxSpeed
-          end
-          
-          function  Controller:Draw(_pEntity)
-            local bBox      = _pEntity:GetComponent("boxCollider")
-            local transform = _pEntity:GetComponent("transform")
-            
-          end
-  
-    return Controller
+        end        
+      end
+    end
+      
+    return component
   end
 }

@@ -25,9 +25,7 @@ Resolution           = nil
 Camera               = nil
 Input                = nil
 Helpers              = nil
-StateMachine         = nil
 SceneController      = nil
-Timers               = nil
 TransitionController = nil
 Vector2              = nil
 
@@ -38,9 +36,9 @@ local surface, vignette
 -- LoadScenes --
 ----------------
 function LoadScenes()
-  SceneController:Add("intro",      'Scenes/Scene_Intro')
+  --SceneController:Add("intro",      'Scenes/Scene_Intro')
   --SceneController:Add("title",      'Scenes/Scene_Title')
-  SceneController:Add("menu",       'Scenes/Scene_Menu')
+  --SceneController:Add("menu",       'Scenes/Scene_Menu')
   SceneController:Add("gameplay",   'Scenes/Scene_Gameplay')
   SceneController:Add("gameOver",   'Scenes/Scene_Game_Over')
   SceneController:Add("highScores", 'Scenes/Scene_HighScores')
@@ -57,19 +55,17 @@ function love.load()
   Helpers = require("Libraries/Helpers").new()
   
   -- ECS
-  p_Entity             = require 'Libraries/ECS/Parents/p_Entity'
-  p_Component          = require 'Libraries/ECS/Parents/p_Component'
-  p_System             = require 'Libraries/ECS/Parents/p_System'
+  p_Entity             = require('Libraries/ECS/Parents/p_Entity')
+  p_Component          = require('Libraries/ECS/Parents/p_Component')
+  p_System             = require('Libraries/ECS/Parents/p_System')
   
   -- classes
   Resolution           = require('Libraries/Resolution').new()
-  Input                = require('Libraries/Input/InputController')
-  StateMachine         = require('Libraries/StateMachine')
-  Timers               = require('Libraries/Timers')
+  Input                = require('Libraries/Input/InputController').new()
   Vector2              = require('Libraries/Vector2')
-  Camera               = require('Libraries/Camera/Camera')
-  TransitionController = require('Controllers/TransitionController')
-  SceneController      = require('Controllers/SceneController')   
+  Camera               = require('Libraries/Camera/Camera').new()
+  TransitionController = require('Controllers/TransitionController').new()
+  SceneController      = require('Controllers/SceneController').new()  
   
   Resolution:SetWindow(screenWidth, screenHeight, 2, fullscreen) 
   
@@ -126,7 +122,7 @@ function love.draw()
   
   love.graphics.draw(surface, 0, 0, 0, Resolution.scale, Resolution.scale)
     
-  love.graphics.setColor(1, 1, 1, 0.1)
+  love.graphics.setColor(1, 1, 1, 0.35)
     love.graphics.draw(vignette, 0, 0)
   love.graphics.setColor(1, 1, 1, 1)
   

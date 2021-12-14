@@ -3,25 +3,48 @@ local Scene = require('Scenes/Scene_Parent')
   ------------------
   -- Declarations --
   ------------------
-  local ECS      = nil
-  local Tilemap  = nil
-  local Parallax = nil
-  local state    = nil
-  local blur     = nil
-  local Timers   = nil
+  local ECS          = nil
+  local Tilemap      = nil
+  local Parallax     = nil
+  local state        = nil
+  local blur         = nil
+  local Timers       = nil
   
-  local cdStart  = nil
-  
+  local cdStart      = nil  
   local maxScale     = 16
   local minScale     = 4
-  local startCounter = 3
-  
+  local startCounter = 3  
   local blur_radius  = 20;
   
   local ballPos1, ballPos2
   local goalPlayer, goalEnemy
   
   local enemy, player
+  local labelP, labelE
+  local scoreP, scoreE = 0, 0
+
+  
+  --------------------
+  -- event game_end --
+  --------------------
+  function love.handlers.game_end(_pString)
+    if(_pString == "player") then
+      scoreP       = scoreP + 1
+      labelP.label = tostring(scoreP)
+      
+    elseif(_pString == "enemy") then
+      scoreE       = scoreE + 1
+      labelE.label = tostring(scoreE)
+      
+    end    
+    
+    local pController = player:GetComponent("characterController")
+          pController:Stop()
+    
+    local eController = enemy:GetComponent("characterController")
+          eController:Stop()
+    
+  end
 
   ------------------------
   -- Initialize_Systems --
@@ -30,16 +53,13 @@ local Scene = require('Scenes/Scene_Parent')
     ECS        = require('Libraries/ECS/ECS_Manager') 
     ECS:Register(require('Libraries/ECS/Systems/s_Character_Controller').new())
     ECS:Register(require('Libraries/ECS/Systems/s_Steering').new(ECS.entities))
-    --ECS:Register(require('Libraries/ECS/Systems/s_Child_Of').new())
     local s_collider = ECS:Register(require('Libraries/ECS/Systems/s_Collider').new())
           s_collider:SetEntities(ECS.entities)
-          s_collider:SetTileLayer(Tilemap)
-    
+          s_collider:SetTileLayer(Tilemap)    
     
     ECS:Register(require('Libraries/ECS/Systems/s_Mover').new())
+    ECS:Register(require('Libraries/ECS/Systems/s_Trail_Renderer').new())
     ECS:Register(require('Libraries/ECS/Systems/s_Sprite_Renderer').new())
-    --ECS:Register(require('Libraries/ECS/Systems/s_Animator').new())
-    ECS:Register(require('Libraries/ECS/Systems/s_Box_Renderer').new())
   end
 
   -------------------------
@@ -70,24 +90,27 @@ local Scene = require('Scenes/Scene_Parent')
       obj = Tilemap.objects[i]
       if(obj.name == "enemy") then      
         enemy = ECS:Create()
-        --enemy:AddComponent(require('Libraries/ECS/Local/c_CPU_Controller').new(ECS))
+        enemy:AddComponent(require('Libraries/ECS/Local/c_CPU_Controller').new(ECS))
         enemy:AddComponent(require('Libraries/ECS/Components/c_Steering').new()) 
-        enemy:AddComponent(require('Libraries/ECS/Components/c_Box_Collider').new(0, 0, 8, 32))
+        local collider = enemy:AddComponent(require('Libraries/ECS/Components/c_Box_Collider').new(0, 0, 8, 32))
+              collider.isTrigger = false
+        
         enemy:AddComponent(require('Libraries/ECS/Components/c_Transform').new(obj.x, obj.y, 0))
         enemy:AddComponent(require('Libraries/ECS/Components/c_Sprite_Renderer').new('Images/Racket.png'))
-        enemy:AddComponent(require('Libraries/ECS/Components/c_DropShadow').new())
-        
-        enemy.name  = "enemy"
+        enemy:AddComponent(require('Libraries/ECS/Components/c_DropShadow').new())        
+        enemy.name = "enemy"
         
       elseif(obj.name == 'player') then
         player = ECS:Create()
         
         player:AddComponent(require('Libraries/ECS/Local/c_Pong_Controller').new())
+        player:AddComponent(require('Libraries/ECS/Components/c_Steering').new())
+        local collider = player:AddComponent(require('Libraries/ECS/Components/c_Box_Collider').new(0, 0, 8, 32))
+              collider.isTrigger = false
+        
         player:AddComponent(require('Libraries/ECS/Components/c_Transform').new(obj.x, obj.y, 0))
-        player:AddComponent(require('Libraries/ECS/Components/c_Box_Collider').new(0, 0, 8, 32))
         player:AddComponent(require('Libraries/ECS/Components/c_Sprite_Renderer').new('Images/Racket.png'))
         player:AddComponent(require('Libraries/ECS/Components/c_DropShadow').new())
-        --player:AddComponent(require('Libraries/ECS/Components/c_Box_Render').new()) 
         player.name  = "player"
         
       elseif(obj.name == "ball1") then      
@@ -99,42 +122,64 @@ local Scene = require('Scenes/Scene_Parent')
     elseif(obj.name == "goal_player") then
         local goal = ECS:Create()
               goal:AddComponent(require('Libraries/ECS/Components/c_Transform').new(obj.x, obj.y + (obj.height*0.5)))
-              goal:AddComponent(require('Libraries/ECS/Components/c_Box_Collider').new(0, 0, obj.width, obj.height)) 
-              --goal:AddComponent(require('Libraries/ECS/Components/c_Box_Render').new()) 
+              local collider = goal:AddComponent(require('Libraries/ECS/Components/c_Box_Collider').new(0, 0, obj.width, obj.height)) 
+                    collider.isTrigger   = true
+                    collider.isKinematic = false
+                    
               goal.name = "goal_player"
         
       elseif(obj.name == "goal_enemy") then
         local goal = ECS:Create()
               goal:AddComponent(require('Libraries/ECS/Components/c_Transform').new(obj.x, obj.y + (obj.height*0.5)))
-              goal:AddComponent(require('Libraries/ECS/Components/c_Box_Collider').new(0, 0, obj.width, obj.height))
-              --goal:AddComponent(require('Libraries/ECS/Components/c_Box_Render').new()) 
+              local collider = goal:AddComponent(require('Libraries/ECS/Components/c_Box_Collider').new(0, 0, obj.width, obj.height)) 
+                    collider.isTrigger = true                    
+                    collider.isKinematic = false
+                    
               goal.name = "goal_enemy"
         
       end
     end 
   end
   
+  ---------------
+  -- Load_Ball --
+  ---------------
   function Load_Ball()    
     local pos
     if(math.random() > 0.5) then
       pos = ballPos1
     else 
-      pos = ballPos2
-      
+      pos = ballPos2      
     end
     
     ball = ECS:Create()
     local bController = ball:AddComponent(require('Libraries/ECS/Local/c_Ball_Controller').new())
           
     ball:AddComponent(require('Libraries/ECS/Components/c_Transform').new(pos.x, pos.y, 0))
-    local collider = ball:AddComponent(require('Libraries/ECS/Components/c_Box_Collider').new(0, 0, 8, 8))
+    local collider = ball:AddComponent(require('Libraries/ECS/Components/c_Box_Collider').new(0, 0, 8, 8))          
+          collider.isTrigger = false
+          
     ball:AddComponent(require('Libraries/ECS/Components/c_Entity_Reflector').new())
+    ball:AddComponent(require('Libraries/ECS/Components/c_Trail_Emitter').new())
     ball:AddComponent(require('Libraries/ECS/Components/c_Sprite_Renderer').new('Images/Ball.png'))   
     ball:AddComponent(require('Libraries/ECS/Components/c_DropShadow').new()) 
-    --ball:AddComponent(require('Libraries/ECS/Components/c_Box_Render').new()) 
     ball.name  = "ball"
-    collider.isTrigger = false
     
+  end
+  
+  --------------
+  -- Load_GUI --
+  --------------
+  function Load_GUI()
+    local GUI     = Scene.GUI_Controller    
+    local xPlayer = Round(Resolution.window.width  * 0.38)
+    local xEnemy  = Round(Resolution.window.width  * 0.6)
+    local yBoth   = Round(Resolution.window.height * 0.2)    
+    labelP        = GUI:Add(GUI:Label(xPlayer, yBoth, tostring(scoreP), 3))
+    labelE        = GUI:Add(GUI:Label(xEnemy,  yBoth, tostring(scoreE), 3))
+    
+    labelP:SetFont("Libraries/GUI/Fonts/Vudotronic.otf", 8)
+    labelE:SetFont("Libraries/GUI/Fonts/Vudotronic.otf", 8)
   end
   
   ----------
@@ -153,6 +198,7 @@ local Scene = require('Scenes/Scene_Parent')
     Initialize_Tilemap()
     Initialize_Systems() 
     Load_Tilemap_Entities()
+    Load_GUI()
     
     local blurImage = love.graphics.newImage("Images/Shader_Textures/spr_Blur_Noise.png")
     local layer     = Parallax.layers[1]
@@ -166,7 +212,10 @@ local Scene = require('Scenes/Scene_Parent')
     
     if (debug) then print("Scenes,  loaded:      "..Scene.name) end
   end
-
+  
+  ------------
+  -- Unload --
+  ------------
   function Scene:Unload()
     if (debug) then print("Scenes,  unLoaded:    "..Scene.name) end
   end
@@ -191,11 +240,16 @@ local Scene = require('Scenes/Scene_Parent')
       if(cdStart.finished) then
         cdStart = nil
         Load_Ball()
+        
+        local pController = player:GetComponent("characterController")
+              pController:Start()
+        
+        local eController = enemy:GetComponent("characterController")
+              eController:Start()
+        
         State:Set("START")
-        
       else
-        cdStart:Update(dt)
-        
+        cdStart:Update(dt)        
       end
       
     elseif(State:Compare("START")) then
@@ -230,8 +284,7 @@ local Scene = require('Scenes/Scene_Parent')
     if(State:Compare("NONE")) then
       cdStart:DrawGUI()
       
-    end
-    
+    end    
   end
   
 return Scene

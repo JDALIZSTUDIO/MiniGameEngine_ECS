@@ -3,6 +3,7 @@ return {
     local bBox = p_Component.new("boxCollider")
           bBox.drawMode      = 'line'
           bBox.isTrigger     = true
+          bBox.isKinematic   = false
           bBox.top           = 0
           bBox.bottom        = 0
           bBox.left          = 0

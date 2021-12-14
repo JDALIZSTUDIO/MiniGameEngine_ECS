@@ -13,6 +13,7 @@ return {
     function Entity:AddComponent(_pComponent)
       assert(_pComponent.__id)
       self.components[_pComponent.__id] = _pComponent
+      self.components[_pComponent.__id].gameObject = self
       return _pComponent
     end
 

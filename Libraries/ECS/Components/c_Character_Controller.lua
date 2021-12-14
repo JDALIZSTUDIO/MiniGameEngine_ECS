@@ -1,28 +1,44 @@
 return {
   new = function(_pECS)
-    local CC = p_Component.new("characterController")
-          CC.GameObject = _pECS or nil
+    local component = p_Component.new("characterController")
+          component.ECS = _pECS or nil
     
-      function CC:Load(_pEntity)
-        
-      end
-      
-      function CC:OnEntityCollision(_pEntity, _pTable)        
-        
-      end
-      
-      function CC:OnTileCollision(_pEntity, _pTileID)        
-        
-      end
-      
-      function CC:Update(dt, _pEntity)
-        
-      end
-      
-      function CC:Draw(_pEntity)
-        
-      end
+    function component:Custom_Load()  
     
-    return CC
+    end
+    
+    function component:Process_Input()  
+      
+    end
+    
+    function component:Update_Logic(dt)  
+      
+    end
+    
+    function component:Load()
+      component:Custom_Load()
+    end
+
+    function component:Update(dt)
+      self:Process_Input(dt)
+      self:Update_Logic(dt)
+    end
+    
+    function component:Draw()
+      
+    end
+    
+    ----------------
+    -- collisions --
+    ----------------
+    function component:OnEntityCollision(_pTable)
+      
+    end
+    
+    function component:OnTileCollision(_pTileID)
+      
+    end
+    
+    return component
   end
 }

@@ -14,7 +14,7 @@ return {
     function system:Load(_pEntity)
       if(debug) then print("Systems, loaded:      s_Collider by ".._pEntity.name) end
     end
-        
+    
     ---------------
     -- GetTileAt --
     ---------------
@@ -31,14 +31,6 @@ return {
       end
     end
     
-    -----------
-    -- Align --
-    -----------
-    function system:Align(_pEntity, _pOther, _pSX, _pSY)
-      
-            
-    end
-    
     ----------------
     -- Intersects --
     ----------------
@@ -52,17 +44,19 @@ return {
       local dX  = bBoxA.position.x - bBoxB.position.x
       local dY  = bBoxA.position.y - bBoxB.position.y
       local aDX = math.abs(dX)
-      local aDY = math.abs(dY)
-      
+      local aDY = math.abs(dY)      
       local sHW = (bBoxA.width*0.5)  + (bBoxB.width*0.5)
       local sHH = (bBoxA.height*0.5) + (bBoxB.height*0.5)
       
       if(aDX >= sHW or aDY >= sHH) then
         return false
         
-      else
+      else        
         
-        if(bBoxA.isTrigger) then return true end
+        if(bBoxA.isTrigger   or 
+           bBoxA.isKinematic or
+           bBoxB.isTrigger   or
+           bBoxB.isKinematic) then return true end
         
         local sX = sHW - aDX
         local sY = sHH - aDY
@@ -82,34 +76,27 @@ return {
         end        
         if(dY < 0) then
           sY = -sY
-        end   
-        
+        end
         
         local transformA = _pEntity:GetComponent("transform")
-        local transformB = _pOther:GetComponent("transform")
-           
-        
-        local distance = math.sqrt(sX * sX + sY * sY)
-        local nX , nY  = sX / distance, sY / distance
-        
-        local dtVXA  = transformA.velocity.x * deltaTime
-        local dtVYA  = transformA.velocity.y * deltaTime
-        
-        local dtVXB  = transformB.velocity.x * deltaTime
-        local dtVYB  = transformB.velocity.y * deltaTime
-        
-        local vX, vY = dtVXA - (dtVXB or 0), dtVXB - (dtVXB or 0)
-        
-        local pS     = vX * nX + vY * nY
+        local transformB = _pOther:GetComponent("transform")        
+        local distance   = math.sqrt(sX * sX + sY * sY)
+        local nX , nY    = sX / distance, sY / distance        
+        local dtVXA      = transformA.velocity.x * deltaTime
+        local dtVYA      = transformA.velocity.y * deltaTime        
+        local dtVXB      = transformB.velocity.x * deltaTime
+        local dtVYB      = transformB.velocity.y * deltaTime        
+        local vX, vY     = dtVXA - (dtVXB or 0), dtVXB - (dtVXB or 0)        
+        local pS         = vX * nX + vY * nY
         
         if(pS <= 0) then
           
           transformA.position.x = transformA.position.x + sX
-          transformA.position.y = transformA.position.y + sY 
+          transformA.position.y = transformA.position.y + sY
           
           local reflector = _pEntity:GetComponent("entityReflector")
           if(reflector ~= nil) then 
-            reflector:Reflect(_pEntity, _pOther)
+            reflector:Reflect(_pOther)
           else
             if(sX ~= 0) then 
               transformA.velocity:Set(0, transformA.velocity.y)
@@ -145,24 +132,27 @@ return {
     -- Update --
     ------------
     function system:Update(dt, _pEntity)
+      local transform = _pEntity:GetComponent("transform")
+      local collider  = _pEntity:GetComponent("boxCollider")
+      if(collider.active == false) then return end
+      
       deltaTime = dt
-      system:UpdateBoxCollider(_pEntity)
+      system:UpdateBoxCollider(transform, collider)
       system:EntityCollisions(_pEntity)
       system:LayerCollisons(_pEntity)
+      
     end
     
     ------------------------
     -- UpdateBoxCollider --
     ------------------------
-    function system:UpdateBoxCollider(_pEntity)
-      local transform = _pEntity:GetComponent("transform")
-      local bBox      = _pEntity:GetComponent("boxCollider")    
-      bBox.position.x = Round(transform.position.x + bBox.offset.x)
-      bBox.position.y = Round(transform.position.y + bBox.offset.y)
-      bBox.top        = Round(bBox.position.y - ((bBox.height * 0.5) * transform.scale.y))
-      bBox.bottom     = Round(bBox.position.y + ((bBox.height * 0.5) * transform.scale.y))
-      bBox.left       = Round(bBox.position.x - ((bBox.width  * 0.5) * transform.scale.x))
-      bBox.right      = Round(bBox.position.x + ((bBox.width  * 0.5) * transform.scale.x))
+    function system:UpdateBoxCollider(_pTransform, _pCollider) 
+      _pCollider.position.x = Round(_pTransform.position.x + _pCollider.offset.x)
+      _pCollider.position.y = Round(_pTransform.position.y + _pCollider.offset.y)
+      _pCollider.top        = Round(_pCollider.position.y - ((_pCollider.height * 0.5) * _pTransform.scale.y))
+      _pCollider.bottom     = Round(_pCollider.position.y + ((_pCollider.height * 0.5) * _pTransform.scale.y))
+      _pCollider.left       = Round(_pCollider.position.x - ((_pCollider.width  * 0.5) * _pTransform.scale.x))
+      _pCollider.right      = Round(_pCollider.position.x + ((_pCollider.width  * 0.5) * _pTransform.scale.x))
     end
     
     ----------------------
@@ -188,8 +178,8 @@ return {
         end
       end 
       
-      local charC = _pEntity:GetComponent("characterController")
-      if(charC ~= nil) then charC:OnEntityCollision(_pEntity, result) end
+      local character = _pEntity:GetComponent("characterController")
+      if(character ~= nil) then character:OnEntityCollision(result) end
       
     end
     
@@ -213,7 +203,7 @@ return {
       if(transform.velocity.x > 0) then
         if(self:GetTileAt(bBox.right, transform.position.y) ~= 0) then
           transform.velocity.x = 0
-          transform.position.x = ((math.floor(transform.position.x / tileWidth) + 1) * tileWidth) - Round(bBox.width*0.5)
+          transform.position.x = ((math.floor(transform.position.x / tileWidth) + 1) * tileWidth) - Round(bBox.width*0.5) - 1
           collide = true
           
         end

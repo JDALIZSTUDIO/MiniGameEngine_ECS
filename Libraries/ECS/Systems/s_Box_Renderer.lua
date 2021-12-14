@@ -8,7 +8,7 @@ return {
     
     function system:Draw(_pEntity)
       local renderer = _pEntity:GetComponent("boxRenderer")
-      if(renderer.debug == false) then return end
+      if(renderer.active == false) then return end
       
       local bBox = _pEntity:GetComponent("boxCollider")
       

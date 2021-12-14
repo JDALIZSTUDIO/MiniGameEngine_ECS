@@ -10,9 +10,10 @@ return {
     end
     
     function system:Draw(_pEntity)
-      local dropShadow = _pEntity:GetComponent("dropShadow")
-      local transform  = _pEntity:GetComponent("transform")
-      local renderer   = _pEntity:GetComponent("spriteRenderer")
+      local dropShadow   = _pEntity:GetComponent("dropShadow")
+      local transform    = _pEntity:GetComponent("transform")
+      local renderer     = _pEntity:GetComponent("spriteRenderer")      
+      if(renderer.active == false) then return end
       
       if(renderer.shader ~= nil) then 
         if(renderer.shader.active) then renderer.shader:Set() end 

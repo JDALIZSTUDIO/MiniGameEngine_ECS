@@ -1,28 +1,41 @@
 return {
   new = function()
-    local Steering = p_Component.new("steering")
-      Steering.angle          = 0
-      Steering.friction       = 0.1
-      Steering.lookAhead      = 64
-      Steering.mass           = 100
-      Steering.massMod        = 1
-      Steering.maxAlign       = 2
-      Steering.maxAvoidance   = 8
-      Steering.maxCohesion    = 6
-      Steering.maxForce       = 600
-      Steering.maxSeparation  = 6
-      Steering.maxVelocity    = 600
-      Steering.radiusArrive   = 128
-      Steering.radiusFlocking = 48
-      Steering.steeringForce  = Vector2:New(0, 0)
-      Steering.velocity       = Vector2:New(0, 0)
-      Steering.rotationLocked = false
-      Steering.zero           = Vector2:New(0, 0)
+    local component = p_Component.new("steering")
+          component.angle          = 0
+          component.friction       = 0.1
+          component.lookAhead      = 64
+          component.mass           = 100
+          component.massMod        = 1
+          component.maxAlign       = 2
+          component.maxAvoidance   = 8
+          component.maxCohesion    = 6
+          component.maxForce       = 400
+          component.maxSeparation  = 6
+          component.maxVelocity    = 400
+          component.radiusArrive   = 48
+          component.radiusFlocking = 48
+          component.steeringForce  = Vector2:New(0, 0)
+          component.velocity       = Vector2:New(0, 0)
+          component.rotationLocked = false
+          component.zero           = Vector2:New(0, 0)
+          component.precision      = 0.1
       
-      -- Private Functions
-      function Steering:Private_Arrive(_pOrigin, _pTarget)
-        local force = Vector2:Subtract(_pTarget, _pOrigin)
+      local transform = nil
+      
+      ----------
+      -- Load --
+      ----------
+      function component:Load()
+        transform = self.gameObject:GetComponent("transform")
+      end
+      
+      --------------------
+      -- Private_Arrive --
+      --------------------
+      function component:Private_Arrive(_pTarget)
+        if(transform.position:Distance(_pTarget) < self.precision) then return Vector2:New(0, 0) end        
         
+        local force = Vector2:Subtract(_pTarget, transform.position)
         
         local dist = force:Length()
         force:Normalize()
@@ -38,14 +51,22 @@ return {
         return force
       end
       
-      function Steering:Private_Flee(_pOrigin, _pTarget)
-        local force = self:Private_Seek(_pOrigin, _pTarget)
+      ------------------
+      -- Private_Flee --
+      ------------------
+      function component:Private_Flee(_pTarget)
+        local force = self:Private_Seek(transform.position,  _pTarget)
         force:MultiplyN(-1)
         return force
       end
       
-      function Steering:Private_Seek(_pOrigin, _pTarget)
-        local force = Vector2:Subtract(_pTarget, _pOrigin)
+      ------------------
+      -- Private_Seek --
+      ------------------
+      function component:Private_Seek(_pTarget)        
+        if(transform.position:Distance(_pTarget) < self.precision) then return Vector2:New(0, 0) end
+        
+        local force = Vector2:Subtract(_pTarget, transform.position)
         force:Normalize()
         force:MultiplyN(self.maxVelocity)
         force:Subtract(self.velocity)
@@ -53,19 +74,30 @@ return {
         return force
       end
       
-      -- Public Functions
-      function Steering:Arrive(_pOrigin, _pTarget)
-        self.steeringForce:Add(self:Private_Arrive(_pOrigin, _pTarget))
+      ------------
+      -- Arrive --
+      ------------
+      function component:Arrive(_pTarget)
+        if(_pTarget == nil) then return end
+        self.steeringForce:Add(self:Private_Arrive(_pTarget))
       end
 
-      function Steering:Flee(_pOrigin, _pTarget)
-        self.steeringForce:Add(self:Private_Flee(_pOrigin, _pTarget))
+      ----------
+      -- Flee --
+      ----------
+      function component:Flee(_pTarget)
+        if(_pTarget == nil) then return end
+        self.steeringForce:Add(self:Private_Flee(_pTarget))
       end
 
-      function Steering:Seek(_pOrigin, _pTarget)
-        self.steeringForce:Add(self:Private_Seek(_pOrigin, _pTarget))
+      ----------
+      -- Seek --
+      ----------
+      function component:Seek(_pTarget)
+        if(_pTarget == nil) then return end
+        self.steeringForce:Add(self:Private_Seek(_pTarget))
       end
       
-    return Steering    
+    return component    
   end
 }

@@ -18,8 +18,10 @@ end
 
 function ECS_Manager:Find(_pName)
   local entity
-  for i = 1, #self.entities do
-    entity = self.entites[i]
+  local length = #self.entities
+  if(length < 1) then return nil end
+  for i = 1, length do
+    entity = self.entities[i]
     if(entity.name == _pName) then return entity end
   end
 end

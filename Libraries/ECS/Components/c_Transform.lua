@@ -1,6 +1,8 @@
 return {
   new = function(_pX, _pY, _pRotation)
     local transform = p_Component.new("transform")
+          transform.maxSpeed    = 180
+          transform.origin      = Vector2:New(_pX or 0, _pY or 0)
           transform.position    = Vector2:New(_pX or 0, _pY or 0)
           transform.rotation    = _pRotation or 0
           transform.scale       = Vector2:New(1, 1)
