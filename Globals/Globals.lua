@@ -21,7 +21,7 @@ local Globals = {
     ---------------
     -- Booleans --
     ---------------
-    debug = false
+    debug = true
 }
 
 function Globals:Load()

@@ -50,7 +50,7 @@ local Scene = require('Libraries/Scenes/Scene_Parent')
   -- Initialize_Systems --
   ------------------------
   function Initialize_Systems()
-    ECS        = require('Libraries/ECS/ECS_Manager') 
+    ECS        = require('Libraries/ECS/ECS_Manager').new()
     ECS:Register(require('Libraries/ECS/Systems/s_Character_Controller').new())
     ECS:Register(require('Libraries/ECS/Systems/s_Steering').new(ECS.entities))
     local s_collider = ECS:Register(require('Libraries/ECS/Systems/s_Collider').new())
