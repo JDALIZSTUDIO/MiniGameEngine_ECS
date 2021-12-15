@@ -35,7 +35,7 @@ return {
                 if(light.lightSource == nil or light.position == nil) then                    
                     print("Lighting, Removing: 1 ligthSource")
                     table.remove(self.lights, i)
-                else
+                elseif(light.lightSource.active) then
                     path = "lights["..tostring(i-1).."]."
                     struct        = {
                         pathPos   = path.."position",

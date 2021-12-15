@@ -37,7 +37,7 @@ return {
       self.helpers = require('Libraries/Helpers').new()
 
       self:Set_Aspect(screenWidth, screenHeight, screenScale, fullscreen)      
-      vignette = love.graphics.newImage("Images/Vignette/Vignette1440p.png")
+      vignette = love.graphics.newImage("Images/Vignette/Vignette1280x720.png")
 
       Input.keyboard:SetAxies({["left"] = "left", ["right"] = "right", ["up"] = "up", ["down"] = "down"})
       Input.keyboard:SetButtons({["button1"] = "space", ["button2"] = "lctrl", ["button3"] = "lshift", ["button4"] = "return"})  
@@ -80,7 +80,7 @@ return {
         end      
         
       love.graphics.setColor(1, 1, 1, 0.35)
-        --love.graphics.draw(vignette, 0, 0)
+        love.graphics.draw(vignette, 0, 0)
       love.graphics.setColor(1, 1, 1, 1)
       
       Scene_Manager:Draw_GUI()  

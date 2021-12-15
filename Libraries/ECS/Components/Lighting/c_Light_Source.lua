@@ -4,6 +4,6 @@ return {
           component.color = _pColor or {1, 1, 1}
           component.power = _pPower or 64
   
-  return component
+    return component
   end
 }
