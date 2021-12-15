@@ -10,7 +10,7 @@ return {
         local lights
 
         function Lighting:Add(_pEntity)
-            local lightSource = _pEntity:GetComponent("LightSource")
+            local lightSource = _pEntity:GetComponent("lightSource")
             local transform   = _pEntity:GetComponent("transform")
             local light       = {
                 lightSource   = lightSource,
@@ -30,14 +30,14 @@ return {
         function Lighting:Update(dt)
             lights = {}
             local light, path, string, struct
-            print(#self.lights)
             for i = #self.lights, 1, -1 do
                 light = self.lights[i]
-                if(light.lightSource == nil or light.position == nil) then
+                if(light.lightSource == nil or light.position == nil) then                    
+                    print("Lighting, Removing: 1 ligthSource")
                     table.remove(self.lights, i)
                 else
-                    path = "Lights["..tostring(i).."]."
-                    struct {
+                    path = "lights["..tostring(i-1).."]."
+                    struct        = {
                         pathPos   = path.."position",
                         position  = {light.position.x, light.position.y},
                         pathDif   = path.."diffuse",
@@ -46,29 +46,28 @@ return {
                         power     = light.lightSource.power
                     }
                     
-                    table.add(lights, struct)
+                    table.insert(lights, struct)
                 end
             end
         end
 
         function Lighting:Set()
             love.graphics.setColor(1, 1, 1, 1)
-            love.graphics.clear()
-
             love.graphics.setShader(self.shader)            
-            self.shader:send("screen", self.screen)
+              self.shader:send("screen", self.screen)
+              self.shader:send("num_lights", #lights)
 
-            local l
-            for i = 1, #lights do
-                l = lights[i]
-                self.shader:send(l.pathPos,   l.position)
-                self.shader:send(l.pathDif,   l.diffuse)
-                self.shader:send(l.pathPower, l.power)
-            end
+              local l
+              for i = 1, #lights do
+                  l = lights[i]
+                  self.shader:send(l.pathPos,   l.position)
+                  self.shader:send(l.pathDif,   l.diffuse)
+                  self.shader:send(l.pathPower, l.power)
+              end
         end
 
         function Lighting:UnSet()            
-            love.graphics.setShader()
+          love.graphics.setShader()
         end
 
         return Lighting

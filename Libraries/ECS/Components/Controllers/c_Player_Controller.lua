@@ -1,5 +1,4 @@
-local factory  = require('Libraries/ECS/Components/c_Character_Controller')
-local keyboard = require("Libraries/Input/KeyboardInput")
+local factory  = require('Libraries/ECS/Components/Controllers/c_Character_Controller')
 
 return {
   new = function(_pECS)

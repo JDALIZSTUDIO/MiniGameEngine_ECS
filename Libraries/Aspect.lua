@@ -18,7 +18,7 @@ return {
     
     function Aspect:SetAspect(_pWindowWidth, _pWindowHeight, _pFullscreen)
       local success = love.window.setMode(_pWindowWidth, _pWindowHeight, {fullscreen = _pFullscreen})
-      self.fullScaleX = love.graphics.getWidth() / _pWindowWidth
+      self.fullScaleX = love.graphics.getWidth()  / _pWindowWidth
       self.fullScaleY = love.graphics.getHeight() / _pWindowHeight
       self.dX = love.graphics.getWidth()  * (1-self.fullScaleX)
       self.dY = love.graphics.getHeight() * (1-self.fullScaleY)

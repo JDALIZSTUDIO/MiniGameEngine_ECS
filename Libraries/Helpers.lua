@@ -36,6 +36,13 @@ return {
       -----------
       -- Round --
       -----------
+      function Screen_To_World(_pX, _pY)
+        return _pX/(love.graphics.getWidth()/Aspect.window.width)/Aspect.scale, _pY/(love.graphics.getHeight()/Aspect.window.height)/Aspect.scale
+      end
+
+      -----------
+      -- Round --
+      -----------
       function Round(num, idp)
         local mult = 10^(idp or 0)
         return math.floor(num * mult + 0.5) / mult

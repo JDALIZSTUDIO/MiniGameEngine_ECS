@@ -3,32 +3,13 @@ return {
     local system = p_System.new({"transform", "boxCollider"})
     
     local entities   = {}
-    local layer      = {}
-    local tileWidth  = 0
-    local tileHeight = 0
     local deltaTime  = 0
     
     ----------
     -- Load --
     ----------
     function system:Load(_pEntity)
-      if(debug) then print("Systems, loaded:      s_Collider by ".._pEntity.name) end
-    end
-    
-    ---------------
-    -- GetTileAt --
-    ---------------
-    function system:GetTileAt(_pX, _pY)
-      local col    = math.floor(_pX / tileWidth ) + 1
-      local lig    = math.floor(_pY / tileHeight) + 1
-      local length = #layer.data
-      
-      if(col > 0 and col <= layer.width and lig > 0 and lig <= layer.height) then
-        local index = ((lig-1) * layer.width) + col
-        return layer.data[index]
-      else
-        return 0
-      end
+      if(debug) then print("Systems, loaded:      s_Collider_Entities by ".._pEntity.name) end
     end
     
     ----------------
@@ -108,8 +89,7 @@ return {
         end
         
         return true        
-      end
-      
+      end      
     end
     
     -----------------
@@ -117,15 +97,6 @@ return {
     -----------------
     function system:SetEntities(_pEntities)
       entities = _pEntities
-    end
-    
-    ------------------
-    -- SetTileLayer --
-    ------------------
-    function system:SetTileLayer(_pTilemap)      
-      layer      = _pTilemap:GetCollisions()
-      tileWidth  = _pTilemap.mapData.tilewidth
-      tileHeight = _pTilemap.mapData.tileheight
     end
     
     ------------
@@ -141,18 +112,6 @@ return {
       system:EntityCollisions(_pEntity)
       system:LayerCollisons(_pEntity)
       
-    end
-    
-    ------------------------
-    -- UpdateBoxCollider --
-    ------------------------
-    function system:UpdateBoxCollider(_pTransform, _pCollider) 
-      _pCollider.position.x = Round(_pTransform.position.x + _pCollider.offset.x)
-      _pCollider.position.y = Round(_pTransform.position.y + _pCollider.offset.y)
-      _pCollider.top        = Round(_pCollider.position.y - ((_pCollider.height * 0.5) * _pTransform.scale.y))
-      _pCollider.bottom     = Round(_pCollider.position.y + ((_pCollider.height * 0.5) * _pTransform.scale.y))
-      _pCollider.left       = Round(_pCollider.position.x - ((_pCollider.width  * 0.5) * _pTransform.scale.x))
-      _pCollider.right      = Round(_pCollider.position.x + ((_pCollider.width  * 0.5) * _pTransform.scale.x))
     end
     
     ----------------------
@@ -180,73 +139,6 @@ return {
       
       local character = _pEntity:GetComponent("characterController")
       if(character ~= nil) then character:OnEntityCollision(result) end
-      
-    end
-    
-    ----------------------
-    -- TilemapCollisons --
-    ----------------------
-    function system:LayerCollisons(_pEntity)
-      
-      local length = #layer.data
-      if(length < 1) then return end
-      
-      local transform = _pEntity:GetComponent("transform")
-      local bBox      = _pEntity:GetComponent("boxCollider")
-      
-      local posX, posY
-      
-      ----------------
-      -- horizontal --
-      ----------------      
-      local collide = false
-      if(transform.velocity.x > 0) then
-        if(self:GetTileAt(bBox.right, transform.position.y) ~= 0) then
-          transform.velocity.x = 0
-          transform.position.x = ((math.floor(transform.position.x / tileWidth) + 1) * tileWidth) - Round(bBox.width*0.5) - 1
-          collide = true
-          
-        end
-        
-      elseif(transform.velocity.x < 0) then
-        if(self:GetTileAt(bBox.left, transform.position.y) == tileID) then
-          transform.velocityPre:Set(transform.velocity.x, transform.velocity.y)
-          transform.velocity.x = 0
-          transform.position.x = ((math.floor(transform.position.x / tileWidth) + 1) * tileWidth) - Round(bBox.width*0.5)
-          collide = true
-          
-        end
-        
-      end
-      
-      ----------------
-      -- vertical --
-      ----------------
-      if(transform.velocity.y > 0) then
-        if(self:GetTileAt(transform.position.x, bBox.bottom) ~= 0) then
-          transform.velocityPre:Set(transform.velocity.x, transform.velocity.y)
-          transform.velocity.y = 0
-          transform.position.y = ((math.floor((transform.position.y+1) / tileHeight) + 1) * tileHeight) - Round(bBox.height*0.5)
-          collide = true
-          
-        end
-        
-      elseif(transform.velocity.y < 0) then
-        if(self:GetTileAt(transform.position.x, bBox.top) ~= 0) then
-          transform.velocityPre:Set(transform.velocity.x, transform.velocity.y)
-          transform.velocity.y = 0
-          transform.position.y = (math.floor((transform.position.y-1) / tileHeight) * tileHeight) + Round(bBox.height*0.5) - 1
-          collide = true
-          
-        end
-        
-      end
-      
-      if(collide) then
-        local charC = _pEntity:GetComponent("characterController")
-              charC:OnTileCollision(_pEntity, nil)
-        
-      end
       
     end
     

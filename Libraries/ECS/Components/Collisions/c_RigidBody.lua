@@ -1,8 +1,8 @@
 return {
   new = function(_pOffsetX, _pOffsetY, _pWidth, _pHeight)
-    local rigid = p_Component.new("rigidBody")
+    local component = p_Component.new("rigidBody")
     
     
-    return rigid  
+    return component  
   end
 }
