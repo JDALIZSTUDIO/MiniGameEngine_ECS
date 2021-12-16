@@ -1,40 +1,48 @@
 return {
     new = function()
         local Lighting = {
+            components,
             lights,
             screen,
             shader,
-            surface
         }
-        
-        local lights
 
+        ---------
+        -- Add --
+        ---------
         function Lighting:Add(_pEntity)
             local lightSource = _pEntity:GetComponent("lightSource")
             local transform   = _pEntity:GetComponent("transform")
-            local light       = {
-                lightSource   = lightSource,
-                position      = transform.position
-            }
-            table.insert(self.lights, light)
+            if(lightSource ~= nil and transform ~= nil) then
+                local light       = {
+                    lightSource   = lightSource,
+                    position      = transform.position
+                }
+                table.insert(self.components, light)
+            end
         end
 
+        ----------
+        -- Load --
+        ----------
         function Lighting:Load(_pW, _pH)
-            self.lights  = {}
-            self.screen  = { _pW, _pH }
-            self.shader  = love.graphics.newShader("Shaders/shd_Lighting.fs")
-            self.surface = love.graphics.newCanvas(_pW, _pH)
-            self.surface:setFilter("nearest", "nearest")
+            self.components = {}
+            self.lights     = {}
+            self.screen     = { _pW, _pH }
+            self.shader     = love.graphics.newShader("Shaders/shd_Lighting.fs")
         end
 
+        ------------
+        -- Update --
+        ------------
         function Lighting:Update(dt)
-            lights = {}
+            self.lights = {}
             local light, path, string, struct
-            for i = #self.lights, 1, -1 do
-                light = self.lights[i]
+            for i = #self.components, 1, -1 do
+                light = self.components[i]
                 if(light.lightSource == nil or light.position == nil) then                    
                     print("Lighting, Removing: 1 ligthSource")
-                    table.remove(self.lights, i)
+                    table.remove(self.components, i)
                 elseif(light.lightSource.active) then
                     path = "lights["..tostring(i-1).."]."
                     struct        = {
@@ -43,29 +51,34 @@ return {
                         pathDif   = path.."diffuse",
                         diffuse   = light.lightSource.color,
                         pathPower = path.."power",
-                        power     = light.lightSource.power
-                    }
-                    
-                    table.insert(lights, struct)
+                        power     = light.lightSource.power,
+                    }                    
+                    table.insert(self.lights, struct)
                 end
             end
         end
 
+        ---------
+        -- Set --
+        ---------
         function Lighting:Set()
             love.graphics.setColor(1, 1, 1, 1)
             love.graphics.setShader(self.shader)            
               self.shader:send("screen", self.screen)
-              self.shader:send("num_lights", #lights)
+              self.shader:send("num_lights", #self.lights)
 
               local l
-              for i = 1, #lights do
-                  l = lights[i]
+              for i = 1, #self.lights do
+                  l = self.lights[i]
                   self.shader:send(l.pathPos,   l.position)
                   self.shader:send(l.pathDif,   l.diffuse)
                   self.shader:send(l.pathPower, l.power)
               end
         end
 
+        -----------
+        -- UnSet --
+        -----------
         function Lighting:UnSet()            
           love.graphics.setShader()
         end

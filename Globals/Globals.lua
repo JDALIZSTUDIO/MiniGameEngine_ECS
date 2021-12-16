@@ -1,29 +1,24 @@
-local Globals = {
+local Globals = {}
+
     ---------
     -- ECS --
     ---------
-    p_Entity             = nil,
-    p_Component          = nil,
-    p_System             = nil,
+    p_Entity      = nil
+    p_Component   = nil
+    p_System      = nil
 
     -------------
     -- Classes --
     -------------
-    Aspect        = nil,
-    Camera        = nil,
-    Easing        = nil,
-    Input         = nil,
-    Helpers       = nil,
-    Scene_Manager = nil,
-    Table         = nil,
-    Transition    = nil,
-    Vector2       = nil,
-
-    ---------------
-    -- Booleans --
-    ---------------
-    debug = true
-}
+    Aspect        = nil
+    Camera        = nil
+    Easing        = nil
+    Input         = nil
+    Helpers       = nil
+    Scene_Manager = nil
+    Table         = nil
+    Transition    = nil
+    Vector2       = nil
 
 function Globals:Load()
     Vector2       = require('Libraries/Vector2')

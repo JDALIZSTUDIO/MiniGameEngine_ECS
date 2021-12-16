@@ -9,31 +9,6 @@ return {
 
         local lightposition
 
-        ----------------------
-        -- PUBLIC FUNCTIONS --
-        ----------------------
-
-        -----------
-        -- Awake --
-        ----------- 
-        function Scene:Awake()
-
-        end
-
-        ------------
-        -- Unload --
-        ------------
-        function Scene:Unload()
-
-        end
-
-        ---------------
-        -- PreUnload --
-        ---------------
-        function Scene:PreUnload()
-
-        end
-
         ----------
         -- Load --
         ----------
@@ -79,13 +54,6 @@ return {
                 ECS:Draw()
             Lighting:UnSet()
 
-        end
-
-        -------------
-        -- Draw_GUI --
-        -------------
-        function Scene:Draw_GUI()
-            
         end
 
         return Scene

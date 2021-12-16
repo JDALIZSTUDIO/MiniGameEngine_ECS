@@ -16,7 +16,7 @@ return {
     function coreGame:Set_Aspect(_pW, _pH, _pScale, _pFullscreen)
       Aspect:SetWindow(_pW, _pH, _pScale, _pFullscreen)      
       surface = love.graphics.newCanvas(_pW, _pH)
-      surface:setFilter("nearest", "nearest")
+      surface:setFilter("nearest", "nearest", 16)
     end
 
     -----------------
@@ -66,9 +66,9 @@ return {
         love.graphics.clear()
           Camera:Set()
             Scene_Manager:Draw()
-        love.graphics.setCanvas()
           Camera:UnSet()
-      
+        love.graphics.setCanvas()
+
         if(fullscreen) then
           local w = love.graphics.getWidth() / surface:getWidth()
           local h = love.graphics.getHeight() / surface:getHeight()

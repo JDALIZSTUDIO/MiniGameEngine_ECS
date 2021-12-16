@@ -17,8 +17,12 @@ const float quadratic = 0.032;
   vec4 effect( vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords ){   
   vec4 pixel = Texel(texture, texture_coords);
 
+  if(pixel.a == 0.0){
+    return pixel;
+  }
+
   vec2 norm_screen = screen_coords / screen;
-  vec3 diffuse     = vec3(0);
+  vec3 diffuse     = vec3(pixel.r, pixel.g, pixel.b);
   
   for (int i = 0; i < num_lights; i++){
     Light light = lights[i];
