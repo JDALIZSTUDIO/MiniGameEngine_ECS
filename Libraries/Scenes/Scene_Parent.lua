@@ -76,7 +76,7 @@ return {
       self.GUI = require('Libraries/GUI/GUI_Factory')
       self:Awake()
 
-      if (debug) then print("Scenes,  awoken:      "..Scene.name) end
+      if (isDebug) then print("Scenes,  awoken:      "..Scene.name) end
     end
 
     -------------
@@ -93,7 +93,7 @@ return {
       self.GUI:UnLoad()
       self.GUI = nil
       self:PreUnload()
-      if (debug) then print("Scenes,  preUnLoaded: "..Scene.name) end
+      if (isDebug) then print("Scenes,  preUnLoaded: "..Scene.name) end
     end
 
     -----------

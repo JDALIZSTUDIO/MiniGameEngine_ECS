@@ -46,7 +46,7 @@ return {
       end
       
       self.animations[_pID] = animation      
-        if(debug) then print("Animation added:      ".._pID..", "..tostring(#animation.quadData).." quads") end
+        if(isDebug) then print("Animation added:      ".._pID..", "..tostring(#animation.quadData).." quads") end
       Animator:Play(_pID)
       
       return animation

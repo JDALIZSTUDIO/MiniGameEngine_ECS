@@ -6,7 +6,7 @@ return {
       
       local surface
       
-      if(debug) then print("Systems, loaded:      SpriteRenderer by ".._pEntity.name) end
+      if(isDebug) then print("Systems, loaded:      SpriteRenderer by ".._pEntity.name) end
     end
     
     function system:Draw(_pEntity)

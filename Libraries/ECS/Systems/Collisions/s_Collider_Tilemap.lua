@@ -10,7 +10,7 @@ return {
       -- Load --
       ----------
       function system:Load(_pEntity)
-        if(debug) then print("Systems, loaded:      s_Collider_Tilemap by ".._pEntity.name) end
+        if(isDebug) then print("Systems, loaded:      s_Collider_Tilemap by ".._pEntity.name) end
       end
       
       ---------------
@@ -34,8 +34,8 @@ return {
       ------------------
       function system:SetTileLayer(_pTilemap)      
         layer      = _pTilemap:GetCollisions()
-        tileWidth  = _pTilemap.mapData.tilewidth
-        tileHeight = _pTilemap.mapData.tileheight
+        tileWidth  = _pTilemap.map.tilewidth
+        tileHeight = _pTilemap.map.tileheight
       end
       
       ------------

@@ -11,7 +11,7 @@ return {
       -- Load --
       ----------
       function system:Load(_pEntity)
-        if(debug) then print("Systems, loaded:      s_Collider_Tilemap by ".._pEntity.name) end
+        if(isDebug) then print("Systems, loaded:      s_Collider_Tilemap by ".._pEntity.name) end
       end
       
       ------------

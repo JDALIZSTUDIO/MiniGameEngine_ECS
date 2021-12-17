@@ -3,7 +3,7 @@ return {
     local system = p_System.new({"transform", "boxCollider", "boxRenderer"})
   
     function system:Load(_pEntity)
-      if(debug) then print("Systems, loaded:      Physics by ".._pEntity.name) end
+      if(isDebug) then print("Systems, loaded:      Physics by ".._pEntity.name) end
     end
     
     function system:Draw(_pEntity)

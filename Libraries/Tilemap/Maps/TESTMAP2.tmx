@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="left-up" width="15" height="10" tilewidth="16" tileheight="16" infinite="0" nextlayerid="2" nextobjectid="1">
+ <editorsettings>
+  <export target="TESTMAP2.lua" format="lua"/>
+ </editorsettings>
+ <properties>
+  <property name="Depth" type="int" value="0"/>
+ </properties>
+ <tileset firstgid="1" name="top-down interior v2" tilewidth="16" tileheight="16" tilecount="854" columns="14">
+  <image source="../Images/top-down interior v2.png" width="224" height="976"/>
+ </tileset>
+ <tileset firstgid="855" name="top-down interior v2" tilewidth="16" tileheight="16" tilecount="854" columns="14">
+  <image source="E:/Assets/Sprites/PixelArt/Paid/TopDown/RPG/Tilesets/Raou/Top-Down - Interior Tileset/top-down interior v2.png" width="224" height="976"/>
+ </tileset>
+ <layer id="1" name="Calque de Tuiles 1" width="15" height="10">
+  <data encoding="csv">
+855,856,856,856,856,856,856,856,856,856,856,856,856,856,857,
+869,870,870,870,870,870,870,870,870,870,870,870,870,870,871,
+869,870,870,870,870,870,870,870,870,870,870,870,870,870,871,
+869,870,870,870,870,870,870,870,870,870,870,870,870,870,871,
+869,870,870,870,870,870,870,870,870,870,870,870,870,870,871,
+869,870,870,870,870,870,870,870,870,870,870,870,870,870,871,
+869,870,870,870,870,870,870,870,870,870,870,870,870,870,871,
+869,870,870,870,870,870,870,870,870,870,870,870,870,870,871,
+869,870,870,870,870,870,870,870,870,870,870,870,870,870,871,
+883,884,884,884,884,884,884,884,884,884,884,884,884,884,885
+</data>
+ </layer>
+</map>

@@ -7,7 +7,7 @@ return {
     function system:Load(_pEntity)
       local controller = _pEntity:GetComponent(id)
             controller:Load(_pEntity)
-      if(debug) then print("Systems, loaded:      s_Character_Controller by ".._pEntity.name) end
+      if(isDebug) then print("Systems, loaded:      s_Character_Controller by ".._pEntity.name) end
     end
     
     function system:Update(dt, _pEntity)

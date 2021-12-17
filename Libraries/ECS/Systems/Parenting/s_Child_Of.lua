@@ -3,7 +3,7 @@ return {
     local system = p_System.new({"transform", "childOf"})
   
     function system:Load(_pEntity)
-      if(debug) then print("Systems, loaded:      ChildOf by ".._pEntity.name) end
+      if(isDebug) then print("Systems, loaded:      ChildOf by ".._pEntity.name) end
     end
     
     function system:Update(dt, _pEntity)

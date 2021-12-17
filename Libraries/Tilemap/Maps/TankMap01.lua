@@ -54,7 +54,9 @@ return {
       offsety = 0,
       parallaxx = 1,
       parallaxy = 1,
-      properties = {},
+      properties = {
+        ["Depth"] = 0
+      },
       encoding = "lua",
       data = {
         66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66,
@@ -95,7 +97,9 @@ return {
       offsety = 0,
       parallaxx = 1,
       parallaxy = 1,
-      properties = {},
+      properties = {
+        ["Depth"] = 0
+      },
       encoding = "lua",
       data = {
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -136,7 +140,9 @@ return {
       offsety = 0,
       parallaxx = 1,
       parallaxy = 1,
-      properties = {},
+      properties = {
+        ["Depth"] = 0
+      },
       encoding = "lua",
       data = {
         42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42,
@@ -177,7 +183,9 @@ return {
       offsety = 0,
       parallaxx = 1,
       parallaxy = 1,
-      properties = {},
+      properties = {
+        ["Depth"] = 0
+      },
       encoding = "lua",
       data = {
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -218,7 +226,9 @@ return {
       offsety = 0,
       parallaxx = 1,
       parallaxy = 1,
-      properties = {},
+      properties = {
+        ["Depth"] = 0
+      },
       encoding = "lua",
       data = {
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,

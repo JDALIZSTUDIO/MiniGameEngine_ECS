@@ -210,21 +210,21 @@ local Scene = require('Libraries/Scenes/Scene_Parent')
     
     State:Set("NONE")
     
-    if (debug) then print("Scenes,  loaded:      "..Scene.name) end
+    if (isDebug) then print("Scenes,  loaded:      "..Scene.name) end
   end
   
   ------------
   -- Unload --
   ------------
   function Scene:Unload()
-    if (debug) then print("Scenes,  unLoaded:    "..Scene.name) end
+    if (isDebug) then print("Scenes,  unLoaded:    "..Scene.name) end
   end
 
   ------------
   -- Update --
   ------------
   function Scene:Update(dt)
-    if(debug) then
+    if(isDebug) then
       if(love.keyboard.isDown("left"))  then blur_radius = blur_radius - 0.1 end
       if(love.keyboard.isDown("right")) then blur_radius = blur_radius + 0.1 end
       if(blur_radius < 0) then blur_radius = 0 end
@@ -270,7 +270,7 @@ local Scene = require('Libraries/Scenes/Scene_Parent')
     Tilemap:DrawFront()
       ECS:Draw()
       
-    if(debug) then love.graphics.print(tostring(Round(blur_radius)), 10, 10) end
+    if(isDebug) then love.graphics.print(tostring(Round(blur_radius)), 10, 10) end
   end
 
   -------------

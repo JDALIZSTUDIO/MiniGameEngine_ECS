@@ -2,7 +2,7 @@ return {
   new = function() 
     local system = p_System.new({"transform", "boxCollider", "trailEmitter"})
     function system:Load(_pEntity)
-      if(debug) then print("Systems, loaded:      s_Trail_Renderer by ".._pEntity.name) end
+      if(isDebug) then print("Systems, loaded:      s_Trail_Renderer by ".._pEntity.name) end
     end
     
     function system:Update(dt, _pEntity)

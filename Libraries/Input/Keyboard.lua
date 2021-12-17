@@ -21,18 +21,18 @@ return {
       for key, value in pairs(_pTable) do
         self.e_axis[key] = value
         self.nbAxis      = self.nbAxis + 1
-        if(debug) then print("Keyboard, Added Axis: "..key..", "..value) end
+        if(isDebug) then print("Keyboard, Added Axis: "..key..", "..value) end
       end
-      if(debug) then print("Keyboard, Total Axies: "..self.nbAxis) end
+      if(isDebug) then print("Keyboard, Total Axies: "..self.nbAxis) end
     end
 
     function kb:SetButtons(_pTable)
       for key, value in pairs(_pTable) do
         self.e_button[key] = value
         self.nbButtons     = self.nbButtons + 1
-        if(debug) then print("Keyboard, Added Button: "..key..", "..value) end
+        if(isDebug) then print("Keyboard, Added Button: "..key..", "..value) end
       end
-      if(debug) then print("Keyboard, Total Buttons: "..self.nbButtons) end
+      if(isDebug) then print("Keyboard, Total Buttons: "..self.nbButtons) end
     end
       
     function kb:Update(dt) 

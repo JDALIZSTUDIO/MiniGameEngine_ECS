@@ -40,6 +40,13 @@ return {
         return _pX/(love.graphics.getWidth()/Aspect.window.width)/Aspect.scale, _pY/(love.graphics.getHeight()/Aspect.window.height)/Aspect.scale
       end
 
+      -------------
+      -- Modulus --
+      -------------
+      function Modulus(pA, _pB)
+        return pA - (math.floor(pA/_pB)*_pB)
+      end
+
       -----------
       -- Round --
       -----------

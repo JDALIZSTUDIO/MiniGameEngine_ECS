@@ -9,7 +9,7 @@ return {
       local steering  = _pEntity:GetComponent("steering")
             steering:Load()
       
-      if(debug) then print("Systems, loaded:      s_Steering by ".._pEntity.name) end
+      if(isDebug) then print("Systems, loaded:      s_Steering by ".._pEntity.name) end
     end
     
       ------------

@@ -2,7 +2,7 @@ love.graphics.setDefaultFilter("nearest")
 io.stdout:setvbuf('no')
 love.window.maximize(false)
 math.randomseed(os.time())
-debug = false
+isDebug = true
 
 local game = nil
 
@@ -18,7 +18,7 @@ end
 -- update --
 ------------
 function love.update(dt)
-  if(debug) then
+  if(isDebug) then
     if(love.keyboard.isDown("escape")) then love.event.quit() end
   end
   game:Update(dt)
@@ -29,5 +29,5 @@ end
 ----------
 function love.draw()
   game:Draw()
-  if(debug) then love.graphics.print(tostring(love.timer.getFPS(), 10, 10)) end
+  if(isDebug) then love.graphics.print(tostring(love.timer.getFPS(), 10, 10)) end
 end

@@ -44,7 +44,7 @@ return {
       self.GUI:Add(self.GUI:Button(x, Round(Aspect.window.height/1.6), "Options", "Libraries/GUI/Sprites/ButtonStrip.png", 4, fnOptions))
       self.GUI:Add(self.GUI:Button(x, Round(Aspect.window.height/1.3), "Quit",    "Libraries/GUI/Sprites/ButtonStrip.png", 4, fnQuit))
       
-      if (debug) then print("Scenes,  loaded:      "..Scene.name) end
+      if (isDebug) then print("Scenes,  loaded:      "..Scene.name) end
     end
 
     return Scene
