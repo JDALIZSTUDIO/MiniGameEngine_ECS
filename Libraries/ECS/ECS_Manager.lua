@@ -28,6 +28,9 @@ return {
       end
     end
 
+    function Controller:Load()
+      
+    end
 
     function Controller:Register(_pSystem)
       table.insert(self.systems, _pSystem)

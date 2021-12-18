@@ -84,6 +84,10 @@ Vector2.new = function(_pX, _pY)
         return math.atan2(0 - v.y, 0 - v.x)
     end
 
+    function v:DirectionTo(_pVector2)
+        return math.atan2(_pVector2.y - v.y, _pVector2.x - v.x)
+    end
+
     function v:Divide(_pVector2)
         v.x = v.x / _pVector2.x
         v.y = v.y / _pVector2.y

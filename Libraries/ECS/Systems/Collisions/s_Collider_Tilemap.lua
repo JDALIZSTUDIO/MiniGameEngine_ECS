@@ -21,11 +21,10 @@ return {
         local lig    = math.floor(_pY / tileHeight) + 1
         local length = #layer.data
         
-        if(col > 0 and col <= layer.width and lig > 0 and lig <= layer.height) then
-          local index = ((lig-1) * layer.width) + col
-          return layer.data[index]
+        if(col > 0 and col <= layer.width and lig > 0 and lig <= layer.height) then          
+          return layer.data[col][lig]
         else
-          return 0
+          return nil
         end
       end
             

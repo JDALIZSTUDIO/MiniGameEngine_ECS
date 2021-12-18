@@ -2,6 +2,14 @@ return {
   new = function()
     local Table = {}
     
+    function Table:GetPairsCount(_pTable)
+      local count = 0
+      for key, value in pairs(_pTable) do
+        if(value ~= nil) then count = count+1 end
+      end
+      return count
+    end
+
     function Table:To1D(_pTable, _pW, _pH)
       local table = {}
       for yy = 1, _pH do

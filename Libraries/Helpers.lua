@@ -2,6 +2,11 @@ return {
   new = function()
     local class = {}    
     
+    -----------
+    -- Clamp --
+    -----------
+    function Clamp(n, low, high) return math.min(math.max(n, low), high) end
+
       ----------
       -- Dump --
       ----------

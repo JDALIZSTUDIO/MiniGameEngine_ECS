@@ -9,7 +9,7 @@ return {
         ----------
         function Scene:Load()
             Tilemap = require('Libraries/Tilemap/Tilemap').new()
-            Tilemap:Load('Libraries/Tilemap/Maps/TESTMAP')
+            Tilemap:Load('Libraries/Tilemap/Maps/TESTMAP3')
         end
 
         ------------

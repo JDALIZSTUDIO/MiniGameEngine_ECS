@@ -15,7 +15,6 @@ return {
         end
 
         function Class:Layer1D_To_Layer2D(_pLayer)
-            --print("width: "..tostring(_pLayer.width))
             return Table:Clone1D_To_2D(_pLayer.data, _pLayer.width, _pLayer.height)
         end
 

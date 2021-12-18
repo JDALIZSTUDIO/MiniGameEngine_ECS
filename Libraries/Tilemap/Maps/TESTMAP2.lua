@@ -4,27 +4,25 @@ return {
   tiledversion = "1.7.2",
   orientation = "orthogonal",
   renderorder = "left-up",
-  width = 15,
-  height = 10,
+  width = 20,
+  height = 12,
   tilewidth = 16,
   tileheight = 16,
-  nextlayerid = 2,
+  nextlayerid = 5,
   nextobjectid = 1,
-  properties = {
-    ["Depth"] = 0
-  },
+  properties = {},
   tilesets = {
     {
-      name = "top-down interior v2",
+      name = "PixelPackTOPDOWN8BIT",
       firstgid = 1,
       tilewidth = 16,
       tileheight = 16,
       spacing = 0,
       margin = 0,
-      columns = 14,
-      image = "../Images/top-down interior v2.png",
-      imagewidth = 224,
-      imageheight = 976,
+      columns = 16,
+      image = "../Images/PixelPackTOPDOWN8BIT.png",
+      imagewidth = 256,
+      imageheight = 480,
       objectalignment = "unspecified",
       tileoffset = {
         x = 0,
@@ -37,34 +35,93 @@ return {
       },
       properties = {},
       wangsets = {},
-      tilecount = 854,
-      tiles = {}
-    },
-    {
-      name = "top-down interior v2",
-      firstgid = 855,
-      tilewidth = 16,
-      tileheight = 16,
-      spacing = 0,
-      margin = 0,
-      columns = 14,
-      image = "E:/Assets/Sprites/PixelArt/Paid/TopDown/RPG/Tilesets/Raou/Top-Down - Interior Tileset/top-down interior v2.png",
-      imagewidth = 224,
-      imageheight = 976,
-      objectalignment = "unspecified",
-      tileoffset = {
-        x = 0,
-        y = 0
-      },
-      grid = {
-        orientation = "orthogonal",
-        width = 16,
-        height = 16
-      },
-      properties = {},
-      wangsets = {},
-      tilecount = 854,
-      tiles = {}
+      tilecount = 480,
+      tiles = {
+        {
+          id = 176,
+          animation = {
+            {
+              tileid = 176,
+              duration = 100
+            },
+            {
+              tileid = 177,
+              duration = 100
+            },
+            {
+              tileid = 178,
+              duration = 100
+            },
+            {
+              tileid = 179,
+              duration = 100
+            }
+          }
+        },
+        {
+          id = 192,
+          animation = {
+            {
+              tileid = 192,
+              duration = 100
+            },
+            {
+              tileid = 193,
+              duration = 100
+            },
+            {
+              tileid = 194,
+              duration = 100
+            },
+            {
+              tileid = 195,
+              duration = 100
+            }
+          }
+        },
+        {
+          id = 208,
+          animation = {
+            {
+              tileid = 208,
+              duration = 100
+            },
+            {
+              tileid = 209,
+              duration = 100
+            },
+            {
+              tileid = 210,
+              duration = 100
+            },
+            {
+              tileid = 211,
+              duration = 100
+            }
+          }
+        },
+        {
+          id = 224,
+          animation = {
+            {
+              tileid = 224,
+              duration = 100
+            },
+            {
+              tileid = 225,
+              duration = 100
+            },
+            {
+              tileid = 226,
+              duration = 100
+            },
+            {
+              tileid = 227,
+              duration = 100
+            }
+          }
+        }
+      }
     }
   },
   layers = {
@@ -72,10 +129,10 @@ return {
       type = "tilelayer",
       x = 0,
       y = 0,
-      width = 15,
-      height = 10,
+      width = 20,
+      height = 12,
       id = 1,
-      name = "Calque de Tuiles 1",
+      name = "ground",
       visible = true,
       opacity = 1,
       offsetx = 0,
@@ -85,16 +142,18 @@ return {
       properties = {},
       encoding = "lua",
       data = {
-        855, 856, 856, 856, 856, 856, 856, 856, 856, 856, 856, 856, 856, 856, 857,
-        869, 870, 870, 870, 870, 870, 870, 870, 870, 870, 870, 870, 870, 870, 871,
-        869, 870, 870, 870, 870, 870, 870, 870, 870, 870, 870, 870, 870, 870, 871,
-        869, 870, 870, 870, 870, 870, 870, 870, 870, 870, 870, 870, 870, 870, 871,
-        869, 870, 870, 870, 870, 870, 870, 870, 870, 870, 870, 870, 870, 870, 871,
-        869, 870, 870, 870, 870, 870, 870, 870, 870, 870, 870, 870, 870, 870, 871,
-        869, 870, 870, 870, 870, 870, 870, 870, 870, 870, 870, 870, 870, 870, 871,
-        869, 870, 870, 870, 870, 870, 870, 870, 870, 870, 870, 870, 870, 870, 871,
-        869, 870, 870, 870, 870, 870, 870, 870, 870, 870, 870, 870, 870, 870, 871,
-        883, 884, 884, 884, 884, 884, 884, 884, 884, 884, 884, 884, 884, 884, 885
+        329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329,
+        329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329,
+        329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329,
+        329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329,
+        329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329,
+        329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329,
+        329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329,
+        329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329,
+        329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329,
+        329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329,
+        329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329,
+        329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329, 329
       }
     }
   }
