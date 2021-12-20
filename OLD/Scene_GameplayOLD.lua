@@ -57,7 +57,7 @@ local Scene = require('Libraries/Scenes/Scene_Parent')
           s_collider:SetEntities(ECS.entities)
           s_collider:SetTileLayer(Tilemap)    
     
-    ECS:Register(require('Libraries/ECS/Systems/s_Mover').new())
+    ECS:Register(require('Libraries/ECS/Systems/s_Simple_Mover').new())
     ECS:Register(require('Libraries/ECS/Systems/s_Trail_Renderer').new())
     ECS:Register(require('Libraries/ECS/Systems/s_Sprite_Renderer').new())
   end
@@ -124,7 +124,7 @@ local Scene = require('Libraries/Scenes/Scene_Parent')
               goal:AddComponent(require('Libraries/ECS/Components/c_Transform').new(obj.x, obj.y + (obj.height*0.5)))
               local collider = goal:AddComponent(require('Libraries/ECS/Components/c_Box_Collider').new(0, 0, obj.width, obj.height)) 
                     collider.isTrigger   = true
-                    collider.isKinematic = false
+                    collider.isStatic = false
                     
               goal.name = "goal_player"
         
@@ -133,7 +133,7 @@ local Scene = require('Libraries/Scenes/Scene_Parent')
               goal:AddComponent(require('Libraries/ECS/Components/c_Transform').new(obj.x, obj.y + (obj.height*0.5)))
               local collider = goal:AddComponent(require('Libraries/ECS/Components/c_Box_Collider').new(0, 0, obj.width, obj.height)) 
                     collider.isTrigger = true                    
-                    collider.isKinematic = false
+                    collider.isStatic = false
                     
               goal.name = "goal_enemy"
         

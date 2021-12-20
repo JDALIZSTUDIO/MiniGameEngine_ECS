@@ -8,7 +8,11 @@ return {
           Animator.shader           = {}          
           Animator.surfacePing      = nil
           Animator.surfacePong      = nil
-        
+    
+    local max     = math.max
+    local floor   = math.floor
+    local newQuad = love.graphics.newQuad
+
     function Animator:Add(_pID, _pPath, _pW, _pH, _pOffsetX, _pOffsetY, _pStartX, _pStartY, _pEndX, _pEndY)
       local image         = love.graphics.newImage(_pPath)
       local imageWidth    = image:getWidth()
@@ -29,17 +33,17 @@ return {
         
       local col   = _pStartX or 1
       local lig   = _pStartY or 1
-      local nbCol = math.max(1, _pEndX or math.floor(animation.atlasWidth  /  animation.frameWidth))
-      local nbLig = math.max(1, _pEndY or math.floor(animation.atlasHeight / animation.frameHeight))
+      local nbCol = max(1, _pEndX or floor(animation.atlasWidth  /  animation.frameWidth))
+      local nbLig = max(1, _pEndY or floor(animation.atlasHeight / animation.frameHeight))
       
       local quad
       for y = lig, nbLig, 1 do
         for x = col, nbCol, 1 do
-          quad = love.graphics.newQuad((x-1) * animation.frameWidth,
-                                       (y-1) * animation.frameHeight,
-                                       animation.frameWidth,
-                                       animation.frameHeight,
-                                       animation.atlas:getDimensions());
+          quad = newQuad((x-1) * animation.frameWidth,
+                         (y-1) * animation.frameHeight,
+                          animation.frameWidth,
+                          animation.frameHeight,
+                          animation.atlas:getDimensions());
                                      
           table.insert(animation.quadData, quad)
         end

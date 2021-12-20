@@ -6,7 +6,7 @@ return {
     -- Load --
     ----------
     function Scene:Load()
-      Camera:SetPosition(0, 0)
+      Camera:Set_Position(0, 0)
       
       -----------------
       -- Transitions --

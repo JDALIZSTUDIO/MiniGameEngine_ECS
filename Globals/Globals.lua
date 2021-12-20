@@ -32,6 +32,8 @@ function Globals:Load()
     Table         = require('Libraries/Table').new()
     Transition    = require('Libraries/Transition').new()
     Scene_Manager = require('Libraries/Scenes/Scene_Manager').new()
+
+    Camera:Load()
 end
 
 return Globals

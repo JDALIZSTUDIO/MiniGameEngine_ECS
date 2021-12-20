@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="left-up" width="17" height="7" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="7">
+ <editorsettings>
+  <export target="TESTMAP4.lua" format="lua"/>
+ </editorsettings>
+ <tileset firstgid="1" name="Environment" tilewidth="16" tileheight="16" tilecount="256" columns="16">
+  <image source="../Images/Environment.png" width="256" height="256"/>
+  <tile id="72">
+   <animation>
+    <frame tileid="72" duration="100"/>
+    <frame tileid="73" duration="100"/>
+    <frame tileid="74" duration="100"/>
+    <frame tileid="75" duration="100"/>
+   </animation>
+  </tile>
+  <wangsets>
+   <wangset name="grass" type="corner" tile="-1">
+    <wangcolor name="grass" color="#ff0000" tile="-1" probability="1"/>
+    <wangtile tileid="8" wangid="0,0,0,1,0,0,0,0"/>
+    <wangtile tileid="9" wangid="0,0,0,1,0,1,0,0"/>
+    <wangtile tileid="10" wangid="0,0,0,0,0,1,0,0"/>
+    <wangtile tileid="11" wangid="0,1,0,0,0,1,0,1"/>
+    <wangtile tileid="12" wangid="0,1,0,0,0,0,0,1"/>
+    <wangtile tileid="13" wangid="0,1,0,1,0,0,0,1"/>
+    <wangtile tileid="24" wangid="0,1,0,1,0,0,0,0"/>
+    <wangtile tileid="25" wangid="0,1,0,1,0,1,0,1"/>
+    <wangtile tileid="26" wangid="0,0,0,0,0,1,0,1"/>
+    <wangtile tileid="27" wangid="0,0,0,0,0,1,0,1"/>
+    <wangtile tileid="29" wangid="0,1,0,1,0,0,0,0"/>
+    <wangtile tileid="40" wangid="0,1,0,0,0,0,0,0"/>
+    <wangtile tileid="41" wangid="0,1,0,0,0,0,0,1"/>
+    <wangtile tileid="42" wangid="0,0,0,0,0,0,0,1"/>
+    <wangtile tileid="43" wangid="0,0,0,1,0,1,0,1"/>
+    <wangtile tileid="44" wangid="0,0,0,1,0,1,0,0"/>
+    <wangtile tileid="45" wangid="0,1,0,1,0,1,0,0"/>
+   </wangset>
+  </wangsets>
+ </tileset>
+ <layer id="1" name="ground" width="17" height="7">
+  <properties>
+   <property name="Depth" type="int" value="0"/>
+  </properties>
+  <data encoding="csv">
+26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,
+26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,
+26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,
+26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,
+26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,
+26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,
+26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26
+</data>
+ </layer>
+ <layer id="2" name="walls" width="17" height="7">
+  <properties>
+   <property name="Depth" type="int" value="0"/>
+  </properties>
+  <data encoding="csv">
+2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+2,2,2,2,2,0,0,0,0,99,99,99,0,0,0,0,2,
+2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+2,2,2,2,2,99,0,99,99,99,99,99,0,0,0,0,2,
+2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2
+</data>
+ </layer>
+ <layer id="4" name="deco" width="17" height="7">
+  <properties>
+   <property name="Depth" type="int" value="0"/>
+  </properties>
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,19,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,19,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="6" name="collisions" width="17" height="7">
+  <properties>
+   <property name="Depth" type="int" value="1"/>
+   <property name="Solid" type="bool" value="true"/>
+  </properties>
+  <data encoding="csv">
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,
+1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+</data>
+ </layer>
+ <objectgroup id="3" name="objects">
+  <object id="1" gid="18" x="64" y="48" width="16" height="16"/>
+  <object id="2" gid="18" x="64" y="64" width="16" height="16"/>
+  <object id="3" gid="18" x="64" y="80" width="16" height="16"/>
+  <object id="4" gid="18" x="176" y="48" width="16" height="16"/>
+  <object id="5" gid="18" x="176" y="64" width="16" height="16"/>
+  <object id="6" gid="18" x="176" y="80" width="16" height="16"/>
+ </objectgroup>
+</map>

@@ -1,22 +1,37 @@
 return {
   new = function() 
-    local system = p_System.new({"transform", "boxCollider", "trailEmitter"})
+    local system = p_System.new({"transform", "boundingBox", "trailEmitter"})
+
+    local an = "animator"
+    local sr = "spriteRenderer"
+    local te = "trailEmitter"
+    local tr = "transform"
+
+    ----------
+    -- Load --
+    ----------
     function system:Load(_pEntity)
       if(isDebug) then print("Systems, loaded:      s_Trail_Renderer by ".._pEntity.name) end
     end
     
+    ------------
+    -- Update --
+    ------------
     function system:Update(dt, _pEntity)
-      local emitter = _pEntity:GetComponent("trailEmitter")
+      local emitter = _pEntity:GetComponent(te)
       if(emitter.active == false) then return end
       
       emitter:Update(dt, _pEntity)
       
     end
     
+    ----------
+    -- Draw --
+    ----------
     function system:Draw(_pEntity)
-      local emitter   = _pEntity:GetComponent("trailEmitter")
-      local renderer  = _pEntity:GetComponent("spriteRenderer")
-      local transform = _pEntity:GetComponent("transform")
+      local emitter   = _pEntity:GetComponent(te)
+      local renderer  = _pEntity:GetComponent(sr)
+      local transform = _pEntity:GetComponent(tr)
       
       if(emitter.active == false) then return end
       if(renderer.active == false) then return end
@@ -43,7 +58,7 @@ return {
                                0)
         end
         
-        renderer  = _pEntity:GetComponent("animator")
+        renderer  = _pEntity:GetComponent(an)
         if(renderer ~= nil) then
           
         end        

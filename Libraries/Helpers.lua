@@ -2,10 +2,18 @@ return {
   new = function()
     local class = {}    
     
+    local floor = math.floor
+    local cos   = math.cos
+    local sin   = math.sin
+    local max   = math.max
+    local min   = math.min
+    local rad   = math.rad
+    local pi    = math.pi
+
     -----------
     -- Clamp --
     -----------
-    function Clamp(n, low, high) return math.min(math.max(n, low), high) end
+    function Clamp(n, low, high) return min(max(n, low), high) end
 
       ----------
       -- Dump --
@@ -21,6 +29,20 @@ return {
          else
             return tostring(o)
          end
+      end
+
+      ------------------
+      -- Length_Dir_X --
+      ------------------
+      function Length_Dir_X(_pSpeed, _pDirection)
+        return cos(_pDirection) * _pSpeed
+      end
+
+      ------------------
+      -- Length_Dir_Y --
+      ------------------
+      function Length_Dir_Y(_pSpeed, _pDirection)
+        return sin(_pDirection) * _pSpeed
       end
 
       ----------
@@ -49,7 +71,7 @@ return {
       -- Modulus --
       -------------
       function Modulus(pA, _pB)
-        return pA - (math.floor(pA/_pB)*_pB)
+        return pA - (floor(pA/_pB)*_pB)
       end
 
       -----------
@@ -57,26 +79,26 @@ return {
       -----------
       function Round(num, idp)
         local mult = 10^(idp or 0)
-        return math.floor(num * mult + 0.5) / mult
+        return floor(num * mult + 0.5) / mult
       end
 
       -----------------
       -- SmoothAngle --
       -----------------
-      function SmoothAngle(current, goal, speed, dt)
-          local diff = (goal-current+math.pi)%(2*math.pi)-math.pi
+      function Smooth_Angle(current, goal, speed, dt)
+          local diff = (goal-current+pi)%(2*pi)-pi
           return current + (diff * speed) * dt
       end
 
       ---------
       -- Cos --
       ---------
-      function Cos(pA) return math.cos(math.rad(pA)) end
+      function Cos(pA) return cos(rad(pA)) end
 
       ---------
       -- Sin --
       ---------
-      function Sin(pA) return math.sin(math.rad(pA)) end
+      function Sin(pA) return sin(rad(pA)) end
 
       
     return class

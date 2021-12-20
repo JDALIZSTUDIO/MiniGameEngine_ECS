@@ -2,12 +2,21 @@ return {
   new = function() 
     local system = p_System.new({"transform", "animator"})
     
+    local an = "animator"
+    local tr = "transform"
+
+    ----------
+    -- Load --
+    ----------
     function system:Load(_pEntity)
       if(isDebug) then print("Systems, loaded:      s_Animator by ".._pEntity.name) end
     end
     
+    ------------
+    -- Update --
+    ------------
     function system:Update(dt, _pEntity)      
-      local animator = _pEntity:GetComponent("animator")
+      local animator = _pEntity:GetComponent(an)
       if(animator.active == false) then return end
       if(animator.currentAnimation == nil) then return end
       
@@ -32,13 +41,13 @@ return {
     
     function system:Draw(_pEntity)
       
-      local animator = _pEntity:GetComponent("animator")
+      local animator = _pEntity:GetComponent(an)
       if(animator.active == false) then return end
       
       local current  = animator.currentAnimation
       if current == nil then return end      
       
-      local transform = _pEntity:GetComponent("transform")
+      local transform = _pEntity:GetComponent(tr)
       
       love.graphics.draw(current.atlas, 
                          current.quadData[animator.currentFrame], 

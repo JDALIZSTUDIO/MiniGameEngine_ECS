@@ -2,6 +2,7 @@ return {
     new = function()
         local Class        = {
             animations     = {},
+            collisions     = {},
             image          = nil,
             quads          = nil,
             map            = nil,
@@ -19,6 +20,16 @@ return {
 
         local animator, converter, extractor, parser
 
+        --------------------
+        -- Get_Collisions --
+        --------------------
+        function Class:Get_Collisions()            
+            return self.collisions
+        end
+
+        -----------------
+        -- DrawLayers --
+        -----------------
         function Class:Load(_pPath)
             ----------------
             -- Load_Stuff --
@@ -27,44 +38,64 @@ return {
             converter = require('Libraries/Tilemap/Tilemap_Converter').new()
             extractor = require('Libraries/Tilemap/Tilemap_Tiles').new()
             parser    = require('Libraries/Tilemap/Tilemap_Parser').new()
-
+            
+            --------------
+            -- Load_Map --
+            --------------
             self.map  = require(_pPath)
 
+            ---------------------------------
+            -- Load Image/Quads/Animations --
+            ---------------------------------
             local imagePath = self.map.tilesets[1].image:sub(3)
-            self.image      = love.graphics.newImage("Libraries/Tilemap"..imagePath)
-
-            self.quads      = extractor:Return_Quads(self.image, self.map.tilewidth, self.map.tileheight)
-            if(isDebug) then print("Tilemap, loaded:      "..tostring(#self.quads).." quads") end
-            
+            self.image      = love.graphics.newImage("Libraries/Tilemap"..imagePath)            
+            self.quads      = extractor:Return_Quads(self.image, self.map.tilewidth, self.map.tileheight)            
             self.animations = extractor:Return_Animations(self.map.tilesets[1])
+
+            if(isDebug) then print("Tilemap, loaded image: "..imagePath) end
+            if(isDebug) then print("Tilemap, loaded quads: "..tostring(#self.quads)) end
+
             -----------
             -- Parse --
             -----------
-            local tileLayers = parser:Get_Layer_By_Type(self.map.layers, parser.tileLayer)
-            local backlayers  = parser:Get_Layer_By_Property_Ext(tileLayers, "Depth", 0)
+            local tileLayers  = parser:Get_Layers_By_Type(self.map.layers, parser.name.tileLayer)
+            local backlayers  = parser:Get_Layers_By_Property_Ext(tileLayers, parser.property.depth, 0)
             if(#backlayers == 0) then
-                self.tileLayers.back = tileLayers
+                self.tileLayers.back   = tileLayers
             else
-                self.tileLayers.back = backlayers
-                self.tileLayers.front = parser:Get_Layer_By_Property_Ext(tileLayers, "Depth", 1)
+                self.tileLayers.back   = backlayers
+                self.tileLayers.front  = parser:Get_Layers_By_Property_Ext(tileLayers, parser.property.depth, 1)
             end
-            self.tileLayers.collisions = parser:Get_Layer_By_Property_Ext(tileLayers, "Solid", true)
+            self.collisions            = parser:Get_Layers_By_Property_Ext(tileLayers, parser.property.solid, true)
+            self.objects               = parser:Get_Layers_By_Type(self.map.layers, parser.objectGroup)
+            
+            if(isDebug) then print("Tilemap, extracted layers  : "..tostring(#self.tileLayers.back).." Back") end
+            if(isDebug) then print("Tilemap, extracted layers  : "..tostring(#self.tileLayers.front).." Front") end
+            if(isDebug) then print("Tilemap, extracted layers  : "..tostring(#self.collisions).." Collision") end
+            if(isDebug) then print("Tilemap, extracted objects : "..tostring(#self.objects)) end
 
             -------------
             -- Convert --
             -------------
             self.tileLayers.back       = converter:Layers1D_To_2D(self.tileLayers.back)
             self.tileLayers.front      = converter:Layers1D_To_2D(self.tileLayers.front)
-            self.tileLayers.collisions = converter:Layers1D_To_2D(self.tileLayers.collisions)
+            self.collisions            = converter:Layer1D_To_Layer2D(self.collisions[1])
+
+            if(isDebug) then print("Tilemap, converted         : "..tostring(#self.tileLayers.back).." Back Layers, 1D to 2D tables") end
+            if(isDebug) then print("Tilemap, converted         : "..tostring(#self.tileLayers.front).." Front Layers, 1D to 2D tables") end
+            if(isDebug) then print("Tilemap, converted         : "..tostring(#self.collisions).." Collision Layers, 1D to 2D tables") end
         end
 
+        ------------
+        -- Update --
+        ------------
         function Class:Update(dt)
             animator:Animate(dt, self.animations)
         end
 
-        -----------------
+        ----------------
         -- DrawLayers --
-        -----------------
+        ----------------
         function Class:DrawLayers(_pLayers)
             if(self.quads == nil or #self.quads == 0) then return end
             
@@ -75,6 +106,7 @@ return {
                     for yy = 1, layer.height do
                         for xx = 1, layer.width do
                             tile = layer.data[xx][yy]
+                            --if(xx == 1 and yy == 1) then print(Dump(tile)) end
                             anim = self.animations[tile-1]
                             
                             id = tile

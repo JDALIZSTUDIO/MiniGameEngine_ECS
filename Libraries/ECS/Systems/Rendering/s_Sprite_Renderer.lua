@@ -1,18 +1,25 @@
 return {
   new = function()
     local system = p_System.new({"transform", "spriteRenderer"})
-  
+    
+    local ds = "dropShadow"
+    local sr = "spriteRenderer"
+    local tr = "transform"
+    
+    ----------
+    -- Load --
+    ----------
     function system:Load(_pEntity)
-      
-      local surface
-      
       if(isDebug) then print("Systems, loaded:      SpriteRenderer by ".._pEntity.name) end
     end
     
+    ----------
+    -- Draw --
+    ----------
     function system:Draw(_pEntity)
-      local dropShadow   = _pEntity:GetComponent("dropShadow")
-      local transform    = _pEntity:GetComponent("transform")
-      local renderer     = _pEntity:GetComponent("spriteRenderer")      
+      local dropShadow   = _pEntity:GetComponent(ds)
+      local transform    = _pEntity:GetComponent(tr)
+      local renderer     = _pEntity:GetComponent(sr)      
       if(renderer.active == false) then return end
       
       if(renderer.shader ~= nil) then 

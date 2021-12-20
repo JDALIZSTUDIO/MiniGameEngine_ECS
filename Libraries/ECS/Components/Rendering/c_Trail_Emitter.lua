@@ -5,12 +5,15 @@ return {
           component.trail  = {}
           component.maxT   = _pMaxTrail or 50
     
+    local insert = table.insert
+    local remove = table.remove
+
     function component:Update(dt, _pEntity)
       if(component.active) then
         local transform = _pEntity:GetComponent("transform")
         local length = #component.trail
-        if(length > component.maxT) then table.remove(component.trail, 1) end
-        table.insert(component.trail, {x = transform.position.x, y = transform.position.y, rotation = transform.rotation})
+        if(length > component.maxT) then remove(component.trail, 1) end
+        insert(component.trail, {x = transform.position.x, y = transform.position.y, rotation = transform.rotation})
       end      
     end
     

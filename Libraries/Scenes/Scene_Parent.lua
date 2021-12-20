@@ -73,9 +73,13 @@ return {
     -- _Awake --
     ------------  
     function Scene:_Awake()
+      Camera:Set_Position(
+        Aspect.screen.width  * 0.5,
+        Aspect.screen.height * 0.5
+      )
       self.GUI = require('Libraries/GUI/GUI_Factory')
       self:Awake()
-
+      
       if (isDebug) then print("Scenes,  awoken:      "..Scene.name) end
     end
 

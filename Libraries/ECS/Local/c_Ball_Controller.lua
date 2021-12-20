@@ -68,7 +68,7 @@ return {
             local length = #_pTable
             if(length == 0) then return end
             
-            local bBox      = self.gameObject:GetComponent("boxCollider")
+            local bBox      = self.gameObject:GetComponent("boundingBox")
             local transform = self.gameObject:GetComponent("transform")            
             local objBox
             

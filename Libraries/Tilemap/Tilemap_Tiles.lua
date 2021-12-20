@@ -19,7 +19,7 @@ return {
                     indexFrame   = 1
                 }
                 animations[tile.id] = anim
-                if(isDebug) then print("Tileset: ".._pTileset.name..", Added tile animation index: "..tostring(tile.id)) end
+                if(isDebug) then print("Tileset: ".._pTileset.name..", Added animation, index: "..tostring(tile.id)) end
             end            
             return animations
         end

@@ -5,8 +5,8 @@ return {
     
     function component:Reflect(_pOther)
       local transformA = self.gameObject:GetComponent("transform")
-      local bBoxA      = self.gameObject:GetComponent("boxCollider")
-      local bBoxB      = _pOther:GetComponent("boxCollider")
+      local bBoxA      = self.gameObject:GetComponent("boundingBox")
+      local bBoxB      = _pOther:GetComponent("boundingBox")
       
       if(bBoxA.position.y < bBoxB.top) then 
         transformA.velocity.y = -transformA.velocity.y 

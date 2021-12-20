@@ -1,16 +1,26 @@
 return {
   new = function()
-    local system = p_System.new({"transform", "boxCollider", "boxRenderer"})
-  
+    local system = p_System.new({"transform", "boundingBox", "boxRenderer"})
+    
+    local br = "boxRenderer"
+    local bc = "boundingBox"
+    local tr = "transform"
+
+    ----------
+    -- Load --
+    ----------
     function system:Load(_pEntity)
-      if(isDebug) then print("Systems, loaded:      Box_Renderer by ".._pEntity.name) end
+      if(isDebug) then print("Systems, loaded:      s_Box_Renderer by ".._pEntity.name) end
     end
     
+    ----------
+    -- Draw --
+    ----------
     function system:Draw(_pEntity)
-      local renderer = _pEntity:GetComponent("boxRenderer")
+      local renderer = _pEntity:GetComponent(br)
       if(renderer.active == false) then return end
       
-      local bBox = _pEntity:GetComponent("boxCollider")
+      local bBox = _pEntity:GetComponent(bc)
       
       love.graphics.setColor(1, 1, 1, 1)
       love.graphics.rectangle(bBox.drawMode, 
@@ -19,8 +29,8 @@ return {
                               bBox.width, 
                               bBox.height)
                             
-      local transform = _pEntity:GetComponent("transform")
-      love.graphics.circle("fill", transform.position.x, transform.position.y, 1)
+      local transform = _pEntity:GetComponent(tr)
+      love.graphics.circle(bBox.drawMode, bBox.position.x, bBox.position.y, 1)
     end
     
     return system  

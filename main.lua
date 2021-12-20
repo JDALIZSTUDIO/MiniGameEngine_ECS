@@ -2,7 +2,7 @@ love.graphics.setDefaultFilter("nearest")
 io.stdout:setvbuf('no')
 love.window.maximize(false)
 math.randomseed(os.time())
-isDebug = true
+isDebug = false
 
 local game = nil
 

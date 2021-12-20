@@ -1,27 +1,71 @@
 return {
   new = function()
     local Camera   = {
-          ahead    = Vector2.new(),
-          clamped  = true,
-          isLook   = true,
-          maxDist  = 48,
+          clamped  = false,
+          follower = nil,
           position = Vector2.new(),
           rotation = 0,
+          shaker   = nil,
           scale    = Vector2.new(1, 1),
-          speed    = 0.2,
-          target   = nil,
-          timer    = 0,
+          target   = nil
     }
 
+    ------------
+    -- Attach --
+    ------------
+    function Camera:Attach(_pObj)
+      self.target = _pObj
+    end
+    
+    ------------
+    -- Detach --
+    ------------
+    function Camera:Detach()
+      self.target = nil
+    end    
+
+    ----------
+    -- Load --
+    ----------
+    function Camera:Load()
+      self.follower = require('Libraries/Camera/Camera_Follower').new()
+      self.shaker   = require('Libraries/Camera/Camera_Shaker').new()
+    end
+    
     ---------
     -- Set --
     ---------
     function Camera:Set()
+      local offsetX = Aspect.screen.width  * 0.5
+      local offsetY = Aspect.screen.height * 0.5
       love.graphics.push()
-        love.graphics.rotate (-Camera.rotation)
-        love.graphics.scale (Camera.scale.x, Camera.scale.y)
-        love.graphics.translate(-Camera.position.x, 
-                                -Camera.position.y)
+        love.graphics.rotate (-self.rotation)
+        love.graphics.scale (self.scale.x, self.scale.y)
+        love.graphics.translate(-math.floor(self.position.x  - offsetX + self.shaker.offset.x), 
+                                -math.floor((self.position.y - offsetY + self.shaker.offset.y)))
+    end
+
+    -----------------
+    -- SetPosition --
+    -----------------
+    function Camera:Set_Position(_pX, _pY)
+      self.position.x = math.floor(_pX) or 0
+      self.position.y = math.floor(_pY) or 0
+    end
+
+    --------------
+    -- SetScale --
+    --------------
+    function Camera:Set_Scale(_sX, _sY)
+      self.scale.x = math.floor(_sX) or 1
+      self.scale.y = math.floor(_sY) or 1
+    end
+
+    -----------
+    -- Shake --
+    -----------
+    function Camera:Shake(_pMagnitude, _pDuration)
+      self.shaker:Shake(_pMagnitude, _pDuration)
     end
 
     -----------
@@ -31,72 +75,23 @@ return {
       love.graphics.pop()
     end
 
-    -----------------
-    -- SetPosition --
-    -----------------
-    function Camera:SetPosition(_pX, _pY)
-      Camera.position.x = math.floor(_pX) or 0
-      Camera.position.y = math.floor(_pY) or 0
-    end
-
-    --------------
-    -- SetScale --
-    --------------
-    function Camera:SetScale(_sX, _sY)
-      Camera.scale.x = math.floor(_sX) or 1
-      Camera.scale.y = math.floor(_sY) or 1
-    end
-
-    ------------
-    -- Attach --
-    ------------
-    function Camera:Attach(_pObj)
-      Camera.target = _pObj
-    end
-
-    ------------
-    -- Detach --
-    ------------
-    function Camera:Detach()
-      Camera.target = nil
-    end
-    
     ------------
     -- Update --
     ------------
-    function Camera:Update(dt)      
-      local offsetX   = Round(Aspect.screen.width*0.5)
-      local offsetY   = Round(Aspect.screen.height*0.5)
+    function Camera:Update(dt)   
+      self.shaker:Update(dt)
 
       if(self.target ~= nil) then
-
-        if(self.isLook) then
-          local w = love.graphics.getWidth()
-          local h = love.graphics.getHeight()
-          local mx, my = Screen_To_World(love.mouse.getPosition())
-          if(mx > 0 and mx < w and
-             my > 0 and my < h) then
-              local dir  = self.target.position:DirectionTo({x = mx, y = my})
-              local dist = self.target.position:Distance({x = mx, y = my})
-              self.ahead:Set(
-                self.target.position.x + (math.cos(dir) * math.min(dist, self.maxDist)),
-                self.target.position.y + (math.sin(dir) * math.min(dist, self.maxDist))
-              )
-              self.position.x = Round(Lerp(self.position.x, self.ahead.x - offsetX, self.speed))
-              self.position.y = Round(Lerp(self.position.y, self.ahead.y - offsetY, self.speed))
-          else
-            self.position.x = Round(Lerp(self.position.x, self.target.position.x - offsetX, self.speed))
-            self.position.y = Round(Lerp(self.position.y, self.target.position.y - offsetY, self.speed))            
-          end
-        else
-          self.position.x = Round(Lerp(self.position.x, self.target.position.x - offsetX, self.speed))
-          self.position.y = Round(Lerp(self.position.y, self.target.position.y - offsetY, self.speed))
-        end
+        self.follower:Follow_Target(self.target)
+        self.position.x = self.follower.position.x
+        self.position.y = self.follower.position.y  
+      else
+        self.follower:Set_Position(self.position)
       end
 
       if(self.clamped) then
-        self.position.x = Clamp(self.position.x, Round(Aspect.screen.width  * 0.5), Round(Aspect.screen.width  - (Aspect.screen.width*0.5)))  - offsetX
-        self.position.y = Clamp(self.position.y, Round(Aspect.screen.height * 0.5), Round(Aspect.screen.height - (Aspect.screen.height*0.5))) - offsetY
+        self.position.x = Clamp(self.position.x, Aspect.screen.width  * 0.5, Aspect.screen.width  - (Aspect.screen.width*0.5))
+        self.position.y = Clamp(self.position.y, Aspect.screen.height * 0.5, Aspect.screen.height - (Aspect.screen.height*0.5))
       end
     end
     
