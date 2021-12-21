@@ -32,8 +32,8 @@ return {
     -- Screen_To_World --
     ---------------------
     function Camera:Screen_To_World(_pX, _pY)    
-      return _pX / self.scale.x + self.position.x - self.offset.x, 
-             _pY / self.scale.y + self.position.y - self.offset.y
+      return _pX / Aspect.scale + self.position.x - self.offset.x, 
+             _pY / Aspect.scale + self.position.y - self.offset.y
     end  
 
     ----------

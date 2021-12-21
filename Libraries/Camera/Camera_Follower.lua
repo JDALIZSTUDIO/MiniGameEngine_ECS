@@ -2,8 +2,8 @@ return {
     new = function(_pCamera)
         local Class = {
             ahead    = Vector2.new(),
-            isLook   = false,
-            maxDist  = 48,
+            isLook   = true,
+            maxDist  = 32,
             position = Vector2.new(),         
             speed    = 0.1
         }  
