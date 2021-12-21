@@ -2,33 +2,61 @@ return {
     new = function()
       local system = p_System.new({"transform", "boundingBox"})
       
-      local layer      = {}
-      local tileWidth  = 0
-      local tileHeight = 0
-      local deltaTime  = 0
+      local entities = {}      
+      local bc       = "boxCollider"
+      local bb       = "boundingBox"
       
-      local bc = "boundingBox"
-      local tr = "transform"
+      ----------------------
+      -- Collide_Entities --
+      ----------------------
+      function system:Collide_Entities(_pEntity)        
+        local length = #entities
+        if(length < 2) then return end
+  
+        local bBox   = _pEntity:GetComponent(bb)
+        local boxCol = _pEntity:GetComponent(bc)
+        local otherBBox
+  
+        local result   = {}
+        
+        for i = length, 1, -1 do
+          other = entities[i]        
+          if(other ~= _pEntity      and 
+             other.expired == false and
+             other.active  == true) then
+             
+            if(system:Match(other)) then
+              otherBBox = other:GetComponent(bb)
+              if(bBox:Intersects(otherBBox)) then
+                insert(result, other)
+              end
+            end
+          end
+        end 
+        
+        local character = _pEntity:GetComponent(ch)
+        if(character ~= nil) then character:OnEntityCollision(result) end        
+      end
 
       ----------
       -- Load --
       ----------
       function system:Load(_pEntity)
-        local collider  = _pEntity:GetComponent(bc)
-              collider:Load()
-              
-        if(isDebug) then print("Systems, loaded:      s_Box_Collider by ".._pEntity.name) end
+        local bBox = _pEntity:GetComponent(bb)
+              bBox:Load()
+        
+        entities = self.ECS:Get_Entities()
+
+        if(isDebug) then print("Systems, loaded:      s_Bounding_Box by ".._pEntity.name) end
       end
       
       ------------
       -- Update --
       ------------
       function system:Update(dt, _pEntity)
-        local collider  = _pEntity:GetComponent(bc)
-        if(collider.active == false) then return end
-
-        local transform = _pEntity:GetComponent(tr)
-        collider:Update_Collider(transform)       
+        local bBox = _pEntity:GetComponent(bb)
+        if(bBox.active == false) then return end
+        self:Collide_Entities(_pEntity)
       end
       
       return system

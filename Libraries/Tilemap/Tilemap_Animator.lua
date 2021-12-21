@@ -2,6 +2,9 @@ return {
     new = function()
         local Class = {}
 
+        -------------
+        -- Animate --
+        -------------
         function Class:Animate(dt, _pTable)
             local animation, current
             for key, value in pairs(_pTable) do

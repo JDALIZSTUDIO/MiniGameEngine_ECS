@@ -1,24 +1,27 @@
 return {
   new = function()
-    local Controller = {
+    local Class = {
       entities = {},
       systems  = {}
     }
 
-    function Controller:Add(_pEntity)
-      table.insert(self.entities, _pEntity)
+    local insert = table.insert
+    local remove = table.remove
+
+    function Class:Add(_pEntity)
+      insert(self.entities, _pEntity)
       return _pEntity
     end
 
-    function Controller:Create()
+    function Class:Create()
       local entity = p_Entity.new()
-            entity.controller = self
+            entity.Class = self
             
-      table.insert(self.entities, entity)
+      insert(self.entities, entity)
       return entity
     end
 
-    function Controller:Find(_pName)
+    function Class:Find(_pName)
       local entity
       local length = #self.entities
       if(length < 1) then return nil end
@@ -28,16 +31,21 @@ return {
       end
     end
 
-    function Controller:Load()
+    function Class:Get_Entities()
+      return self.entities
+    end
+
+    function Class:Load()
       
     end
 
-    function Controller:Register(_pSystem)
-      table.insert(self.systems, _pSystem)
+    function Class:Register(_pSystem)
+      _pSystem.ECS = self
+      insert(self.systems, _pSystem)
       return _pSystem
     end
 
-    function Controller:Update(dt)
+    function Class:Update(dt)
       local entity
       for i = #self.entities, 1, -1 do
         entity = self.entities[i]
@@ -48,7 +56,7 @@ return {
             end
           end
           
-          table.remove(self.entities, i) 
+          remove(self.entities, i) 
         else      
           for j, system in ipairs(self.systems) do
             if(system:Match(entity)) then
@@ -65,7 +73,7 @@ return {
       end
     end
 
-    function Controller:Draw()
+    function Class:Draw()
       local entity
       for i = 1, #self.entities do  
         entity = self.entities[i]
@@ -77,6 +85,6 @@ return {
       end
     end
 
-    return Controller
+    return Class
   end
 }

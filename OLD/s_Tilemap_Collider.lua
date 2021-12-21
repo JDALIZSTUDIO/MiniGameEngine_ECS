@@ -14,6 +14,8 @@ return {
       local rb = "rigidBody"
       local tr = "transform"
 
+      local floor = math.floor
+
       ----------
       -- Load --
       ----------
@@ -74,7 +76,7 @@ return {
           ID = self:Get_Tile_At(collider.right, collider.position.y)
           if(ID ~= 0) then
             transform.velocity.x = 0
-            transform.position.x = ((math.floor(collider.position.x / tileWidth) + 1) * tileWidth) - Round(collider.width*0.5) - 1
+            transform.position.x = ((math.floor(collider.position.x / tileWidth) + 1) * tileWidth) - floor(collider.width*0.5) - 1
             collideX = true
             
           end
@@ -84,7 +86,7 @@ return {
           if(ID == tileID) then
             transform.velocityPre:Set(transform.velocity.x, transform.velocity.y)
             transform.velocity.x = 0
-            transform.position.x = ((math.floor(collider.position.x / tileWidth) + 1) * tileWidth) - Round(collider.width*0.5)
+            transform.position.x = ((math.floor(collider.position.x / tileWidth) + 1) * tileWidth) - floor(collider.width*0.5)
             collideX = true
             
           end          
@@ -99,9 +101,8 @@ return {
           if(ID ~= 0) then
             transform.velocityPre:Set(transform.velocity.x, transform.velocity.y)
             transform.velocity.y = 0
-            transform.position.y = ((math.floor((collider.position.y+1) / tileHeight) + 1) * tileHeight) - Round(collider.height*0.5)
-            collideY = true
-            
+            transform.position.y = ((math.floor((collider.position.y+1) / tileHeight) + 1) * tileHeight) - floor(collider.height*0.5)
+            collideY = true            
           end
           
         elseif(transform.velocity.y < 0) then
@@ -109,10 +110,11 @@ return {
           if(ID ~= 0) then
             transform.velocityPre:Set(transform.velocity.x, transform.velocity.y)
             transform.velocity.y = 0
-            transform.position.y = (math.floor((collider.position.y-1) / tileHeight) * tileHeight) + Round(collider.height*0.5) - 1
+            transform.position.y = (math.floor((collider.position.y-1) / tileHeight) * tileHeight) + floor(collider.height*0.5) - 1
+            --transform.position.y = (math.floor((collider.position.y-1) / tileHeight) * tileHeight) + Round(collider.height*0.5) - 1
             collideY = true
             
-          end          
+          end
         end
         
         if(collideX or collideY) then

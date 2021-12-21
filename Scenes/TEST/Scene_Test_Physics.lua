@@ -5,6 +5,68 @@ return {
         local ECS
         local Tilemap
 
+        ------------------
+        -- Load_Objects --
+        ------------------
+        function Load_Objects()
+            local obj
+            local objects = Tilemap:Get_Objects()
+            for i = 1, #objects do
+                obj = objects[i]
+                local x = obj.x + (obj.width*0.5)
+                local y = obj.y - (obj.height*0.5)
+                if(obj.name == "player") then
+                    local player = ECS:Create()
+                        player.name = obj.name
+                        player:AddComponent(require('TESTS/c_Tank_Controller_TEST').new())
+                        local t =player:AddComponent(require('Libraries/ECS/Components/Movement/c_Transform').new(x, y, 0))
+                        player:AddComponent(require('Libraries/ECS/Components/Collisions/c_Bounding_Box').new(0, 0, 16, 16))
+                        player:AddComponent(require('Libraries/ECS/Components/Collisions/c_Rigid_Body').new())
+                        player:AddComponent(require('Libraries/ECS/Components/Rendering/c_Box_Render').new())
+
+                    Camera:Attach(t)
+                elseif(obj.name == "block") then
+                    local block = ECS:Create()
+                          block.name = obj.name
+                          block:AddComponent(require('Libraries/ECS/Components/Movement/c_Transform').new(x, y, 0))
+                          block:AddComponent(require('Libraries/ECS/Components/Collisions/c_Bounding_Box').new(0, 0, 16, 16))
+                          block:AddComponent(require('Libraries/ECS/Components/Collisions/c_Rigid_Body').new({isStatic = true}))
+                          block:AddComponent(require('Libraries/ECS/Components/Rendering/c_Sprite_Renderer').new("Images/Tank_Game/block.png"))
+                          --block:AddComponent(require('Libraries/ECS/Components/Rendering/c_Box_Render').new())
+                elseif(obj.name == "wall") then
+                    local wall = ECS:Create()
+                          wall.name = obj.name
+                          wall:AddComponent(require('Libraries/ECS/Components/Movement/c_Transform').new(x, y, 0))
+                          wall:AddComponent(require('Libraries/ECS/Components/Collisions/c_Bounding_Box').new(0, 0, 16, 16))
+                          wall:AddComponent(require('Libraries/ECS/Components/Collisions/c_Rigid_Body').new({isStatic = true}))
+                          wall:AddComponent(require('Libraries/ECS/Components/Rendering/c_Sprite_Renderer').new("Images/Tank_Game/wall.png"))
+                          --wall:AddComponent(require('Libraries/ECS/Components/Rendering/c_Box_Render').new())
+                elseif(obj.name == "grass") then
+                    local grass = ECS:Create()
+                          grass.name = obj.name
+                          grass:AddComponent(require('Libraries/ECS/Components/Movement/c_Transform').new(x, y, 0))
+                          grass:AddComponent(require('Libraries/ECS/Components/Collisions/c_Bounding_Box').new(0, 0, 16, 16))
+                          grass:AddComponent(require('Libraries/ECS/Components/Collisions/c_Rigid_Body').new({isStatic = true}))
+                          grass:AddComponent(require('Libraries/ECS/Components/Rendering/c_Sprite_Renderer').new("Images/Tank_Game/grass.png"))
+                          --grass:AddComponent(require('Libraries/ECS/Components/Rendering/c_Box_Render').new())
+                end
+            end
+        end
+
+        ------------------
+        -- Load_Systems --
+        ------------------
+        function Load_Systems()
+            ECS:Register(require('Libraries/ECS/Systems/Controllers/s_Character_Controller').new()) 
+            ECS:Register(require('Libraries/ECS/Systems/Collisions/s_Bounding_Box').new())
+            local rb = ECS:Register(require('Libraries/ECS/Systems/Collisions/s_Rigid_Body').new()) 
+                  rb:Set_Tilemap(Tilemap)
+       
+            ECS:Register(require('Libraries/ECS/Systems/Rendering/s_Sprite_Renderer').new())
+            ECS:Register(require('Libraries/ECS/Systems/Rendering/s_Box_Renderer').new())
+
+        end
+
         ----------
         -- Load --
         ----------
@@ -13,26 +75,9 @@ return {
             Tilemap = require('Libraries/Tilemap/Tilemap').new()
 
             Tilemap:Load('Libraries/Tilemap/Maps/TESTMAP4')
-
-            ECS:Register(require('Libraries/ECS/Systems/Controllers/s_Character_Controller').new())
-            ECS:Register(require('Libraries/ECS/Systems/Collisions/s_Rigid_Body').new())    
-            ECS:Register(require('Libraries/ECS/Systems/Collisions/s_Box_Collider').new())
-            --ECS:Register(require('Libraries/ECS/Systems/Collisions/s_Entity_Collider').new())
-            local tm = ECS:Register(require('Libraries/ECS/Systems/Collisions/s_Tilemap_Collider').new())
-                  tm:Set_Tilemap(Tilemap)
-
-            ECS:Register(require('Libraries/ECS/Systems/Movement/s_Simple_Mover').new())        
-            ECS:Register(require('Libraries/ECS/Systems/Rendering/s_Box_Renderer').new())
-
-            local player = ECS:Create()
-                  player.name = "player"
-                  player:AddComponent(require('TESTS/c_Tank_Controller_TEST').new())
-                  local t =player:AddComponent(require('Libraries/ECS/Components/Movement/c_Transform').new(128, 48, 0))
-                  player:AddComponent(require('Libraries/ECS/Components/Collisions/c_Box_Collider').new(0, 0, 16, 16))
-                  player:AddComponent(require('Libraries/ECS/Components/Collisions/c_Rigid_Body').new())
-                  player:AddComponent(require('Libraries/ECS/Components/Rendering/c_Box_Render').new())
-
-            Camera:Attach(t)
+            
+            Load_Objects()
+            Load_Systems()
         end
 
         ------------

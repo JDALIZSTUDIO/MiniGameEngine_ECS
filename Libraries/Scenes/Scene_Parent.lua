@@ -73,7 +73,7 @@ return {
     -- _Awake --
     ------------  
     function Scene:_Awake()
-      Camera:Set_Position(
+      Camera:Look_At(
         Aspect.screen.width  * 0.5,
         Aspect.screen.height * 0.5
       )

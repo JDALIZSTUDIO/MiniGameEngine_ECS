@@ -23,14 +23,22 @@ return {
         --------------------
         -- Get_Collisions --
         --------------------
-        function Class:Get_Collisions()            
-            return self.collisions
+        function Class:Get_Collisions()        
+            return self.collisions[1]
         end
 
         -----------------
-        -- DrawLayers --
+        -- Get_Objects --
         -----------------
+        function Class:Get_Objects()        
+            return self.objects[1].objects
+        end
+
+        ----------
+        -- Load --
+        ----------
         function Class:Load(_pPath)
+
             ----------------
             -- Load_Stuff --
             ----------------
@@ -44,11 +52,15 @@ return {
             --------------
             self.map  = require(_pPath)
 
-            ---------------------------------
-            -- Load Image/Quads/Animations --
-            ---------------------------------
+            ----------------
+            -- Load Image --
+            ----------------
             local imagePath = self.map.tilesets[1].image:sub(3)
             self.image      = love.graphics.newImage("Libraries/Tilemap"..imagePath)            
+            
+            ------------------------------
+            -- Extract Quads/Animations --
+            ------------------------------
             self.quads      = extractor:Return_Quads(self.image, self.map.tilewidth, self.map.tileheight)            
             self.animations = extractor:Return_Animations(self.map.tilesets[1])
 
@@ -66,12 +78,10 @@ return {
                 self.tileLayers.back   = backlayers
                 self.tileLayers.front  = parser:Get_Layers_By_Property_Ext(tileLayers, parser.property.depth, 1)
             end
-            self.collisions            = parser:Get_Layers_By_Property_Ext(tileLayers, parser.property.solid, true)
-            self.objects               = parser:Get_Layers_By_Type(self.map.layers, parser.objectGroup)
+            self.objects               = parser:Get_Layers_By_Type(self.map.layers, parser.name.objectGroup)
             
             if(isDebug) then print("Tilemap, extracted layers  : "..tostring(#self.tileLayers.back).." Back") end
             if(isDebug) then print("Tilemap, extracted layers  : "..tostring(#self.tileLayers.front).." Front") end
-            if(isDebug) then print("Tilemap, extracted layers  : "..tostring(#self.collisions).." Collision") end
             if(isDebug) then print("Tilemap, extracted objects : "..tostring(#self.objects)) end
 
             -------------
@@ -79,11 +89,13 @@ return {
             -------------
             self.tileLayers.back       = converter:Layers1D_To_2D(self.tileLayers.back)
             self.tileLayers.front      = converter:Layers1D_To_2D(self.tileLayers.front)
-            self.collisions            = converter:Layer1D_To_Layer2D(self.collisions[1])
-
+            
             if(isDebug) then print("Tilemap, converted         : "..tostring(#self.tileLayers.back).." Back Layers, 1D to 2D tables") end
             if(isDebug) then print("Tilemap, converted         : "..tostring(#self.tileLayers.front).." Front Layers, 1D to 2D tables") end
             if(isDebug) then print("Tilemap, converted         : "..tostring(#self.collisions).." Collision Layers, 1D to 2D tables") end
+            
+            self.collisions            = parser:Get_Layers_By_Property_Ext(tileLayers, parser.property.solid, true)
+            if(isDebug) then print("Tilemap, extracted layers  : "..tostring(#self.collisions).." Collision") end
         end
 
         ------------
@@ -105,10 +117,9 @@ return {
                 if(layer.visible == true) then       
                     for yy = 1, layer.height do
                         for xx = 1, layer.width do
-                            tile = layer.data[xx][yy]
-                            --if(xx == 1 and yy == 1) then print(Dump(tile)) end
+                            tile = layer.data[xx][yy]                     
                             anim = self.animations[tile-1]
-                            
+
                             id = tile
                             if(anim ~= nil) then
                                 id = anim.currentFrame.tileid
@@ -125,8 +136,7 @@ return {
                         end
                     end 
                 end    
-            end
-            
+            end            
             love.graphics.setColor(1, 1, 1, 1)
         end
         

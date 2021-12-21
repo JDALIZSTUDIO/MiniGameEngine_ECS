@@ -3,24 +3,27 @@ return {
     local p = _pParameters or {}
 
     local component = p_Component.new("rigidBody")
-          component.velocity = Vector2.new()
-          component.friction = p.friction or 0.95
-          component.isStatic = p.isStatic or false
-          component.maxForce = p.maxForce or 60
+          component.friction    = p.friction or 0.9
+          component.isBounce    = p.isBounce or false
+          component.isStatic    = p.isStatic or false
+          component.maxForce    = p.maxForce or 60
+          component.velocity    = Vector2.new()
+          component.velocityPre = Vector2.new()
     
-    local deg = math.deg
-    local cos = math.cos
-    local sin = math.sin
-    local max = math.max
-    local min = math.min
+    local deg  = math.deg
+    local cos  = math.cos
+    local sin  = math.sin
+    local max  = math.max
+    local min  = math.min
+    local gameObject = nil
 
     ---------------
     -- Add_Force --
     ---------------
     function component:Add_Force(_pForce)
       self.velocity:Set(
-        self.velocity.x - _pForce.x,
-        self.velocity.y - _pForce.y
+        self.velocity.x + _pForce.x,
+        self.velocity.y + _pForce.y
       )
     end
 
@@ -60,6 +63,13 @@ return {
     function component:_Get_Direction()
       return self.velocity:Direction()
     end
+    
+    --------------------
+    -- _Get_Direction --
+    --------------------
+    function component:_Get_Magnitude()
+      return component.velocity:Length()
+    end
 
     -------------------
     -- _Length_Dir_X --
@@ -75,6 +85,13 @@ return {
       return sin(_pDirection) * _pSpeed
     end
     
+    ----------
+    -- Load --
+    ----------
+    function component:Load()
+      gameObject = self.gameObject
+    end
+
     ------------------
     -- Set_Velocity --
     ------------------

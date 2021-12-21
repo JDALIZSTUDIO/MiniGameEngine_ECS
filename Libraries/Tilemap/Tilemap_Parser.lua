@@ -13,7 +13,10 @@ return {
         }
 
         local insert = table.insert
-
+        
+        ----------------------------
+        -- Get_Layers_By_Property --
+        ----------------------------
         function Class:Get_Layers_By_Property(_pLayers, _pProperty)
             local layer
             local layers = {}
@@ -26,6 +29,9 @@ return {
             return layers
         end
 
+        --------------------------------
+        -- Get_Layers_By_Property_Ext --
+        --------------------------------
         function Class:Get_Layers_By_Property_Ext(_pLayers, _pProperty, _pValue)
             local layer
             local layers = {}
@@ -38,6 +44,9 @@ return {
             return layers
         end
         
+        ------------------------
+        -- Get_Layers_By_Type --
+        ------------------------
         function Class:Get_Layers_By_Type(_pLayers, _pType)
             local layer
             local layers = {}

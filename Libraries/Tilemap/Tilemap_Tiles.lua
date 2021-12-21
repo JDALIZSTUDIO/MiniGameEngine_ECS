@@ -2,6 +2,9 @@ return {
     new = function()
         local Class = {}
 
+        -----------------------
+        -- Return_Animations --
+        -----------------------
         function Class:Return_Animations(_pTileset)
             local tile, anim
             local animations = {}
@@ -24,6 +27,9 @@ return {
             return animations
         end
         
+        ------------------
+        -- Return_Quads --
+        ------------------
         function Class:Return_Quads(_pImage, _pTileW, _pTileH)
             local quads = {}, quad
             local nbCol = math.floor(_pImage:getWidth()  / _pTileW)

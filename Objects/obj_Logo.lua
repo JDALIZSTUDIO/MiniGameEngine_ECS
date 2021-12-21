@@ -18,6 +18,9 @@ return {
     local h_disp   = "displacement"
     local h_scale  = "scale"
 
+    local cos  = math.cos
+    local lerp = Lerp
+
     function obj:Load()
       timers     = require('Libraries/Timers').new()
       timers:Add(h_aber, 1)
@@ -76,7 +79,7 @@ return {
         end
         
       elseif(self.state:Compare("STOP")) then
-        scale = Lerp(scale, 0, 0.05)
+        scale = lerp(scale, 0, 0.05)
         if(scale < 0.01) then
           scale = 0
           timers:Start(h_aber)
@@ -88,7 +91,7 @@ return {
         if(timers:Finished(h_aber)) then self.state:Set("ABERRATION") end
         
       elseif(self.state:Compare("ABERRATION")) then
-        aScale = Lerp(aScale, 0, 0.05)
+        aScale = lerp(aScale, 0, 0.05)
         if(aScale < 0.01) then
           aScale = 0
           timers:Start(h_aber)
@@ -96,7 +99,7 @@ return {
           
         end   
         
-        self.shader_aber:SetUniform(h_aber,  math.cos(time) * 128)
+        self.shader_aber:SetUniform(h_aber,  cos(time) * 128)
         self.shader_aber:SetUniform(h_scale, aScale)
         
       elseif(self.state:Compare("TO_NEXT")) then        
@@ -119,11 +122,9 @@ return {
                          self.background.position.y)
       
       if(self.state:Compare("ABERRATION")) then        
-        self.shader_aber:Set()
-        
+        self.shader_aber:Set()        
       else
-        self.shader_wave:Set()
-        
+        self.shader_wave:Set()        
       end
       
           love.graphics.draw(self.logo.image,

@@ -1,3 +1,7 @@
+if pcall(require, "lldebugger") then
+  require("lldebugger").start()
+end
+
 love.graphics.setDefaultFilter("nearest")
 io.stdout:setvbuf('no')
 love.window.maximize(false)
@@ -18,9 +22,9 @@ end
 -- update --
 ------------
 function love.update(dt)
-  if(isDebug) then
+  --if(isDebug) then
     if(love.keyboard.isDown("escape")) then love.event.quit() end
-  end
+  --end
   game:Update(dt)
 end
 

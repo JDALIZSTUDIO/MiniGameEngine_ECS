@@ -2,8 +2,8 @@ return {
   new = function(_pRequirements)
     assert(type(_pRequirements) == 'table')
     local system = {
-      requires = _pRequirements
-      
+      ECS        = nil,
+      requires   = _pRequirements      
     }
     
     function system:Match(_pEntity) 
