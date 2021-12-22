@@ -14,7 +14,7 @@ return {
       -- Load --
       ----------
       function system:Load(_pEntity)
-        local bBox = _pEntity:GetComponent(bb)
+        local bBox = _pEntity:Get_Component(bb)
               bBox:Load()
               
         if(isDebug) then print("Systems, loaded:      s_Bounding_Box by ".._pEntity.name) end
@@ -24,10 +24,10 @@ return {
       -- Update --
       ------------
       function system:Update(dt, _pEntity)
-        local bBox = _pEntity:GetComponent(bb)
+        local bBox = _pEntity:Get_Component(bb)
         if(bBox.active == false) then return end
 
-        local transform = _pEntity:GetComponent(tr)
+        local transform = _pEntity:Get_Component(tr)
         bBox:Update_Bounding_Box(transform)       
       end
       

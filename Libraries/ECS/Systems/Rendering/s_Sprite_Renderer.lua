@@ -10,16 +10,16 @@ return {
     -- Load --
     ----------
     function system:Load(_pEntity)
-      if(isDebug) then print("Systems, loaded:      SpriteRenderer by ".._pEntity.name) end
+      if(isDebug) then print("Systems, loaded:      Sprite_Renderer by ".._pEntity.name) end
     end
     
     ----------
     -- Draw --
     ----------
     function system:Draw(_pEntity)
-      local dropShadow   = _pEntity:GetComponent(ds)
-      local transform    = _pEntity:GetComponent(tr)
-      local renderer     = _pEntity:GetComponent(sr)      
+      local dropShadow   = _pEntity:Get_Component(ds)
+      local transform    = _pEntity:Get_Component(tr)
+      local renderer     = _pEntity:Get_Component(sr)      
       if(renderer.active == false) then return end
       
       if(renderer.shader ~= nil) then 

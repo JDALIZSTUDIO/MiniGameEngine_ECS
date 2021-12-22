@@ -38,10 +38,10 @@ local Scene = require('Libraries/Scenes/Scene_Parent')
       
     end    
     
-    local pController = player:GetComponent("characterController")
+    local pController = player:Get_Component("characterController")
           pController:Stop()
     
-    local eController = enemy:GetComponent("characterController")
+    local eController = enemy:Get_Component("characterController")
           eController:Stop()
     
   end
@@ -90,27 +90,27 @@ local Scene = require('Libraries/Scenes/Scene_Parent')
       obj = Tilemap.objects[i]
       if(obj.name == "enemy") then      
         enemy = ECS:Create()
-        enemy:AddComponent(require('Libraries/ECS/Local/c_CPU_Controller').new(ECS))
-        enemy:AddComponent(require('Libraries/ECS/Components/c_Steering').new()) 
-        local collider = enemy:AddComponent(require('Libraries/ECS/Components/c_Bounding_Box').new(0, 0, 8, 32))
+        enemy:Add_Component(require('Libraries/ECS/Local/c_CPU_Controller').new(ECS))
+        enemy:Add_Component(require('Libraries/ECS/Components/c_Steering').new()) 
+        local collider = enemy:Add_Component(require('Libraries/ECS/Components/c_Bounding_Box').new(0, 0, 8, 32))
               collider.isTrigger = false
         
-        enemy:AddComponent(require('Libraries/ECS/Components/c_Transform').new(obj.x, obj.y, 0))
-        enemy:AddComponent(require('Libraries/ECS/Components/c_Sprite_Renderer').new('Images/Racket.png'))
-        enemy:AddComponent(require('Libraries/ECS/Components/c_DropShadow').new())        
+        enemy:Add_Component(require('Libraries/ECS/Components/c_Transform').new(obj.x, obj.y, 0))
+        enemy:Add_Component(require('Libraries/ECS/Components/c_Sprite_Renderer').new('Images/Racket.png'))
+        enemy:Add_Component(require('Libraries/ECS/Components/c_DropShadow').new())        
         enemy.name = "enemy"
         
       elseif(obj.name == 'player') then
         player = ECS:Create()
         
-        player:AddComponent(require('Libraries/ECS/Local/c_Pong_Controller').new())
-        player:AddComponent(require('Libraries/ECS/Components/c_Steering').new())
-        local collider = player:AddComponent(require('Libraries/ECS/Components/c_Bounding_Box').new(0, 0, 8, 32))
+        player:Add_Component(require('Libraries/ECS/Local/c_Pong_Controller').new())
+        player:Add_Component(require('Libraries/ECS/Components/c_Steering').new())
+        local collider = player:Add_Component(require('Libraries/ECS/Components/c_Bounding_Box').new(0, 0, 8, 32))
               collider.isTrigger = false
         
-        player:AddComponent(require('Libraries/ECS/Components/c_Transform').new(obj.x, obj.y, 0))
-        player:AddComponent(require('Libraries/ECS/Components/c_Sprite_Renderer').new('Images/Racket.png'))
-        player:AddComponent(require('Libraries/ECS/Components/c_DropShadow').new())
+        player:Add_Component(require('Libraries/ECS/Components/c_Transform').new(obj.x, obj.y, 0))
+        player:Add_Component(require('Libraries/ECS/Components/c_Sprite_Renderer').new('Images/Racket.png'))
+        player:Add_Component(require('Libraries/ECS/Components/c_DropShadow').new())
         player.name  = "player"
         
       elseif(obj.name == "ball1") then      
@@ -121,8 +121,8 @@ local Scene = require('Libraries/Scenes/Scene_Parent')
       
     elseif(obj.name == "goal_player") then
         local goal = ECS:Create()
-              goal:AddComponent(require('Libraries/ECS/Components/c_Transform').new(obj.x, obj.y + (obj.height*0.5)))
-              local collider = goal:AddComponent(require('Libraries/ECS/Components/c_Bounding_Box').new(0, 0, obj.width, obj.height)) 
+              goal:Add_Component(require('Libraries/ECS/Components/c_Transform').new(obj.x, obj.y + (obj.height*0.5)))
+              local collider = goal:Add_Component(require('Libraries/ECS/Components/c_Bounding_Box').new(0, 0, obj.width, obj.height)) 
                     collider.isTrigger   = true
                     collider.isStatic = false
                     
@@ -130,8 +130,8 @@ local Scene = require('Libraries/Scenes/Scene_Parent')
         
       elseif(obj.name == "goal_enemy") then
         local goal = ECS:Create()
-              goal:AddComponent(require('Libraries/ECS/Components/c_Transform').new(obj.x, obj.y + (obj.height*0.5)))
-              local collider = goal:AddComponent(require('Libraries/ECS/Components/c_Bounding_Box').new(0, 0, obj.width, obj.height)) 
+              goal:Add_Component(require('Libraries/ECS/Components/c_Transform').new(obj.x, obj.y + (obj.height*0.5)))
+              local collider = goal:Add_Component(require('Libraries/ECS/Components/c_Bounding_Box').new(0, 0, obj.width, obj.height)) 
                     collider.isTrigger = true                    
                     collider.isStatic = false
                     
@@ -153,16 +153,16 @@ local Scene = require('Libraries/Scenes/Scene_Parent')
     end
     
     ball = ECS:Create()
-    local bController = ball:AddComponent(require('Libraries/ECS/Local/c_Ball_Controller').new())
+    local bController = ball:Add_Component(require('Libraries/ECS/Local/c_Ball_Controller').new())
           
-    ball:AddComponent(require('Libraries/ECS/Components/c_Transform').new(pos.x, pos.y, 0))
-    local collider = ball:AddComponent(require('Libraries/ECS/Components/c_Bounding_Box').new(0, 0, 8, 8))          
+    ball:Add_Component(require('Libraries/ECS/Components/c_Transform').new(pos.x, pos.y, 0))
+    local collider = ball:Add_Component(require('Libraries/ECS/Components/c_Bounding_Box').new(0, 0, 8, 8))          
           collider.isTrigger = false
           
-    ball:AddComponent(require('Libraries/ECS/Components/c_Entity_Reflector').new())
-    ball:AddComponent(require('Libraries/ECS/Components/c_Trail_Emitter').new())
-    ball:AddComponent(require('Libraries/ECS/Components/c_Sprite_Renderer').new('Images/Ball.png'))   
-    ball:AddComponent(require('Libraries/ECS/Components/c_DropShadow').new()) 
+    ball:Add_Component(require('Libraries/ECS/Components/c_Entity_Reflector').new())
+    ball:Add_Component(require('Libraries/ECS/Components/c_Trail_Emitter').new())
+    ball:Add_Component(require('Libraries/ECS/Components/c_Sprite_Renderer').new('Images/Ball.png'))   
+    ball:Add_Component(require('Libraries/ECS/Components/c_DropShadow').new()) 
     ball.name  = "ball"
     
   end
@@ -241,10 +241,10 @@ local Scene = require('Libraries/Scenes/Scene_Parent')
         cdStart = nil
         Load_Ball()
         
-        local pController = player:GetComponent("characterController")
+        local pController = player:Get_Component("characterController")
               pController:Start()
         
-        local eController = enemy:GetComponent("characterController")
+        local eController = enemy:Get_Component("characterController")
               eController:Start()
         
         State:Set("START")

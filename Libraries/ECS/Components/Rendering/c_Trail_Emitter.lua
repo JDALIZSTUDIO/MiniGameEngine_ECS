@@ -10,7 +10,7 @@ return {
 
     function component:Update(dt, _pEntity)
       if(component.active) then
-        local transform = _pEntity:GetComponent("transform")
+        local transform = _pEntity:Get_Component("transform")
         local length = #component.trail
         if(length > component.maxT) then remove(component.trail, 1) end
         insert(component.trail, {x = transform.position.x, y = transform.position.y, rotation = transform.rotation})

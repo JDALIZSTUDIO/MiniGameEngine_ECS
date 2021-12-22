@@ -8,11 +8,17 @@ return {
     local insert = table.insert
     local remove = table.remove
 
+    ---------
+    -- Add --
+    ---------
     function Class:Add(_pEntity)
       insert(self.entities, _pEntity)
       return _pEntity
     end
 
+    ------------
+    -- Create --
+    ------------
     function Class:Create()
       local entity = p_Entity.new()
             entity.Class = self
@@ -21,6 +27,9 @@ return {
       return entity
     end
 
+    ----------
+    -- Find --
+    ----------
     function Class:Find(_pName)
       local entity
       local length = #self.entities
@@ -31,20 +40,32 @@ return {
       end
     end
 
+    ------------------
+    -- Get_Entities --
+    ------------------
     function Class:Get_Entities()
       return self.entities
     end
 
+    ----------
+    -- Load --
+    ----------
     function Class:Load()
       
     end
 
+    --------------
+    -- Register --
+    --------------
     function Class:Register(_pSystem)
       _pSystem.ECS = self
       insert(self.systems, _pSystem)
       return _pSystem
     end
 
+    ------------
+    -- Update --
+    ------------
     function Class:Update(dt)
       local entity
       for i = #self.entities, 1, -1 do
@@ -73,6 +94,9 @@ return {
       end
     end
 
+    ----------
+    -- Draw --
+    ----------
     function Class:Draw()
       local entity
       for i = 1, #self.entities do  
@@ -80,6 +104,21 @@ return {
         for j, system in ipairs(self.systems) do
           if(system:Match(entity)) then        
             system:Draw(entity)
+          end
+        end  
+      end
+    end
+
+    --------------
+    -- Draw_GUI --
+    --------------
+    function Class:Draw_GUI()
+      local entity
+      for i = 1, #self.entities do  
+        entity = self.entities[i]
+        for j, system in ipairs(self.systems) do
+          if(system:Match(entity)) then        
+            system:Draw_GUI(entity)
           end
         end  
       end

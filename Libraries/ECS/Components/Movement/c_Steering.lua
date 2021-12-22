@@ -26,7 +26,7 @@ return {
       -- Load --
       ----------
       function component:Load()
-        transform = self.gameObject:GetComponent("transform")
+        transform = self.gameObject:Get_Component("transform")
       end
       
       --------------------

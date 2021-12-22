@@ -28,11 +28,11 @@ return {
     -- Update --
     ------------
     function system:Update(dt, _pEntity)
-      local collider  = _pEntity:GetComponent(bc)
+      local collider  = _pEntity:Get_Component(bc)
       if(collider.active == false) then return end
       
       deltaTime = dt
-      local transform = _pEntity:GetComponent(tr)
+      local transform = _pEntity:Get_Component(tr)
       system:EntityCollisions(_pEntity)
       
     end
@@ -44,7 +44,7 @@ return {
       local length = #entities
       if(length < 2) then print("no_entities_to_collide_with") return end
 
-      local collider = _pEntity:GetComponent(bc)
+      local collider = _pEntity:Get_Component(bc)
 
       local result   = {}
       
@@ -62,7 +62,7 @@ return {
         end
       end 
       
-      local character = _pEntity:GetComponent(ch)
+      local character = _pEntity:Get_Component(ch)
       if(character ~= nil) then character:OnEntityCollision(result) end
       
     end

@@ -54,7 +54,7 @@ return {
           function component:Load()
             state = require('Libraries/State_Machine').new({"START", "GAMEPLAY", "END"})
             
-            local transform = self.gameObject:GetComponent("transform")
+            local transform = self.gameObject:Get_Component("transform")
                   transform.scale:Set(scale, scale)
                   
             state:Set("START")
@@ -68,14 +68,14 @@ return {
             local length = #_pTable
             if(length == 0) then return end
             
-            local bBox      = self.gameObject:GetComponent("boundingBox")
-            local transform = self.gameObject:GetComponent("transform")            
+            local bBox      = self.gameObject:Get_Component("boundingBox")
+            local transform = self.gameObject:Get_Component("transform")            
             local objBox
             
             local obj
             for i = 1, length do
               obj    = _pTable[i]
-              objBox = obj:GetComponent("transform")
+              objBox = obj:Get_Component("transform")
               
               if(obj.name == "goal_player") then
                 love.event.push("game_end", "player")
@@ -93,7 +93,7 @@ return {
           -- OnTileCollision --
           ---------------------
           function component:OnTileCollision(_pTileID)
-            local transform = self.gameObject:GetComponent("transform")
+            local transform = self.gameObject:Get_Component("transform")
                   transform.velocity.y = -transform.velocityPre.y
             
           end
@@ -110,7 +110,7 @@ return {
           -- Update --
           ------------
           function component:Update(dt)
-            local transform = self.gameObject:GetComponent("transform")
+            local transform = self.gameObject:Get_Component("transform")
             if(state:Compare("START")) then
               transform.scale.x = Lerp(transform.scale.x, 1, 0.1)
               transform.scale.y = Lerp(transform.scale.y, 1, 0.1)
@@ -120,7 +120,7 @@ return {
                  transform.scale.x = 1
                  transform.scale.y = 1
                  
-                 local emitter = self.gameObject:GetComponent("trailEmitter")
+                 local emitter = self.gameObject:Get_Component("trailEmitter")
                        emitter:Start()
                        
                  Launch(transform)                 

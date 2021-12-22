@@ -1,20 +1,21 @@
 return {
   new = function(_pPath, _pShader)
-    local sR = p_Component.new("spriteRenderer")
-          sR.alpha       = 1
-          sR.sprite      = love.graphics.newImage(_pPath)
-          sR.width       = sR.sprite:getWidth()
-          sR.height      = sR.sprite:getHeight()
-          sR.halfW       = sR.width  * 0.5
-          sR.halfH       = sR.height * 0.5
-          sR.shader      = _pShader or nil
-          sR.surfacePing = nil
-          sR.surfacePong = nil
+    local component = p_Component.new("spriteRenderer")
+          component.alpha       = 1
+          component.isGUI       = false
+          component.sprite      = love.graphics.newImage(_pPath)
+          component.width       = component.sprite:getWidth()
+          component.height      = component.sprite:getHeight()
+          component.halfW       = component.width  * 0.5
+          component.halfH       = component.height * 0.5
+          component.shader      = _pShader or nil
+          component.surfacePing = nil
+          component.surfacePong = nil
           
-          function sR:SetShader(_pShader)
+          function component:SetShader(_pShader)
             self.shader = _pShader
           end
       
-    return sR
+    return component
   end
 }

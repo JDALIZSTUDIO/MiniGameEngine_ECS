@@ -63,15 +63,6 @@ return {
       -----------
       -- Round --
       -----------
-      function Screen_To_World(_pX, _pY)
-        print("x: "..tostring(_pX)..", y: "..tostring(_pX))
-        return _pX / (love.graphics.getWidth()  / Aspect.screen.width), 
-               _pY / (love.graphics.getHeight() / Aspect.screen.height)
-      end
-
-      -----------
-      -- Round --
-      -----------
       function Sign(pNumber)
         return pNumber > 0 and 1 or (pNumber == 0 and 0 or -1)
       end

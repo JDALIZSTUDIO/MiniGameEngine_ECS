@@ -6,7 +6,7 @@ love.graphics.setDefaultFilter("nearest")
 io.stdout:setvbuf('no')
 love.window.maximize(false)
 math.randomseed(os.time())
-isDebug = false
+isDebug = true
 
 local game = nil
 

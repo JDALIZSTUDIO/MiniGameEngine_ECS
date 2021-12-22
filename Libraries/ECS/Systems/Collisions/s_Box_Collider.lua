@@ -13,8 +13,8 @@ return {
         local length = #entities
         if(length < 2) then return end
   
-        local bBox   = _pEntity:GetComponent(bb)
-        local boxCol = _pEntity:GetComponent(bc)
+        local bBox   = _pEntity:Get_Component(bb)
+        local boxCol = _pEntity:Get_Component(bc)
         local otherBBox
   
         local result   = {}
@@ -26,7 +26,7 @@ return {
              other.active  == true) then
              
             if(system:Match(other)) then
-              otherBBox = other:GetComponent(bb)
+              otherBBox = other:Get_Component(bb)
               if(bBox:Intersects(otherBBox)) then
                 insert(result, other)
               end
@@ -34,7 +34,7 @@ return {
           end
         end 
         
-        local character = _pEntity:GetComponent(ch)
+        local character = _pEntity:Get_Component(ch)
         if(character ~= nil) then character:OnEntityCollision(result) end        
       end
 
@@ -42,7 +42,7 @@ return {
       -- Load --
       ----------
       function system:Load(_pEntity)
-        local bBox = _pEntity:GetComponent(bb)
+        local bBox = _pEntity:Get_Component(bb)
               bBox:Load()
         
         entities = self.ECS:Get_Entities()
@@ -54,7 +54,7 @@ return {
       -- Update --
       ------------
       function system:Update(dt, _pEntity)
-        local bBox = _pEntity:GetComponent(bb)
+        local bBox = _pEntity:Get_Component(bb)
         if(bBox.active == false) then return end
         self:Collide_Entities(_pEntity)
       end

@@ -16,7 +16,7 @@ return {
       state = require('Libraries/State_Machine').new({"START", "GAMEPLAY", "END", "REPOSITION", "RESTART"})
       state:Set("START")
       
-      steering = self.gameObject:GetComponent("steering")
+      steering = self.gameObject:Get_Component("steering")
       steering.active = false      
       
     end
@@ -57,7 +57,7 @@ return {
     -- Update_Logic --
     ------------------
     function component:Update_Logic(dt)      
-      local transform = self.gameObject:GetComponent("transform")
+      local transform = self.gameObject:Get_Component("transform")
       
       if(state:Compare("GAMEPLAY")) then
         transform.velocity.y = inputDir.y * maxSpeed

@@ -92,7 +92,6 @@ return {
             
             if(isDebug) then print("Tilemap, converted         : "..tostring(#self.tileLayers.back).." Back Layers, 1D to 2D tables") end
             if(isDebug) then print("Tilemap, converted         : "..tostring(#self.tileLayers.front).." Front Layers, 1D to 2D tables") end
-            if(isDebug) then print("Tilemap, converted         : "..tostring(#self.collisions).." Collision Layers, 1D to 2D tables") end
             
             self.collisions            = parser:Get_Layers_By_Property_Ext(tileLayers, parser.property.solid, true)
             if(isDebug) then print("Tilemap, extracted layers  : "..tostring(#self.collisions).." Collision") end

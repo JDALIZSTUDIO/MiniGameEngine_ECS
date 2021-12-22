@@ -95,7 +95,7 @@ return {
         local length = #entities
         if(length < 2) then return end
   
-        local bBox  = _pEntity:GetComponent(bb)
+        local bBox  = _pEntity:Get_Component(bb)
         local otherBBox
         
         for i = length, 1, -1 do
@@ -105,7 +105,7 @@ return {
              other.active  == true) then
              
             if(system:Match(other)) then
-              otherBBox = other:GetComponent(bb)
+              otherBBox = other:Get_Component(bb)
               if(bBox:Intersects(otherBBox)) then
                 self:Resolve_Collision(_pEntity, other)
               end
@@ -127,7 +127,7 @@ return {
       -- Load --
       ----------
       function system:Load(_pEntity)
-        local rigidBody = _pEntity:GetComponent(rb)
+        local rigidBody = _pEntity:Get_Component(rb)
               rigidBody:Load()
         
         entities = self.ECS:Get_Entities()
@@ -139,12 +139,12 @@ return {
       -- Resolve_Collision --
       ----------------------- 
       function system:Resolve_Collision(_pEntity, _pOther)        
-        local transformA = _pEntity:GetComponent("transform")
-        local transformB = _pOther:GetComponent("transform")   
-        local bBoxA      = _pEntity:GetComponent(bb)
-        local bBoxB      = _pOther:GetComponent(bb)
-        local rigidA     = _pEntity:GetComponent(rb)
-        local rigidB     = _pOther:GetComponent(rb)
+        local transformA = _pEntity:Get_Component("transform")
+        local transformB = _pOther:Get_Component("transform")   
+        local bBoxA      = _pEntity:Get_Component(bb)
+        local bBoxB      = _pOther:Get_Component(bb)
+        local rigidA     = _pEntity:Get_Component(rb)
+        local rigidB     = _pOther:Get_Component(rb)
 
         local dX  = bBoxA.position.x - bBoxB.position.x
         local dY  = bBoxA.position.y - bBoxB.position.y
@@ -213,9 +213,9 @@ return {
       ------------
       function system:Update(dt, _pEntity)
         deltaTime       = dt
-        local bBox      = _pEntity:GetComponent(bb)
-        local rigidBody = _pEntity:GetComponent(rb)
-        local transform = _pEntity:GetComponent(tr)
+        local bBox      = _pEntity:Get_Component(bb)
+        local rigidBody = _pEntity:Get_Component(rb)
+        local transform = _pEntity:Get_Component(tr)
         
         rigidBody:_Apply_Gravity(self.gravity)        
         rigidBody:_Clamp_Velocity()
@@ -249,7 +249,7 @@ return {
           end
 
           if(collideX or collideY) then
-            local character = _pEntity:GetComponent(ch)
+            local character = _pEntity:Get_Component(ch)
             if(character ~= nil) then character:OnTileCollision(nil) end            
           end  
         end

@@ -8,13 +8,13 @@ return {
           local steering  = nil
           
           function controller:Load(_pOwner)
-            steering  = _pOwner:GetComponent("steering")
-            transform = _pOwner:GetComponent("transform")
+            steering  = _pOwner:Get_Component("steering")
+            transform = _pOwner:Get_Component("transform")
             target = Vector2.new(transform.position.x, transform.position.y)
           end
           
           function controller:Update(dt, _pOwner)
-            transform = _pOwner:GetComponent("transform")
+            transform = _pOwner:Get_Component("transform")
             local mx, my = love.mouse.getPosition()
             
             if(mx > 0 and mx < love.graphics.getWidth() and 
@@ -24,7 +24,7 @@ return {
               end
             end
             
-            local render = _pOwner:GetComponent("spriteRenderer")
+            local render = _pOwner:Get_Component("spriteRenderer")
                   render.shader:SetUniform("aberration", math.floor(math.random(2.0, 32.0)))
             
             local dist = transform.position:Distance(target)

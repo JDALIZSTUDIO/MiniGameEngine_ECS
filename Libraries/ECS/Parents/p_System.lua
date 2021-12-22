@@ -8,7 +8,7 @@ return {
     
     function system:Match(_pEntity) 
       for i = 1, #self.requires do
-        if(_pEntity:GetComponent(self.requires[i]) == nil) then
+        if(_pEntity:Get_Component(self.requires[i]) == nil) then
           return false
         end
       end
@@ -19,7 +19,7 @@ return {
     function system:Load(_pEntity) end
     function system:Update(dt, _pEntity) end
     function system:Draw(_pEntity) end
-    function system:UI_Draw(_pEntity) end
+    function system:Draw_GUI(_pEntity) end
     function system:Destroy(_pEntity) end
     
     return system

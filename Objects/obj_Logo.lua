@@ -1,6 +1,7 @@
 return {
   new = function()
     local obj      = {
+      alpha        = 0,
       background   = nil,
       logo         = nil,
       shader_aber  = nil,
@@ -110,6 +111,7 @@ return {
         
       end
       
+      if(self.alpha < 1) then self.alpha = self.alpha + 0.005 end
       time = time + 10  * dt    
       self.shader_wave:SetUniform(h_time,  time)
       self.shader_wave:SetUniform(h_disp,  disp)
@@ -117,6 +119,8 @@ return {
     end
 
     function obj:Draw()
+      love.graphics.setColor(1, 1, 1, 1)
+      
       love.graphics.draw(self.background.image,
                          self.background.position.x,
                          self.background.position.y)
@@ -126,7 +130,7 @@ return {
       else
         self.shader_wave:Set()        
       end
-      
+      love.graphics.setColor(1, 1, 1, self.alpha)
           love.graphics.draw(self.logo.image,
                              self.logo.position.x,
                              self.logo.position.y)

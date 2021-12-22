@@ -16,10 +16,10 @@ return {
     -- Update --
     ------------
     function system:Update(dt, _pEntity)
-      local childOf     = _pEntity:GetComponent(co)
+      local childOf     = _pEntity:Get_Component(co)
       if(childOf.active == false) then return end
       
-      local transform = _pEntity:GetComponent(tr)
+      local transform = _pEntity:Get_Component(tr)
       local distance  = childOf.offset:Length()
       
       local x = childOf.parent.position.x + Cos(childOf.parent.rotation+90) * distance

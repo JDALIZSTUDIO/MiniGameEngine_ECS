@@ -19,7 +19,7 @@ return {
       state    = require('Libraries/State_Machine').new({"START", "GAMEPLAY", "END", "REPOSITION", "RESTART"})
       state:Set("START")
       
-      steering = self.gameObject:GetComponent("steering")
+      steering = self.gameObject:Get_Component("steering")
       steering.maxVelocity = 600
       steering.maxForce    = 600
       
@@ -49,12 +49,12 @@ return {
     -- Update_Logic --
     ------------------
     function component:Update_Logic(dt)
-      local transform = self.gameObject:GetComponent("transform")
+      local transform = self.gameObject:Get_Component("transform")
       
       if(state:Compare("GAMEPLAY")) then
         if(target == nil) then
           local ball  = self.ECS:Find("ball")
-          if(ball ~= nil) then target = ball:GetComponent("transform") end
+          if(ball ~= nil) then target = ball:Get_Component("transform") end
         else          
           local tarVec    = Vector2.new(transform.position.x, target.position.y)
           local distance  = transform.position:Distance(target.position)
@@ -74,7 +74,7 @@ return {
         state:Set("REPOSITION")
         
       elseif(state:Compare("REPOSITION")) then
-        local transform = self.gameObject:GetComponent("transform")
+        local transform = self.gameObject:Get_Component("transform")
         local dist      = transform.position:Distance(transform.origin)
         if(dist > 0.2) then
           steering:Arrive(transform.origin)

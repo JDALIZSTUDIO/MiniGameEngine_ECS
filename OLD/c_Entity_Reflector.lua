@@ -4,9 +4,9 @@ return {
     local angleAdd = 35
     
     function component:Reflect(_pOther)
-      local transformA = self.gameObject:GetComponent("transform")
-      local bBoxA      = self.gameObject:GetComponent("boundingBox")
-      local bBoxB      = _pOther:GetComponent("boundingBox")
+      local transformA = self.gameObject:Get_Component("transform")
+      local bBoxA      = self.gameObject:Get_Component("boundingBox")
+      local bBoxB      = _pOther:Get_Component("boundingBox")
       
       if(bBoxA.position.y < bBoxB.top) then 
         transformA.velocity.y = -transformA.velocity.y 

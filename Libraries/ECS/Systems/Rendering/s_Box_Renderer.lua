@@ -17,10 +17,10 @@ return {
     -- Draw --
     ----------
     function system:Draw(_pEntity)
-      local renderer = _pEntity:GetComponent(br)
+      local renderer = _pEntity:Get_Component(br)
       if(renderer.active == false) then return end
       
-      local bBox = _pEntity:GetComponent(bc)
+      local bBox = _pEntity:Get_Component(bc)
       
       love.graphics.setColor(1, 1, 1, 1)
       love.graphics.rectangle(bBox.drawMode, 
@@ -29,7 +29,7 @@ return {
                               bBox.width, 
                               bBox.height)
                             
-      local transform = _pEntity:GetComponent(tr)
+      local transform = _pEntity:Get_Component(tr)
       love.graphics.circle(bBox.drawMode, bBox.position.x, bBox.position.y, 1)
     end
     

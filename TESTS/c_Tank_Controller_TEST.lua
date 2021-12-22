@@ -18,7 +18,7 @@ return {
     -- Process_Input --
     -------------------
     function component:Process_Input()  
-      local rigidbody = gameObject:GetComponent("rigidBody")
+      local rigidbody = gameObject:Get_Component("rigidBody")
 
       if(Input.keyboard:GetAxis("up")) then rigidbody:Add_Force({x = 0, y = -acceleration}) end
       if(Input.keyboard:GetAxis("down")) then rigidbody:Add_Force({x = 0, y = acceleration}) end

@@ -112,9 +112,9 @@ return {
       -- Update --
       ------------
       function system:Update(dt, _pEntity)
-        local bBox       = _pEntity:GetComponent(bb)
-        local simpleBody = _pEntity:GetComponent(sb)
-        local transform  = _pEntity:GetComponent(tr)
+        local bBox       = _pEntity:Get_Component(bb)
+        local simpleBody = _pEntity:Get_Component(sb)
+        local transform  = _pEntity:Get_Component(tr)
 
         local length = layerWidth * layerHeight
         if(length < 1) then 
@@ -141,7 +141,7 @@ return {
           transform.position.y = transform.position.y - (dy * dt)
 
           if(collideX or collideY) then
-            local character = _pEntity:GetComponent(ch)
+            local character = _pEntity:Get_Component(ch)
             if(character ~= nil) then character:OnTileCollision(nil) end            
           end  
         end

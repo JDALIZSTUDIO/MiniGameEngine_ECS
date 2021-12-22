@@ -9,7 +9,7 @@ return {
     -- Load --
     ----------
     function system:Load(_pEntity)
-      local steering  = _pEntity:GetComponent(st)
+      local steering  = _pEntity:Get_Component(st)
             steering:Load()
       
       if(isDebug) then print("Systems, loaded:      s_Steering by ".._pEntity.name) end
@@ -19,7 +19,7 @@ return {
       -- Update --
       ------------
     function system:Update(dt, _pEntity)
-      local steering = _pEntity:GetComponent(st)
+      local steering = _pEntity:Get_Component(st)
       if(steering.active == false) then return end      
             
       if(steering.friction ~= 0) then
@@ -43,7 +43,7 @@ return {
         end
       end
       
-      local transform = _pEntity:GetComponent(tr)      
+      local transform = _pEntity:Get_Component(tr)      
       transform.velocity:Set(steering.velocity.x, steering.velocity.y) 
       
       steering.steeringForce:Set(0, 0)

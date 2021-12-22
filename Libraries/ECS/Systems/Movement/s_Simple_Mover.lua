@@ -11,7 +11,7 @@ return {
     end
     
     function system:Update(dt, _pEntity)
-      local transform = _pEntity:GetComponent(tr)
+      local transform = _pEntity:Get_Component(tr)
       
       transform.velocity:Clamp(transform.maxSpeed)
 

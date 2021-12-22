@@ -10,14 +10,14 @@ return {
       name       = "default"
     }
 
-    function Entity:AddComponent(_pComponent)
+    function Entity:Add_Component(_pComponent)
       assert(_pComponent.__id)
       self.components[_pComponent.__id] = _pComponent
       self.components[_pComponent.__id].gameObject = self
       return _pComponent
     end
 
-    function Entity:GetComponent(_pID)
+    function Entity:Get_Component(_pID)
       return self.components[_pID]
     end
 

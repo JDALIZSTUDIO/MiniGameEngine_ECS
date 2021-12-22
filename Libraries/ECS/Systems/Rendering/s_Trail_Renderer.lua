@@ -18,7 +18,7 @@ return {
     -- Update --
     ------------
     function system:Update(dt, _pEntity)
-      local emitter = _pEntity:GetComponent(te)
+      local emitter = _pEntity:Get_Component(te)
       if(emitter.active == false) then return end
       
       emitter:Update(dt, _pEntity)
@@ -29,9 +29,9 @@ return {
     -- Draw --
     ----------
     function system:Draw(_pEntity)
-      local emitter   = _pEntity:GetComponent(te)
-      local renderer  = _pEntity:GetComponent(sr)
-      local transform = _pEntity:GetComponent(tr)
+      local emitter   = _pEntity:Get_Component(te)
+      local renderer  = _pEntity:Get_Component(sr)
+      local transform = _pEntity:Get_Component(tr)
       
       if(emitter.active == false) then return end
       if(renderer.active == false) then return end
@@ -58,7 +58,7 @@ return {
                                0)
         end
         
-        renderer  = _pEntity:GetComponent(an)
+        renderer  = _pEntity:Get_Component(an)
         if(renderer ~= nil) then
           
         end        

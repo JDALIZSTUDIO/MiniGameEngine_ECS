@@ -47,7 +47,7 @@ return {
       -- Update --
       ------------
       function system:Update(dt, _pEntity)
-        local transform = _pEntity:GetComponent(tr)
+        local transform = _pEntity:Get_Component(tr)
         vDtX = transform.velocity.x * dt
         vDtY = transform.velocity.y * dt
 
@@ -62,8 +62,8 @@ return {
         local length = layerWidth * layerHeight
         if(length < 1) then return end
         
-        local transform = _pEntity:GetComponent(tr)
-        local collider  = _pEntity:GetComponent(bc)
+        local transform = _pEntity:Get_Component(tr)
+        local collider  = _pEntity:Get_Component(bc)
         if(collider.active == false) then return end
 
         local ID, posX, posY
@@ -118,7 +118,7 @@ return {
         end
         
         if(collideX or collideY) then
-          local character = _pEntity:GetComponent(ch)
+          local character = _pEntity:Get_Component(ch)
           if(character ~= nil) then character:OnTileCollision(ID) end
           
         end        

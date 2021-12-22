@@ -12,8 +12,8 @@ return {
         -- Update --
         ------------
         function FOW:Add(_pEntity)
-            local fogRemover  = _pEntity:GetComponent("fogRemover")
-            local transform   = _pEntity:GetComponent("transform")
+            local fogRemover  = _pEntity:Get_Component("fogRemover")
+            local transform   = _pEntity:Get_Component("transform")
             if(fogRemover ~= nil and transform ~= nil) then
                 local remover = {
                     component = fogRemover,

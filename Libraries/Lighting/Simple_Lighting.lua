@@ -11,8 +11,8 @@ return {
         -- Add --
         ---------
         function Lighting:Add(_pEntity)
-            local lightSource = _pEntity:GetComponent("lightSource")
-            local transform   = _pEntity:GetComponent("transform")
+            local lightSource = _pEntity:Get_Component("lightSource")
+            local transform   = _pEntity:Get_Component("transform")
             if(lightSource ~= nil and transform ~= nil) then
                 local light       = {
                     lightSource   = lightSource,

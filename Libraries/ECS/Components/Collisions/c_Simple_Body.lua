@@ -46,7 +46,7 @@ return {
     ----------
     function component:Load()      
       gameObject = self.gameObject
-      transform  = gameObject:GetComponent(tr)
+      transform  = gameObject:Get_Component(tr)
 
       if(isDebug) then print("Systems, loaded:      s_Rigid_Body by ".._pEntity.name) end
     end    
@@ -55,9 +55,9 @@ return {
     -- Update --
     ------------
     function component:Update(dt)
-      local bBox       = _pEntity:GetComponent(bb)
-      local simpleBody = _pEntity:GetComponent(sb)
-      local transform  = _pEntity:GetComponent(tr)
+      local bBox       = _pEntity:Get_Component(bb)
+      local simpleBody = _pEntity:Get_Component(sb)
+      local transform  = _pEntity:Get_Component(tr)
 
       local length = layerWidth * layerHeight
       if(length < 1) then 
@@ -84,7 +84,7 @@ return {
         transform.position.y = transform.position.y - (dy * dt)
 
         if(collideX or collideY) then
-          local character = _pEntity:GetComponent(ch)
+          local character = _pEntity:Get_Component(ch)
           if(character ~= nil) then character:OnTileCollision(nil) end            
         end  
       end

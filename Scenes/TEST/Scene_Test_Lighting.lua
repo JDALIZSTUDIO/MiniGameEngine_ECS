@@ -21,13 +21,13 @@ return {
             Lighting:Load(Aspect.screen.width, Aspect.screen.height)
 
             local light = ECS:Create()
-            light:AddComponent(require('Libraries/ECS/Components/Lighting/c_Light_Source').new())
-            light:AddComponent(require('Libraries/ECS/Components/Movement/c_Transform').new(Aspect.screen.width*0.5,
+            light:Add_Component(require('Libraries/ECS/Components/Lighting/c_Light_Source').new())
+            light:Add_Component(require('Libraries/ECS/Components/Movement/c_Transform').new(Aspect.screen.width*0.5,
                                                                                             Aspect.screen.height*0.5))
 
             Lighting:Add(light)
 
-            local t = light:GetComponent("transform")
+            local t = light:Get_Component("transform")
             lightposition = t.position
         end
 
@@ -36,7 +36,7 @@ return {
         ------------
         function Scene:Update(dt)
             if(love.mouse.isDown(1)) then
-                local x, y = Screen_To_World(love.mouse.getPosition())
+                local x, y = Camera:Screen_To_World(love.mouse.getPosition())
                 lightposition:Set(x, y)
             end
 

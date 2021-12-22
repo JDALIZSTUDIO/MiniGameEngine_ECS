@@ -16,7 +16,7 @@ return {
     -- Update --
     ------------
     function system:Update(dt, _pEntity)      
-      local animator = _pEntity:GetComponent(an)
+      local animator = _pEntity:Get_Component(an)
       if(animator.active == false) then return end
       if(animator.currentAnimation == nil) then return end
       
@@ -41,13 +41,13 @@ return {
     
     function system:Draw(_pEntity)
       
-      local animator = _pEntity:GetComponent(an)
+      local animator = _pEntity:Get_Component(an)
       if(animator.active == false) then return end
       
       local current  = animator.currentAnimation
       if current == nil then return end      
       
-      local transform = _pEntity:GetComponent(tr)
+      local transform = _pEntity:Get_Component(tr)
       
       love.graphics.draw(current.atlas, 
                          current.quadData[animator.currentFrame], 
