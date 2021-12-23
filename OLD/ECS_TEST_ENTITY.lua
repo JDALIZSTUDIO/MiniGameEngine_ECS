@@ -1,4 +1,4 @@
-local Entity = require 'Libraries/ECS/Entity'
+local Entity = require 'Core/Libraries/ECS/Entity'
 
 local test = {}
 

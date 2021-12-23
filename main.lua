@@ -14,7 +14,7 @@ local game = nil
 -- load --
 ----------
 function love.load()
-  game = require('Games/Default_Game').new("New_Game")
+  game = require('Game/Default_Game').new("New_Game")
   game:Load()
 end
 
