@@ -37,7 +37,7 @@ return {
         
         local force = Vector2:Subtract(_pTarget, transform.position)
         
-        local dist = force:Length()
+        local dist = force:Magnitude()
         force:Normalize()
         
         if(dist < self.radiusArrive) then

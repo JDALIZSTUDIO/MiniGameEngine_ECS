@@ -4,6 +4,7 @@ return {
             
       local bb         = "boundingBox"
       local ch         = "characterController"
+      local sb         = "simpleBody"
       local tr         = "transform"
       local insert     = table.insert
   
@@ -84,7 +85,7 @@ return {
       ---------------
       -- GetTileAt --
       ---------------
-      function component:Get_Tile_At(_pX, _pY)
+      function system:Get_Tile_At(_pX, _pY)
         local col = floor(_pX / tileWidth ) + 1
         local lig = floor(_pY / tileHeight) + 1
         return layer.data[col][lig]
@@ -119,7 +120,7 @@ return {
         local length = layerWidth * layerHeight
         if(length < 1) then 
           local direction = simpleBody:_Get_Direction()
-          local length    = simpleBody.velocity:Length()
+          local length    = simpleBody.velocity:Magnitude()
           local dx        = simpleBody:_Length_Dir_X(length, direction)
           local dy        = simpleBody:_Length_Dir_Y(length, direction)
           transform.position:Set(
@@ -132,7 +133,7 @@ return {
           local directionX     = simpleBody:_Get_Direction()
           local lengthX        = simpleBody._Get_Magnitude()
           local dx             = simpleBody:_Length_Dir_X(lengthX, directionX)
-          transform.position.x = simpleBody.position.x - (dx * dt)
+          transform.position.x = transform.position.x - (dx * dt)
           
           local collideY       = self:Collide_Tilemap_Vertical(dt, bBox, transform)
           local directionY     = simpleBody:_Get_Direction()

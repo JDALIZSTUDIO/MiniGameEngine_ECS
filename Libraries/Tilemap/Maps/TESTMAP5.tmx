@@ -99,8 +99,8 @@
  </layer>
  <objectgroup id="3" name="objects">
   <object id="1" name="block" gid="162" x="64" y="48" width="16" height="16"/>
-  <object id="4" name="block" gid="162" x="64" y="64" width="16" height="16"/>
-  <object id="5" name="block" gid="162" x="64" y="80" width="16" height="16"/>
+  <object id="4" name="block" gid="162" x="32" y="48" width="16" height="16"/>
+  <object id="5" name="block" gid="162" x="48" y="48" width="16" height="16"/>
   <object id="6" name="wall" gid="166" x="80" y="96" width="16" height="16"/>
   <object id="7" name="wall" gid="166" x="112" y="96" width="16" height="16"/>
   <object id="8" name="wall" gid="166" x="128" y="96" width="16" height="16"/>
@@ -108,17 +108,17 @@
   <object id="10" name="wall" gid="166" x="160" y="96" width="16" height="16"/>
   <object id="11" name="wall" gid="166" x="176" y="96" width="16" height="16"/>
   <object id="12" name="block" gid="162" x="176" y="80" width="16" height="16"/>
-  <object id="13" name="block" gid="162" x="176" y="64" width="16" height="16"/>
+  <object id="13" name="block" gid="162" x="192" y="48" width="16" height="16"/>
   <object id="14" name="block" gid="162" x="176" y="48" width="16" height="16"/>
   <object id="15" name="wall" gid="166" x="176" y="32" width="16" height="16"/>
   <object id="16" name="wall" gid="166" x="160" y="32" width="16" height="16"/>
   <object id="17" name="wall" gid="166" x="144" y="32" width="16" height="16"/>
   <object id="18" name="bush" gid="228" x="80" y="32" width="16" height="16"/>
   <object id="19" name="bush" gid="228" x="240" y="96" width="16" height="16"/>
-  <object id="20" name="player" gid="256" x="32" y="64" width="16" height="16"/>
   <object id="21" name="spawner" gid="254" x="224" y="64" width="16" height="16"/>
   <object id="22" name="barrel" gid="252" x="96" y="96" width="16" height="16"/>
   <object id="25" name="barrel" gid="252" x="192" y="32" width="16" height="16"/>
   <object id="26" name="crate" gid="250" x="112" y="32" width="16" height="16"/>
+  <object id="20" name="player" gid="256" x="128" y="64" width="16" height="16"/>
  </objectgroup>
 </map>

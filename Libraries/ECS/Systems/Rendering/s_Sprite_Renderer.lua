@@ -5,6 +5,8 @@ return {
     local ds = "dropShadow"
     local sr = "spriteRenderer"
     local tr = "transform"
+
+    local rad = math.rad
     
     ----------
     -- Load --
@@ -32,7 +34,7 @@ return {
         love.graphics.draw(renderer.sprite, 
                            transform.position.x + dropShadow.offset.x, 
                            transform.position.y + dropShadow.offset.y, 
-                           math.rad(transform.rotation), 
+                           rad(transform.rotation), 
                            transform.scale.x, 
                            transform.scale.y, 
                            renderer.halfW, 
@@ -46,7 +48,7 @@ return {
       love.graphics.draw(renderer.sprite, 
                          transform.position.x, 
                          transform.position.y, 
-                         math.rad(transform.rotation), 
+                         rad(transform.rotation), 
                          transform.scale.x, 
                          transform.scale.y, 
                          renderer.halfW, 

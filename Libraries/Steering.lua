@@ -32,7 +32,7 @@ function Steering:New(_pOwner)
     local force = Vector2:Subtract(_pVector2Target, Steering.owner.position)
     force:Normalize()
     
-    local dist = force:Length()
+    local dist = force:Magnitude()
     if(dist < st.radiusArrive) then
       force:MultiplyN(st.maxVelocity * dist / st.radiusArrive)
     else

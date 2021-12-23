@@ -7,7 +7,7 @@ end
 function Vector2:ClampMagnitude(_pVector2, _pScalar)
   local vec2   = _pVector2:Clone()
   
-  local length = vec2:Length()
+  local length = vec2:Magnitude()
   
   if(length > _pScalar) then
     vec2:Normalize()
@@ -102,12 +102,12 @@ Vector2.new = function(_pX, _pY)
         return math.sqrt((_pVector2.x - v.x) ^ 2 + (_pVector2.y - v.y) ^ 2)
     end
 
-    function v:Length()
+    function v:Magnitude()
         return math.sqrt(v.x * v.x + v.y * v.y)
     end
 
     function v:Normalize()
-        local length = v:Length()
+        local length = v:Magnitude()
         v.x = v.x / length
         v.y = v.y / length
     end

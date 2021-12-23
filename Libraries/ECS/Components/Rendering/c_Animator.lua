@@ -13,6 +13,8 @@ return {
     local floor   = math.floor
     local newQuad = love.graphics.newQuad
 
+    local insert  = table.insert 
+
     function Animator:Add(_pID, _pPath, _pW, _pH, _pOffsetX, _pOffsetY, _pStartX, _pStartY, _pEndX, _pEndY)
       local image         = love.graphics.newImage(_pPath)
       local imageWidth    = image:getWidth()
@@ -45,13 +47,13 @@ return {
                           animation.frameHeight,
                           animation.atlas:getDimensions());
                                      
-          table.insert(animation.quadData, quad)
+          insert(animation.quadData, quad)
         end
       end
       
       self.animations[_pID] = animation      
         if(isDebug) then print("Animation added:      ".._pID..", "..tostring(#animation.quadData).." quads") end
-      Animator:Play(_pID)
+        if(self.currentAnimation == nil) then self:Play(_pID) end
       
       return animation
     end
@@ -59,13 +61,12 @@ return {
     function Animator:Play(_pID)
       if(self.currentAnimation == nil) then
         self.currentAnimation = self.animations[_pID]
-        
       else
         if(_pID ~= self.currentAnimation.name) then
           self.currentAnimation          = self.animations[_pID]
           self.currentAnimation.finished = false        
           self.frameCounter              = 0
-          self.currentFrame              = 0
+          self.currentFrame              = 1
           
         end
       end      

@@ -68,7 +68,7 @@ return {
     -- _Get_Direction --
     --------------------
     function component:_Get_Magnitude()
-      return component.velocity:Length()
+      return component.velocity:Magnitude()
     end
 
     -------------------

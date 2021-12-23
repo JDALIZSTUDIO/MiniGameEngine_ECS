@@ -85,9 +85,9 @@ return {
       -----------------
       -- SmoothAngle --
       -----------------
-      function Smooth_Angle(current, goal, speed, dt)
-          local diff = (goal-current+pi)%(2*pi)-pi
-          return current + (diff * speed) * dt
+      function Smooth_Angle(_pCurrent, _pGoal, _pSpeed, dt)
+          local diff = (_pGoal-_pCurrent+pi)%(2*pi)-pi
+          return _pCurrent + (diff * _pSpeed) * dt
       end
 
       ---------

@@ -60,7 +60,8 @@ return {
     -- Draw --
     ----------
     function coreGame:Draw()
-      love.graphics.setBackgroundColor(70/255, 75/255, 103/255, 1)
+      --love.graphics.setBackgroundColor(70/255, 75/255, 103/255, 1)
+      love.graphics.setBackgroundColor(0, 0, 0, 1)
         love.graphics.setColor(1, 1, 1, 1)
         love.graphics.setCanvas(surface)
         love.graphics.clear()

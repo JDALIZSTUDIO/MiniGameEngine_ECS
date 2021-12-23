@@ -1,9 +1,9 @@
-local factory  = require('Libraries/ECS/Components/Controllers/c_Parent_Controller')
-
 return {
   new = function(_pECS)
-    local component = factory.new(_pECS)
-        
+    local component = p_Component.new("characterController")
+          component.ECS = _pECS or nil
+    
+
     -------------
     -- Animate --
     -------------
@@ -15,7 +15,7 @@ return {
     -- Custom_Load --
     -----------------
     function component:Custom_Load()  
-      
+    
     end
     
     -------------------
@@ -36,7 +36,7 @@ return {
     -- Load --
     ----------
     function component:Load()
-      self:Custom_Load()
+      component:Custom_Load()
     end
 
     ------------
@@ -52,6 +52,20 @@ return {
     -- Draw --
     ----------
     function component:Draw()
+      
+    end
+    
+    -----------------------
+    -- OnEntityCollision --
+    -----------------------
+    function component:OnEntityCollision(_pTable)
+      
+    end
+    
+    ---------------------
+    -- OnTileCollision --
+    ---------------------
+    function component:OnTileCollision(_pTileID)
       
     end
     

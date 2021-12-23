@@ -8,7 +8,7 @@ return {
     -- Custom_Load --
     -----------------
     function component:Custom_Load()  
-      
+     
     end
     
     -------------------
@@ -17,7 +17,7 @@ return {
     function component:Process_Input()  
       
     end
-    
+
     ------------------
     -- Update_Logic --
     ------------------
@@ -25,27 +25,12 @@ return {
       
     end
     
-    ----------
-    -- Load --
-    ----------
-    function component:Load()
-      self:Custom_Load()
-    end
-
-    ------------
-    -- Update --
-    ------------
-    function component:Update(dt)
-      self:Process_Input(dt)
-      self:Update_Logic(dt)
-    end
-    
-    ----------
-    -- Draw --
-    ----------
-    function component:Draw()
+    -----------------------
+    -- OnEntityCollision --
+    -----------------------
+    function component:OnEntityCollision(_pTable)
       
-    end
+    end    
     
     return component
   end

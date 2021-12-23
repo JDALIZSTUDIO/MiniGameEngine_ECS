@@ -149,8 +149,8 @@ return {
         local dX  = bBoxA.position.x - bBoxB.position.x
         local dY  = bBoxA.position.y - bBoxB.position.y
         local aDX = math.abs(dX)
-        local aDY = math.abs(dY)     
-        local sHW = (bBoxA.width  * 0.5)  + (bBoxB.width * 0.5)
+        local aDY = math.abs(dY)
+        local sHW = (bBoxA.width  * 0.5) + (bBoxB.width * 0.5)
         local sHH = (bBoxA.height * 0.5) + (bBoxB.height * 0.5)
         
         if(aDX < sHW or aDY < sHH) then
@@ -174,11 +174,11 @@ return {
             sY = -sY
           end
                
-          local distance   = math.sqrt(sX * sX + sY * sY)          
-          local dtVXA      = sign(rigidA.velocity.x)
-          local dtVYA      = sign(rigidA.velocity.y)
-          local dtVXB      = sign(rigidB.velocity.x)
-          local dtVYB      = sign(rigidB.velocity.y)
+          local distance   = math.sqrt(sX * sX + sY * sY)
+          local dtVXA      = rigidA.velocity.x
+          local dtVYA      = rigidA.velocity.y
+          local dtVXB      = rigidB.velocity.x
+          local dtVYB      = rigidB.velocity.y
           local nX, nY     = sX / distance, sY / distance
           local vX, vY     = dtVXA - (dtVXB or 0), dtVXB - (dtVXB or 0)        
           local pS         = vX * nX + vY * nY
@@ -230,18 +230,19 @@ return {
             transform.position.x + (dx * dt),
             transform.position.y + (dy * dt)
           )
-        else
-          
+        else          
           local collideX       = self:Collide_Tilemap_Horizontal(dt, bBox, rigidBody, transform)
           local directionX     = rigidBody:_Get_Direction()
           local lengthX        = rigidBody._Get_Magnitude()
           local dx             = rigidBody:_Length_Dir_X(lengthX, directionX)
+
           transform.position.x = transform.position.x - (dx * dt)
           
           local collideY       = self:Collide_Tilemap_Vertical(dt, bBox, rigidBody, transform)
           local directionY     = rigidBody:_Get_Direction()
           local lengthY        = rigidBody._Get_Magnitude()
           local dy             = rigidBody:_Length_Dir_Y(lengthY, directionY)
+
           transform.position.y = transform.position.y - (dy * dt)          
 
           if(rigidBody.isStatic == false) then

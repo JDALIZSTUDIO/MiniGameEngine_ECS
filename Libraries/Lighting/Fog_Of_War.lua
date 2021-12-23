@@ -35,7 +35,6 @@ return {
             self.halfH       = img:getHeight() * 0.5
             self.lights      = {}
             self.screen      = { _pMapW, _pMapH }
-            self.shader      = love.graphics.newShader("Shaders/shd_Fog_Of_War.fs")
             self.surface     = love.graphics.newCanvas(_pMapW, _pMapH)
 
             self.surface:setFilter("nearest", "nearest", 16)

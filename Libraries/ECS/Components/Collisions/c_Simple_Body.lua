@@ -2,6 +2,8 @@ return {
   new = function() 
     local component = p_Component.new("simpleBody")
 
+    local cos    = math.cos
+    local sin    = math.sin
     local floor  = math.floor
     local insert = table.insert
     local sign   = Sign
@@ -9,6 +11,7 @@ return {
     local gameObject = nil
     local transform  = nil
 
+    local ch = "characterController"
     local bb = "boundingBox"
     local sb = "simpleBody"
     local tr = "transform"
@@ -17,14 +20,14 @@ return {
     -- _Get_Direction --
     --------------------
     function component:_Get_Direction()
-      return transform.velocity:Direction()
+      return component.gameObject:Get_Component(tr).velocity:Direction()
     end
     
     --------------------
     -- _Get_Direction --
     --------------------
     function component:_Get_Magnitude()
-      return transform.velocity:Length()
+      return component.gameObject:Get_Component(tr).velocity:Magnitude()
     end
 
     -------------------
@@ -46,7 +49,6 @@ return {
     ----------
     function component:Load()      
       gameObject = self.gameObject
-      transform  = gameObject:Get_Component(tr)
 
       if(isDebug) then print("Systems, loaded:      s_Rigid_Body by ".._pEntity.name) end
     end    
@@ -62,7 +64,7 @@ return {
       local length = layerWidth * layerHeight
       if(length < 1) then 
         local direction = simpleBody:_Get_Direction()
-        local length    = simpleBody.velocity:Length()
+        local length    = simpleBody.velocity:Magnitude()
         local dx        = simpleBody:_Length_Dir_X(length, direction)
         local dy        = simpleBody:_Length_Dir_Y(length, direction)
         transform.position:Set(
@@ -96,6 +98,6 @@ return {
     function component:Draw()
     end
     
-    return system 
+    return component 
   end
 }

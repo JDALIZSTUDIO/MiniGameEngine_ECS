@@ -1,4 +1,4 @@
-local character_controller = require('Libraries/ECS/Components/c_Character_Controller')
+local character_controller = require('Libraries/ECS/Components/c_Parent_Controller')
 
 return {
   new = function()

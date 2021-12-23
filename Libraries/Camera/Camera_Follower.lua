@@ -5,7 +5,7 @@ return {
             isLook   = true,
             maxDist  = 32,
             position = Vector2.new(),         
-            speed    = 0.1
+            speed    = 0.05
         }  
 
         local camera = _pCamera

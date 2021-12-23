@@ -20,7 +20,7 @@ return {
       if(childOf.active == false) then return end
       
       local transform = _pEntity:Get_Component(tr)
-      local distance  = childOf.offset:Length()
+      local distance  = childOf.offset:Magnitude()
       
       local x = childOf.parent.position.x + Cos(childOf.parent.rotation+90) * distance
       local y = childOf.parent.position.y + Sin(childOf.parent.rotation+90) * distance

@@ -1,9 +1,9 @@
 return {
   new = function(_pOffsetX, _pOffsetY)
-    local dS = p_Component.new("dropShadow")
-          dS.alpha  = 0.3
-          dS.offset = Vector2.new(_pOffsetX or 1, _pOffsetY or 1)
-      
-    return dS
+    local component = p_Component.new("dropShadow")
+          component.alpha  = 0.3
+          component.offset = Vector2.new(_pOffsetX or 1, _pOffsetY or 1)
+
+    return component
   end
 }
