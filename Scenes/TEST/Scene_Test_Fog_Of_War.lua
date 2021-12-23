@@ -4,8 +4,9 @@ return {
         
         local ECS
         local FOW
-        local logo
-        local bg
+        local Logo
+        local BG
+        local LogoSX, LogoSY, BGSX, BGSY
 
         local lightposition
 
@@ -13,13 +14,17 @@ return {
         -- Load --
         ----------
         function Scene:Load()
-            bg   = love.graphics.newImage("Images/Logo/BG.png")
-            logo = love.graphics.newImage("Images/Logo/Logo.png")
+            BG   = love.graphics.newImage("Images/Logo/BG.png")
+            Logo = love.graphics.newImage("Images/Logo/Logo.png")
             ECS  = require('Libraries/ECS/ECS_Manager').new()
             FOW  = require('Libraries/Lighting/Fog_Of_War').new()
             
+            LogoSX = love.graphics:getWidth()  / Logo:getWidth()  / Aspect.scale
+            LogoSY = love.graphics:getHeight() / Logo:getHeight() / Aspect.scale
+            BGSX   = love.graphics:getWidth()  / BG:getWidth()  / Aspect.scale
+            BGSY   = love.graphics:getHeight() / BG:getHeight() / Aspect.scale
+
             FOW:Load(love.graphics.getWidth(), love.graphics.getHeight())
-            --FOW:Load(Aspect.screen.width, Aspect.screen.height)
 
             local light = ECS:Create()
             light:Add_Component(require('Libraries/ECS/Components/Lighting/c_Fog_Remover').new())
@@ -49,8 +54,8 @@ return {
         -- Draw --
         ----------
         function Scene:Draw()
-            love.graphics.draw(bg, 0, 0)
-            love.graphics.draw(logo, 0, 0)
+            love.graphics.draw(BG, 0, 0, 0, BGSX, BGSY)
+            love.graphics.draw(Logo, 0, 0, 0, LogoSX, LogoSY)
             ECS:Draw()
             FOW:Draw()
         end

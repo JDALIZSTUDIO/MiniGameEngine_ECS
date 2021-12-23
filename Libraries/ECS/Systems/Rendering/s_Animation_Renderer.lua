@@ -2,8 +2,9 @@ return {
   new = function() 
     local system = p_System.new({"transform", "animator"})
     
-    local an = "animator"
-    local tr = "transform"
+    local rad = math.rad
+    local an  = "animator"
+    local tr  = "transform"
 
     ----------
     -- Load --
@@ -53,11 +54,11 @@ return {
                          current.quadData[animator.currentFrame], 
                          transform.position.x + current.offset.x, 
                          transform.position.y + current.offset.y,
-                         math.rad(transform.rotation),
+                         rad(transform.rotation),
                          transform.scale.x,
                          transform.scale.y,
-                         current.frameWidth/2,
-                         current.frameHeight/2) 
+                         current.frameWidth  * 0.5,
+                         current.frameHeight * 0.5) 
     end
     
     return system 

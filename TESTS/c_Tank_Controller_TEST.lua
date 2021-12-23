@@ -57,7 +57,7 @@ return {
         local direction = rigidbody:_Get_Direction()
         transform.rotation = deg(smoothAngle(
           rad(transform.rotation),
-          direction + (math.pi/2),
+          direction - (math.pi/2),
           rSpeed,
           dt
         ))

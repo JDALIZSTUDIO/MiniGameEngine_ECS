@@ -22,7 +22,7 @@ return {
                   player.name = "player"
                   local t =player:Add_Component(require('Libraries/ECS/Components/Movement/c_Transform').new(128, 48, 0))
                   player:Add_Component(require('Libraries/ECS/Components/Collisions/c_Bounding_Box').new(0, 0, 16, 16))
-                  player:Add_Component(require('Libraries/ECS/Components/Rendering/c_Box_Render').new())
+                  player:Add_Component(require('Libraries/ECS/Components/Rendering/c_Box_Renderer').new())
 
             Camera:Attach(t)
         end

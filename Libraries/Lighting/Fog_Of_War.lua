@@ -1,6 +1,7 @@
 return {
-    new = function()
+    new = function(_pColor)
         local FOW            = {}
+              FOW.color      = nil
               FOW.components = nil
               FOW.hole       = nil
               FOW.halfW      = 0
@@ -26,21 +27,22 @@ return {
         ----------
         -- Load --
         ----------
-        function FOW:Load(_pMapW, _pMapH)
+        function FOW:Load(_pMapW, _pMapH, _pColor)
             local img = love.graphics.newImage("Images/Fog_Of_War/Hole.png")
             
             self.components  = {}
+            self.color       = _pColor or {0, 0, 0, 1}
             self.hole        = img
             self.halfW       = img:getWidth()  * 0.5
             self.halfH       = img:getHeight() * 0.5
             self.lights      = {}
             self.screen      = { _pMapW, _pMapH }
             self.surface     = love.graphics.newCanvas(_pMapW, _pMapH)
-
+            
             self.surface:setFilter("nearest", "nearest", 16)
 
             love.graphics.setCanvas(self.surface)
-            love.graphics.clear(0, 0, 0)
+            love.graphics.clear(self.color)
             love.graphics.setBlendMode("alpha", "premultiplied")
             love.graphics.setCanvas()
             

@@ -47,7 +47,7 @@ return {
           col = floor(_pBBox.position.x / tileWidth) + 1
           if(ID ~= 0) then
             _pRigid.velocity.x = 0
-            _pTransform.position.x = (col * tileWidth) - floor(_pBBox.width*0.5) + 1
+            _pTransform.position.x = ((col-1) * tileWidth) + floor(_pBBox.width*0.5) + 1
             collide = true            
           end
         end

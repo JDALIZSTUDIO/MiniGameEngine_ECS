@@ -33,7 +33,7 @@ return {
                         local t = player:Add_Component(require('Libraries/ECS/Components/Movement/c_Transform').new(x, y, 0))
                         player:Add_Component(require('Libraries/ECS/Components/Collisions/c_Bounding_Box').new(0, 0, 16, 16))
                         player:Add_Component(require('Libraries/ECS/Components/Collisions/c_Rigid_Body').new())
-                        player:Add_Component(require('Libraries/ECS/Components/Rendering/c_Box_Render').new())
+                        player:Add_Component(require('Libraries/ECS/Components/Rendering/c_Box_Renderer').new())
 
                     Camera:Attach(t)
                 elseif(obj.name == "block") then
@@ -43,7 +43,7 @@ return {
                           block:Add_Component(require('Libraries/ECS/Components/Collisions/c_Bounding_Box').new(0, 0, 16, 16))
                           block:Add_Component(require('Libraries/ECS/Components/Collisions/c_Rigid_Body').new({isStatic = true}))
                           block:Add_Component(require('Libraries/ECS/Components/Rendering/c_Sprite_Renderer').new("Images/Tank_Game/block.png"))
-                          --block:Add_Component(require('Libraries/ECS/Components/Rendering/c_Box_Render').new())
+                          --block:Add_Component(require('Libraries/ECS/Components/Rendering/c_Box_Renderer').new())
                 elseif(obj.name == "wall") then
                     local wall = ECS:Create()
                           wall.name = obj.name
@@ -51,7 +51,7 @@ return {
                           wall:Add_Component(require('Libraries/ECS/Components/Collisions/c_Bounding_Box').new(0, 0, 16, 16))
                           wall:Add_Component(require('Libraries/ECS/Components/Collisions/c_Rigid_Body').new({isStatic = true}))
                           wall:Add_Component(require('Libraries/ECS/Components/Rendering/c_Sprite_Renderer').new("Images/Tank_Game/wall.png"))
-                          --wall:Add_Component(require('Libraries/ECS/Components/Rendering/c_Box_Render').new())
+                          --wall:Add_Component(require('Libraries/ECS/Components/Rendering/c_Box_Renderer').new())
                 elseif(obj.name == "bush") then
                     local grass = ECS:Create()
                           grass.name = obj.name
@@ -59,7 +59,7 @@ return {
                           grass:Add_Component(require('Libraries/ECS/Components/Collisions/c_Bounding_Box').new(0, 0, 16, 16))
                           grass:Add_Component(require('Libraries/ECS/Components/Collisions/c_Rigid_Body').new({isStatic = true}))
                           grass:Add_Component(require('Libraries/ECS/Components/Rendering/c_Sprite_Renderer').new("Images/Tank_Game/grass.png"))
-                          --grass:Add_Component(require('Libraries/ECS/Components/Rendering/c_Box_Render').new())
+                          --grass:Add_Component(require('Libraries/ECS/Components/Rendering/c_Box_Renderer').new())
                 end
             end
         end

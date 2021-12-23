@@ -6,12 +6,13 @@ return {
       helpers = nil
     }
     
+    local colorBG      = {24/255, 20/255, 37/255, 1}
     local fullscreen   = false
-    local screenScale  = 4
-    local screenWidth  = 320
-    local screenHeight = 180
+    local screenScale  = 2
+    local screenWidth  = 640
+    local screenHeight = 360
     
-    local surface, vignette
+    local surface, vignette, vignetteSX, vignetteSY
     
     function coreGame:Set_Aspect(_pW, _pH, _pScale, _pFullscreen)
       Aspect:SetWindow(_pW, _pH, _pScale, _pFullscreen)      
@@ -37,7 +38,8 @@ return {
       self.helpers = require('Libraries/Helpers').new()
 
       self:Set_Aspect(screenWidth, screenHeight, screenScale, fullscreen)      
-      vignette = love.graphics.newImage("Images/Vignette/Vignette1280x720.png")
+      vignette = require("Libraries/Vignette").new()
+      vignette:Set_Texture("Images/Vignette/Vignette1280x720.png")
 
       Input.keyboard:SetAxies({["left"] = "left", ["right"] = "right", ["up"] = "up", ["down"] = "down"})
       Input.keyboard:SetButtons({["button1"] = "space", ["button2"] = "lctrl", ["button3"] = "lshift", ["button4"] = "return"})  
@@ -54,14 +56,15 @@ return {
       Scene_Manager:Update(dt)
       Camera:Update(dt)
       Transition:Update(dt)
+
+      vignette:Update(dt)
     end
     
     ----------
     -- Draw --
     ----------
     function coreGame:Draw()
-      --love.graphics.setBackgroundColor(70/255, 75/255, 103/255, 1)
-      love.graphics.setBackgroundColor(0, 0, 0, 1)
+      love.graphics.setBackgroundColor(colorBG)
         love.graphics.setColor(1, 1, 1, 1)
         love.graphics.setCanvas(surface)
         love.graphics.clear()
@@ -80,9 +83,7 @@ return {
           Aspect:UnSet()
         end      
         
-      love.graphics.setColor(1, 1, 1, 0.35)
-        love.graphics.draw(vignette, 0, 0)
-      love.graphics.setColor(1, 1, 1, 1)
+      vignette:Draw()
       
       Scene_Manager:Draw_GUI()  
       Transition:Draw()

@@ -43,7 +43,11 @@ return {
         position      = {
           x           = 0,
           y           = 0,
-        }        
+        },
+        scale         = {
+          x           = 1,
+          y           = 1
+        }      
       }
       
       local image = love.graphics.newImage("Images/Logo/Logo.png")
@@ -52,6 +56,10 @@ return {
         position  = {
           x       = 0,
           y       = image:getHeight(),
+        },
+        scale         = {
+          x           = 1,
+          y           = 1
         }
       } 
     end
@@ -116,6 +124,11 @@ return {
       self.shader_wave:SetUniform(h_time,  time)
       self.shader_wave:SetUniform(h_disp,  disp)
       self.shader_wave:SetUniform(h_scale, scale)
+
+      self.background.scale.x = love.graphics:getWidth()  / self.background.image:getWidth() / Aspect.scale
+      self.background.scale.y = love.graphics:getHeight() / self.background.image:getHeight() / Aspect.scale
+      self.logo.scale.x       = love.graphics:getWidth()  / self.logo.image:getWidth()  / Aspect.scale
+      self.logo.scale.y       = love.graphics:getHeight() / self.logo.image:getHeight() / Aspect.scale
     end
 
     function obj:Draw()
@@ -123,7 +136,10 @@ return {
       
       love.graphics.draw(self.background.image,
                          self.background.position.x,
-                         self.background.position.y)
+                         self.background.position.y,
+                         0,
+                         self.background.scale.x,
+                         self.background.scale.y)
       
       if(self.state:Compare("ABERRATION")) then        
         self.shader_aber:Set()        
@@ -133,7 +149,10 @@ return {
       love.graphics.setColor(1, 1, 1, self.alpha)
           love.graphics.draw(self.logo.image,
                              self.logo.position.x,
-                             self.logo.position.y)
+                             self.logo.position.y,
+                             0,
+                             self.logo.scale.x,
+                             self.logo.scale.y)
                            
       self.shader_aber:UnSet()
       self.shader_wave:UnSet()

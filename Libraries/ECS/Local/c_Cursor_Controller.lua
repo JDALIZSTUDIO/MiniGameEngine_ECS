@@ -8,7 +8,7 @@ return {
         local sin       = math.sin
         local time      = 0
         local scale     = 0
-        local scale_min = 4
+        local scale_min = 2
         local magnitude = 1.2
         local renderer, transform
 
