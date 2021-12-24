@@ -1,21 +1,29 @@
 return {
   new = function()
-    local Animator = p_Component.new("animator")
-          Animator.animations       = {}
-          Animator.currentAnimation = nil
-          Animator.currentFrame     = 1
-          Animator.frameCounter     = 0
-          Animator.shader           = {}          
-          Animator.surfacePing      = nil
-          Animator.surfacePong      = nil
+    local component = p_Component.new("animator")
+          component.alpha            = 1
+          component.animations       = {}
+          component.currentAnimation = nil
+          component.currentFrame     = 1
+          component.frameCounter     = 0
+          component.shader           = {}          
+          component.surfacePing      = nil
+          component.surfacePong      = nil
     
     local max     = math.max
     local floor   = math.floor
     local newQuad = love.graphics.newQuad
 
+    local an = "animator"
+    local sr = "spriteRenderer"
+    local tr = "transform"
+
     local insert  = table.insert 
 
-    function Animator:Add(_pID, _pPath, _pW, _pH, _pOffsetX, _pOffsetY, _pStartX, _pStartY, _pEndX, _pEndY)
+    ---------
+    -- Add --
+    ---------
+    function component:Add(_pID, _pPath, _pW, _pH, _pOffsetX, _pOffsetY, _pStartX, _pStartY, _pEndX, _pEndY)
       local image         = love.graphics.newImage(_pPath)
       local imageWidth    = image:getWidth()
       local imageHeight   = image:getHeight()
@@ -58,7 +66,40 @@ return {
       return animation
     end
     
-    function Animator:Play(_pID)
+    --------------
+    -- Get_Name --
+    --------------
+    function component:Get_Name()
+      return component.currentAnimation.name
+    end
+
+    function component:Set_Alpha(_pAlpha)
+      component.alpha = _pAlpha
+      local transform = component.gameObject:Get_Component(tr)
+      local child, renderer
+      for i = 1, #transform.children do
+        child = transform.children[i].transform.gameObject
+        renderer = child:Get_Component(an)
+        if(renderer ~= nil) then renderer.alpha = _pAlpha end
+        renderer = child:Get_Component(sr)
+        if(renderer ~= nil) then renderer.alpha = _pAlpha end
+      end
+    end
+
+    -----------------
+    -- Is_Finished --
+    -----------------
+    function component:Is_Finished(_pName)
+      if(self.Get_Name() == _pName) then
+        return self.currentAnimation.finished
+      end
+      return false
+    end
+
+    ----------
+    -- Play --
+    ----------
+    function component:Play(_pID)
       if(self.currentAnimation == nil) then
         self.currentAnimation = self.animations[_pID]
       else
@@ -66,12 +107,11 @@ return {
           self.currentAnimation          = self.animations[_pID]
           self.currentAnimation.finished = false        
           self.frameCounter              = 0
-          self.currentFrame              = 1
-          
+          self.currentFrame              = 1          
         end
       end      
     end
   
-    return Animator
+    return component
   end
 }

@@ -61,10 +61,10 @@ return {
                           spawner:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Simple_Body').new())
 
                     local anim = spawner:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_Animator').new())
-                          anim:Add("closed",  "Images/Tank_Game/Spawner_Atlas.png", 16, 16, 0, 0, 1, 1, 3, 1)
-                          anim:Add("opening", "Images/Tank_Game/Spawner_Atlas.png", 16, 16, 0, 0, 1, 2, 3, 2)
-                          anim:Add("open",    "Images/Tank_Game/Spawner_Atlas.png", 16, 16, 0, 0, 1, 3, 3, 3)
-                          anim:Add("closing", "Images/Tank_Game/Spawner_Atlas.png", 16, 16, 0, 0, 1, 4, 3, 4)                   
+                          anim:Add("closed",  "Game/Images/Enemies/spawner_atlas.png", 32, 32, 0, 0, 1, 1, 1, 1)
+                          anim:Add("open",    "Game/Images/Enemies/spawner_atlas.png", 32, 32, 0, 0, 2, 1, 2, 1)
+                          anim:Add("opening", "Game/Images/Enemies/spawner_atlas.png", 32, 32, 0, 0, 1, 2, 3, 2)
+                          anim:Add("closing", "Game/Images/Enemies/spawner_atlas.png", 32, 32, 0, 0, 1, 3, 3, 3)                   
 
                 elseif(obj.name == "block") then
                     local block = ECS:Create()
@@ -81,7 +81,24 @@ return {
                           wall:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Bounding_Box').new(0, 0, 32, 32))
                           wall:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Rigid_Body').new({isStatic = true}))
                           wall:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_Sprite_Renderer').new("Game/Images/Environment/brickWall.png"))
-                          
+                
+                elseif(obj.name == "crate") then
+                    local crate = ECS:Create()
+                          crate.name = obj.name
+                          crate:Add_Component(require('Core/Libraries/ECS/Components/Movement/c_Transform').new(x, y, 0))
+                          crate:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Bounding_Box').new(0, 0, 32, 32))
+                          crate:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Rigid_Body').new({isStatic = true}))
+                          crate:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_Sprite_Renderer').new("Game/Images/Environment/crate.png"))          
+                
+                
+                elseif(obj.name == "barrel") then
+                    local barrel = ECS:Create()
+                          barrel.name = obj.name
+                          barrel:Add_Component(require('Core/Libraries/ECS/Components/Movement/c_Transform').new(x, y, 0))
+                          barrel:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Bounding_Box').new(0, 0, 32, 32))
+                          barrel:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Rigid_Body').new({isStatic = true}))
+                          barrel:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_Sprite_Renderer').new("Game/Images/Environment/barrel.png"))
+
                 elseif(obj.name == "bush") then
                     local grass = ECS:Create()
                           grass.name = obj.name
@@ -122,7 +139,7 @@ return {
             ECS     = require('Core/Libraries/ECS/ECS_Manager').new()
             Tilemap = require('Core/Libraries/Tilemap/Tilemap').new()
 
-            Tilemap:Load('Core/Libraries/Tilemap/Maps/TESTMAP6')            
+            Tilemap:Load('Game/Tilemaps/Maps/level01', "/Game/Tilemaps/Maps/")            
             
             FOW  = require('Core/Libraries/Lighting/Fog_Of_War').new()
             

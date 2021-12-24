@@ -21,7 +21,7 @@ return {
     ------------
     function Class:Create()
       local entity = p_Entity.new()
-            entity.Class = self
+            entity.ECS = self
             
       insert(self.entities, entity)
       return entity
@@ -61,6 +61,15 @@ return {
       _pSystem.ECS = self
       insert(self.systems, _pSystem)
       return _pSystem
+    end
+
+    function Class:Z_Sorting()
+      local temp = {}
+      local entity
+      for i = #self.entities, 1, -1 do
+        entity = self.entities[i]
+        insert(temp, entity)
+      end
     end
 
     ------------

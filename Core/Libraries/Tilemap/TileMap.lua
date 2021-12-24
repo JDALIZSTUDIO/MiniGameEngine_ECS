@@ -37,7 +37,7 @@ return {
         ----------
         -- Load --
         ----------
-        function Class:Load(_pPath)
+        function Class:Load(_pPath, _pImagePrefix)
 
             ----------------
             -- Load_Stuff --
@@ -55,8 +55,9 @@ return {
             ----------------
             -- Load Image --
             ----------------
-            local imagePath = self.map.tilesets[1].image:sub(3)
-            self.image      = love.graphics.newImage("Core/Libraries/Tilemap"..imagePath)            
+            --local imagePath = self.map.tilesets[1].image:sub(3)
+            local imagePath = self.map.tilesets[1].image
+            self.image      = love.graphics.newImage(_pImagePrefix..imagePath)            
             
             ------------------------------
             -- Extract Quads/Animations --

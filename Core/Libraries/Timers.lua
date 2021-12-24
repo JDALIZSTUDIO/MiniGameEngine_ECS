@@ -1,26 +1,40 @@
 return {
   new = function()
-    local Timers = {
-      lstTimers = {}
-    }
+    local Class = {}
     
-    function Timers:Add(_pID, _pDuration)
-      local timer = self:New(_pDuration)
-      self.lstTimers[_pID] = timer
+    local lstTimers = {}
+
+    ---------
+    -- Add --
+    ---------
+    function Class:Add(_pID, _pDuration)
+      local timer     = self:New(_pDuration)
+      lstTimers[_pID] = timer
       return timer
     end
     
-    function Timers:Finished(_pID)
-      return self.lstTimers[_pID].finished
+    --------------
+    -- Finished --
+    --------------
+    function Class:Finished(_pID)
+      local timer = lstTimers[_pID]
+      if(timer ~= nil) then return timer.finished end
+      return false
     end
 
-    function Timers:New(_pDuration)
+    ---------
+    -- New --
+    ---------
+    function Class:New(_pDuration)
       local timer = {
             duration = _pDuration or 1,
             elapsed  = 0,
             finished = true,
       }
       
+      ------------
+      -- Update --
+      ------------
       function timer:Update(dt)
         if(timer.finished == false) then
           timer.elapsed = timer.elapsed + dt
@@ -30,6 +44,9 @@ return {
         end
       end
       
+      -----------
+      -- Start --
+      -----------
       function timer:Start()
         if(timer.finished == true) then          
           timer.elapsed  = 0
@@ -40,16 +57,22 @@ return {
       return timer
     end
     
-    function Timers:Start(_pID)
-      self.lstTimers[_pID]:Start()
+    -----------
+    -- Start --
+    -----------
+    function Class:Start(_pID)
+      lstTimers[_pID]:Start()
     end
 
-    function Timers:Update(dt)
-      for key, value in pairs(self.lstTimers) do
+    ------------
+    -- Update --
+    ------------
+    function Class:Update(dt)
+      for key, value in pairs(lstTimers) do
         value:Update(dt)
       end
     end
 
-    return Timers
+    return Class
   end
 }
