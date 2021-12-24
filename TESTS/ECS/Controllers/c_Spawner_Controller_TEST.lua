@@ -23,11 +23,11 @@ return {
     -------------
     function component:Animate()
       local animator = gameObject:Get_Component(an)
-      local currentState = state:Get()
+      local current  = state:Get_Name()
 
-      if(currentState == "WAIT") then
+      if(current == "WAIT") then
         
-      elseif(state:Compare("OPENING")) then
+      elseif(current == "OPENING") then
         if(animator:Is_Finished("opening")) then          
           self:Spawn_Tank()
           timers:Start(tName)
@@ -35,17 +35,17 @@ return {
         else
           animator:Play("opening")
         end
-      elseif(state:Compare("CLOSING")) then
+      elseif(current == "CLOSING") then
         if(animator:Is_Finished("closing")) then
           timers:Start(tName)
           state:Set("CLOSED")
         else
           animator:Play("closing")
         end
-      elseif(state:Compare("OPEN")) then        
+      elseif(current == "OPEN") then        
         animator:Play("open")
 
-      elseif(state:Compare("CLOSED")) then        
+      elseif(current == "CLOSED") then        
         animator:Play("closed")
       end
     end
@@ -114,21 +114,22 @@ return {
     -- Update_Logic --
     ------------------
     function component:Update_Logic(dt)
-      local animator     = gameObject:Get_Component(an)
+      local animator = gameObject:Get_Component(an)
+      local current  = state:Get_Name()
 
-      if(state:Compare("WAIT")) then
+      if(current == "WAIT") then
         if(timers:Finished(tName)) then
           state:Set("OPENING")
         end
-      elseif(state:Compare("OPENING")) then
+      elseif(current == "OPENING") then
 
-      elseif(state:Compare("CLOSING")) then
+      elseif(current == "CLOSING") then
 
-      elseif(state:Compare("OPEN")) then
+      elseif(current == "OPEN") then
         if(timers:Finished(tName)) then
           state:Set("CLOSING")
         end
-      elseif(state:Compare("CLOSED")) then
+      elseif(current == "CLOSED") then
         self:Clean_Up()
         if(#lstTanks < maxTanks) then
           if(animator.Get_Name() == "closed") then

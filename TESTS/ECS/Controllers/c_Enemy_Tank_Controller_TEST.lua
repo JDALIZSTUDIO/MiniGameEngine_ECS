@@ -24,19 +24,19 @@ return {
     -------------
     function component:Animate()
       local animator = gameObject:Get_Component(an)
-      local currentState = state:Get()
+      local current  = state:Get_Name()
 
-      if(currentState == "SPAWN") then
+      if(current == "SPAWN") then
         
-      elseif(state:Compare("WAIT")) then
+      elseif(current == "WAIT") then
         
-      elseif(state:Compare("SEARCH")) then
+      elseif(current == "SEARCH") then
        
-      elseif(state:Compare("MOVETO")) then
+      elseif(current == "MOVETO") then
 
-      elseif(state:Compare("ARRIVE")) then 
+      elseif(current == "ARRIVE") then 
 
-      elseif(state:Compare("SHOOT")) then
+      elseif(current == "SHOOT") then
         
       end
     end
@@ -66,9 +66,10 @@ return {
     -- Update_Logic --
     ------------------
     function component:Update_Logic(dt)
-      local animator     = gameObject:Get_Component(an)
+      local animator = gameObject:Get_Component(an)
+      local current  = state:Get_Name()
 
-      if(state:Compare("SPAWN")) then        
+      if(current == "SPAWN") then        
         local animator = gameObject:Get_Component(an)
               animator:Set_Alpha(alpha)
 
@@ -78,13 +79,13 @@ return {
             state:Set("WAIT")
         end
 
-      elseif(state:Compare("WAIT")) then
+      elseif(current == "WAIT") then
 
-      elseif(state:Compare("SEARCH")) then
+      elseif(current == "SEARCH") then
 
-      elseif(state:Compare("MOVETO")) then
+      elseif(current == "MOVETO") then
         
-      elseif(state:Compare("SHOOT")) then
+      elseif(current == "SHOOT") then
         
       end
       timers:Update(dt)
