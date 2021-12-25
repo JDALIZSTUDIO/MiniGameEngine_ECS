@@ -251,7 +251,7 @@ return {
 
           if(collideX or collideY) then
             local character = _pEntity:Get_Component(ch)
-            if(character ~= nil) then character:OnTileCollision(nil) end            
+            if(character ~= nil) then character:On_Tile_Collision(nil) end            
           end  
         end
         rigidBody:_Apply_Friction()

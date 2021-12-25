@@ -1,6 +1,7 @@
 return {
   new = function() 
     local component = p_Component.new("simpleBody")
+          component.isSolid = true
 
     local cos    = math.cos
     local sin    = math.sin
@@ -87,7 +88,7 @@ return {
 
         if(collideX or collideY) then
           local character = _pEntity:Get_Component(ch)
-          if(character ~= nil) then character:OnTileCollision(nil) end            
+          if(character ~= nil) then character:On_Tile_Collision(nil) end            
         end  
       end
     end

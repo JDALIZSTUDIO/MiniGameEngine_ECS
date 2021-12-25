@@ -6,6 +6,31 @@ return {
         local FOW
         local Tilemap
         
+        local solid = 241
+        local void  = 225
+
+        local floor = math.floor
+        
+        ----------------------------
+        -- handlers.Set_Collision --
+        ----------------------------
+        function love.handlers.Set_Collision(_pPosition)
+            local x = floor(_pPosition.x / Tilemap.map.tilewidth)  + 1
+            local y = floor(_pPosition.y / Tilemap.map.tileheight) + 1
+            local collisions = Tilemap:Get_Collisions()
+                  collisions.data[x][y] = solid
+        end
+
+        ------------------------------
+        -- handlers.UnSet_Collision --
+        ------------------------------
+        function love.handlers.UnSet_Collision(_pPosition)
+            local x = floor(_pPosition.x / Tilemap.map.tilewidth)
+            local y = floor(_pPosition.y / Tilemap.map.tileheight)
+            local collisions = Tilemap:Get_Collisions()
+                  collisions.data[x][y] = void
+        end
+
         -----------------
         -- Load_Cursor --
         -----------------
@@ -30,7 +55,7 @@ return {
                 if(obj.name == "player") then
                     local player = ECS:Create()
                         player.name = obj.name
-                        player:Add_Component(require('TESTS/ECS/Controllers/c_Tank_Controller_TEST').new())
+                        player:Add_Component(require('Game/ECS/Controllers/c_Tank_Body_Controller').new())
                     local pTrans = player:Add_Component(require('Core/Libraries/ECS/Components/Movement/c_Transform').new(x, y, 0))
                         player:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Bounding_Box').new(0, 0, 24, 24))
                         player:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Rigid_Body').new())
@@ -44,8 +69,9 @@ return {
 
                     local canon = ECS:Create()
                           canon.name = "turret"
+                          canon:Add_Component(require('Game/ECS/Controllers/c_Tank_Canon_Controller').new())
                     local cTrans = canon:Add_Component(require('Core/Libraries/ECS/Components/Movement/c_Transform').new(x, y, 0))                    
-                          canon:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Bounding_Box').new(0, 0, 16, 16))
+                          canon:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Bounding_Box').new(0, 0, 32, 32))
                           canon:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_Sprite_Renderer').new("Game/Images/Player/Tank_canon.png"))
 
                     pTrans:Add_Child(cTrans)
@@ -55,20 +81,21 @@ return {
                 elseif(obj.name == "spawner") then
                     local spawner = ECS:Create()
                           spawner.name = obj.name
-                          spawner:Add_Component(require('TESTS/ECS/Controllers/c_Spawner_Controller_TEST').new())
+                          spawner:Add_Component(require('Game/ECS/Controllers/c_Spawner_Controller').new())
                           spawner:Add_Component(require('Core/Libraries/ECS/Components/Movement/c_Transform').new(x, y, 0))
                           spawner:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Bounding_Box').new(0, 0, 16, 16))
                           spawner:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Simple_Body').new())
 
                     local anim = spawner:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_Animator').new())
-                          anim:Add("closed",  "Game/Images/Enemies/spawner_atlas.png", 32, 32, 0, 0, 1, 1, 1, 1)
-                          anim:Add("open",    "Game/Images/Enemies/spawner_atlas.png", 32, 32, 0, 0, 2, 1, 2, 1)
-                          anim:Add("opening", "Game/Images/Enemies/spawner_atlas.png", 32, 32, 0, 0, 1, 2, 3, 2)
-                          anim:Add("closing", "Game/Images/Enemies/spawner_atlas.png", 32, 32, 0, 0, 1, 3, 3, 3)                   
+                          anim:Add("closed",  "Game/Images/Enemies/spawner_atlas.png", 32, 32, 0, 0, 1, 1, 1, 1, 0,  false)
+                          anim:Add("open",    "Game/Images/Enemies/spawner_atlas.png", 32, 32, 0, 0, 2, 1, 2, 1, 0,  false)
+                          anim:Add("opening", "Game/Images/Enemies/spawner_atlas.png", 32, 32, 0, 0, 1, 2, 3, 2, 15, false)
+                          anim:Add("closing", "Game/Images/Enemies/spawner_atlas.png", 32, 32, 0, 0, 1, 3, 3, 3, 15, false)                   
 
                 elseif(obj.name == "block") then
                     local block = ECS:Create()
                           block.name = obj.name
+                          block:Add_Component(require('Game/ECS/Controllers/c_Solid_Controller').new())
                           block:Add_Component(require('Core/Libraries/ECS/Components/Movement/c_Transform').new(x, y, 0))
                           block:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Bounding_Box').new(0, 0, 32, 32))
                           block:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Rigid_Body').new({isStatic = true}))
@@ -77,6 +104,7 @@ return {
                 elseif(obj.name == "brickWall") then
                     local wall = ECS:Create()
                           wall.name = obj.name
+                          wall:Add_Component(require('Game/ECS/Controllers/c_Solid_Controller').new())
                           wall:Add_Component(require('Core/Libraries/ECS/Components/Movement/c_Transform').new(x, y, 0))
                           wall:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Bounding_Box').new(0, 0, 32, 32))
                           wall:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Rigid_Body').new({isStatic = true}))
@@ -85,6 +113,7 @@ return {
                 elseif(obj.name == "crate") then
                     local crate = ECS:Create()
                           crate.name = obj.name
+                          crate:Add_Component(require('Game/ECS/Controllers/c_Solid_Controller').new())
                           crate:Add_Component(require('Core/Libraries/ECS/Components/Movement/c_Transform').new(x, y, 0))
                           crate:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Bounding_Box').new(0, 0, 32, 32))
                           crate:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Rigid_Body').new({isStatic = true}))
@@ -94,18 +123,20 @@ return {
                 elseif(obj.name == "barrel") then
                     local barrel = ECS:Create()
                           barrel.name = obj.name
+                          barrel:Add_Component(require('Game/ECS/Controllers/c_Solid_Controller').new())
                           barrel:Add_Component(require('Core/Libraries/ECS/Components/Movement/c_Transform').new(x, y, 0))
                           barrel:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Bounding_Box').new(0, 0, 32, 32))
                           barrel:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Rigid_Body').new({isStatic = true}))
                           barrel:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_Sprite_Renderer').new("Game/Images/Environment/barrel.png"))
 
                 elseif(obj.name == "bush") then
-                    local grass = ECS:Create()
-                          grass.name = obj.name
-                          grass:Add_Component(require('Core/Libraries/ECS/Components/Movement/c_Transform').new(x, y, 0))
-                          grass:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Bounding_Box').new(0, 0, 16, 16))
-                          grass:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Rigid_Body').new({isStatic = true}))
-                          grass:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_Sprite_Renderer').new("Images/Tank_Game/grass.png"))
+                    local bush = ECS:Create()
+                          bush.name = obj.name
+                          bush:Add_Component(require('Game/ECS/Controllers/c_Solid_Controller').new())
+                          bush:Add_Component(require('Core/Libraries/ECS/Components/Movement/c_Transform').new(x, y, 0))
+                          bush:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Bounding_Box').new(0, 0, 16, 16))
+                          bush:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Rigid_Body').new({isStatic = true}))
+                          bush:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_Sprite_Renderer').new("Images/Tank_Game/bush.png"))
                           
                 end
             end
@@ -124,6 +155,7 @@ return {
                   rb:Set_Tilemap(Tilemap)
             
             ECS:Register(require('Core/Libraries/ECS/Systems/Movement/s_Transform').new())
+            ECS:Register(require('Core/Libraries/ECS/Systems/Rendering/s_Trail_Renderer').new())
             ECS:Register(require('Core/Libraries/ECS/Systems/Rendering/s_Animation_Renderer').new())
             ECS:Register(require('Core/Libraries/ECS/Systems/Rendering/s_Sprite_Renderer').new())
             ECS:Register(require('Core/Libraries/ECS/Systems/Rendering/s_Sprite_GUI_Renderer').new())

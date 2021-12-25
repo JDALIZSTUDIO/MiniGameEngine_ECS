@@ -1,7 +1,7 @@
 return {
   new = function(_pMaxTrail)
     local component = p_Component.new("trailEmitter")
-          component.active = false
+          component.active = true
           component.trail  = {}
           component.maxT   = _pMaxTrail or 50
     

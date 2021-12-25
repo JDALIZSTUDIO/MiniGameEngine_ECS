@@ -22,11 +22,16 @@ return {
     end
 
     function Entity:Destroy()
-      self.expired = true
+      Entity.expired = true
     end
 
     function Entity:Load()
       
+    end
+
+    function Entity:On_Destroy()
+       local controller = self:Get_Component("characterController")
+       if(controller ~= nil) then controller:On_Destroy() end
     end
 
     function Entity:Update(dt)

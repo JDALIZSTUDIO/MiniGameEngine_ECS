@@ -10,6 +10,7 @@ return {
     local acceleration = 8
     local rSpeed       = 6
 
+    local ch = "characterController"
     local an = "animator"
     local rb = "rigidBody"
     local tr = "transform"
@@ -63,17 +64,22 @@ return {
         ))
     end
 
-      local canon     = transform:Get_Child(1)      
-      if(canon ~= nil) then
+      local child = transform:Get_Child(1)      
+      if(child ~= nil) then
         local mx, my = Camera:Screen_To_World(love.mouse.getPosition())
         local dx =   mx - transform.position.x
         local dy = -(my - transform.position.y)
-        canon.transform.rotation = deg(smoothAngle(
-          rad(canon.transform.rotation),
+        child.transform.rotation = deg(smoothAngle(
+          rad(child.transform.rotation),
           atan2(dx, dy),
           rSpeed,
           dt
         ))
+      end
+
+      local canon = child.transform.gameObject:Get_Component(ch)
+      if(love.mouse.isDown(1)) then
+        canon:Shoot()
       end
 
     end
@@ -86,16 +92,16 @@ return {
     end
     
     -----------------------
-    -- OnEntityCollision --
+    -- On_Entity_Collision --
     -----------------------
-    function component:OnEntityCollision(_pTable)
+    function component:On_Entity_Collision(_pTable)
       
     end
     
     ---------------------
-    -- OnTileCollision --
+    -- On_Tile_Collision --
     ---------------------
-    function component:OnTileCollision(_pTileID)
+    function component:On_Tile_Collision(_pTileID)
       
     end
     

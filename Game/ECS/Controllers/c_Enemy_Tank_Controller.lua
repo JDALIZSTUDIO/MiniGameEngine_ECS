@@ -92,9 +92,9 @@ return {
     end
     
     -----------------------
-    -- OnEntityCollision --
+    -- On_Entity_Collision --
     -----------------------
-    function component:OnEntityCollision(_pTable)
+    function component:On_Entity_Collision(_pTable)
       
     end    
     

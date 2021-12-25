@@ -6,6 +6,8 @@ return {
       local ch         = "characterController"
       local sb         = "simpleBody"
       local tr         = "transform"
+
+      local floor      = math.floor
       local insert     = table.insert
   
       local layer       = {}
@@ -17,7 +19,7 @@ return {
       --------------------------------
       -- Collide_Tilemap_Horizontal --
       --------------------------------
-      function system:Collide_Tilemap_Horizontal(dt, _pBBox, _pTransform)
+      function system:Collide_Tilemap_Horizontal(dt, _pBBox, _pSolid, _pTransform)
 
         -- store velocity
         _pTransform.velocityPre:Set(_pTransform.velocity.x, _pTransform.velocityPre.y)
@@ -30,8 +32,10 @@ return {
           ID  = self:Get_Tile_At(_pBBox.right + dX + 1, _pBBox.position.y)
           col = floor(_pBBox.position.x / tileWidth) + 1
           if(ID ~= 0) then
-            _pTransform.velocity.x = 0
-            _pTransform.position.x = (col * tileWidth) - floor(_pBBox.width*0.5) - 1
+            if(_pSolid) then
+              _pTransform.velocity.x = 0
+              _pTransform.position.x = (col * tileWidth) - floor(_pBBox.width*0.5) - 1
+            end
             collide = true            
           end          
         
@@ -40,8 +44,10 @@ return {
           ID = self:Get_Tile_At(_pBBox.left + dX -1, _pBBox.position.y)
           col = floor(_pBBox.position.x / tileWidth) + 1
           if(ID ~= 0) then
-            _pTransform.velocity.x = 0
-            _pTransform.position.x = (col * tileWidth) - floor(_pBBox.width*0.5) + 1
+            if(_pSolid) then
+              _pTransform.velocity.x = 0
+              _pTransform.position.x = (col * tileWidth) - floor(_pBBox.width*0.5) + 1
+            end
             collide = true            
           end
         end
@@ -51,7 +57,7 @@ return {
       ------------------------------
       -- Collide_Tilemap_Vertical --
       ------------------------------
-      function system:Collide_Tilemap_Vertical(dt, _pBBox, _pTransform)
+      function system:Collide_Tilemap_Vertical(dt, _pBBox, _pSolid, _pTransform)
 
         -- store velocity
         _pTransform.velocityPre:Set(_pTransform.velocityPre.x, _pTransform.velocity.y)
@@ -63,9 +69,11 @@ return {
         if(_pTransform.velocity.y > 0) then
           ID  = self:Get_Tile_At(_pBBox.position.x, _pBBox.bottom + dY + 1)
           lig = floor(_pBBox.position.y / tileHeight) + 1
-          if(ID ~= 0) then       
-            _pTransform.velocity.y = 0
-            _pTransform.position.y = (lig * tileHeight) - floor(_pBBox.height*0.5) - 1
+          if(ID ~= 0) then
+            if(_pSolid) then  
+              _pTransform.velocity.y = 0
+              _pTransform.position.y = (lig * tileHeight) - floor(_pBBox.height*0.5) - 1
+            end
             collide                = true            
           end        
         
@@ -74,8 +82,10 @@ return {
           ID  = self:Get_Tile_At(_pBBox.position.x, _pBBox.top + dY - 1)
           lig = floor(_pBBox.position.y / tileHeight)
           if(ID ~= 0) then
-            _pTransform.velocity.y = 0
-            _pTransform.position.y = (lig * tileHeight) + floor(_pBBox.height*0.5) + 1
+            if(_pSolid) then
+              _pTransform.velocity.y = 0
+              _pTransform.position.y = (lig * tileHeight) + floor(_pBBox.height*0.5) + 1
+            end
             collide                = true            
           end
         end
@@ -129,13 +139,13 @@ return {
           )
         else
           
-          local collideX       = self:Collide_Tilemap_Horizontal(dt, bBox, transform)
+          local collideX       = self:Collide_Tilemap_Horizontal(dt, bBox, simpleBody.isSolid, transform)
           local directionX     = simpleBody:_Get_Direction()
           local lengthX        = simpleBody._Get_Magnitude()
           local dx             = simpleBody:_Length_Dir_X(lengthX, directionX)
           transform.position.x = transform.position.x - (dx * dt)
           
-          local collideY       = self:Collide_Tilemap_Vertical(dt, bBox, transform)
+          local collideY       = self:Collide_Tilemap_Vertical(dt, bBox, simpleBody.isSolid, transform)
           local directionY     = simpleBody:_Get_Direction()
           local lengthY        = simpleBody._Get_Magnitude()
           local dy             = simpleBody:_Length_Dir_Y(lengthY, directionY)
@@ -143,7 +153,7 @@ return {
 
           if(collideX or collideY) then
             local character = _pEntity:Get_Component(ch)
-            if(character ~= nil) then character:OnTileCollision(nil) end            
+            if(character ~= nil) then character:On_Tile_Collision(nil) end            
           end  
         end
       end

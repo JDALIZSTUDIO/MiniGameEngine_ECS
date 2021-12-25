@@ -23,11 +23,14 @@ return {
     ---------
     -- Add --
     ---------
-    function component:Add(_pID, _pPath, _pW, _pH, _pOffsetX, _pOffsetY, _pStartX, _pStartY, _pEndX, _pEndY)
+    function component:Add(_pID, _pPath, _pW, _pH, _pOffsetX, _pOffsetY, _pStartX, _pStartY, _pEndX, _pEndY, _pSpeed, _pLoop)
       local image         = love.graphics.newImage(_pPath)
       local imageWidth    = image:getWidth()
       local imageHeight   = image:getHeight()
       
+      local loop = _pLoop
+      if(loop == nil) then loop = true end
+
       local animation     = {
             atlas         = image,
             atlasWidth    = imageWidth,
@@ -35,12 +38,14 @@ return {
             finished      = false,
             frameWidth    = _pW or imageWidth,
             frameHeight   = _pH or imageHeight,
+            isLoop        = loop,
             name          = _pID,
             offset        = Vector2.new(-_pOffsetX or 0, -_pOffsetY or 0),
             quadData      = {},
-            speed         = 7
+            speed         = _pSpeed or 7,
+            speedPre      = 0
       }
-        
+      
       local col   = _pStartX or 1
       local lig   = _pStartY or 1
       local nbCol = max(1, _pEndX or floor(animation.atlasWidth  /  animation.frameWidth))
@@ -73,6 +78,9 @@ return {
       return component.currentAnimation.name
     end
 
+    ---------------
+    -- Set_Alpha --
+    ---------------
     function component:Set_Alpha(_pAlpha)
       component.alpha = _pAlpha
       local transform = component.gameObject:Get_Component(tr)
@@ -86,11 +94,25 @@ return {
       end
     end
 
+    -------------
+    -- Restart --
+    -------------
+    function component:Restart()
+      self.speed = self.speedPre
+    end
+
+    ----------
+    -- Stop --
+    ----------
+    function component:Stop()
+      self.speed = 0
+    end
+
     -----------------
     -- Is_Finished --
     -----------------
     function component:Is_Finished(_pName)
-      if(self.Get_Name() == _pName) then
+      if(self:Get_Name() == _pName) then
         return self.currentAnimation.finished
       end
       return false

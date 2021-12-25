@@ -21,24 +21,42 @@ return {
       if(animator.active == false) then return end
       if(animator.currentAnimation == nil) then return end
       
-      animator.frameCounter = animator.frameCounter + (dt * animator.currentAnimation.speed)       
-      
-      if(animator.frameCounter >= 1) then
-        animator.frameCounter = 0
-        animator.currentFrame = animator.currentFrame+1
-        
-        if(animator.currentFrame > #animator.currentAnimation.quadData) then
-          animator.currentFrame = 1          
+      local length = #animator.currentAnimation.quadData
+
+      if(animator.currentAnimation.isLoop) then
+        animator.frameCounter = animator.frameCounter + (dt * animator.currentAnimation.speed)
+
+        if(animator.currentFrame > length-1 and 
+          animator.frameCounter >= 0.5) then
+            animator.currentAnimation.finished = true
         end
-      end
-      
-      animator.currentAnimation.finished = false
-      if(animator.currentFrame == #animator.currentAnimation.quadData and 
-         animator.frameCounter >= 0.8) then
-        animator.currentAnimation.finished = true        
+
+        if(animator.frameCounter >= 1) then
+          animator.frameCounter = 0
+          animator.currentFrame = animator.currentFrame+1
+
+          if(animator.currentFrame > length) then
+            animator.currentFrame = 1
+          end
+        end
+
+      else
+        if(animator.currentFrame < length) then
+          animator.frameCounter = animator.frameCounter + (dt * animator.currentAnimation.speed)
+          if(animator.frameCounter >= 1) then
+            animator.frameCounter = 0
+            animator.currentFrame = animator.currentFrame+1
+          end
+        else
+          animator.currentFrame              = length
+          animator.currentAnimation.finished = true
+        end
       end
     end
     
+    ----------
+    -- Draw --
+    ----------
     function system:Draw(_pEntity)
       
       local animator = _pEntity:Get_Component(an)

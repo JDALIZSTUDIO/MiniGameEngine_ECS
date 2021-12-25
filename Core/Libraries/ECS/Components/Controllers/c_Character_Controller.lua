@@ -18,6 +18,13 @@ return {
       
     end
     
+    ----------------
+    -- On_Destroy --
+    ----------------
+    function component:On_Destroy()  
+    
+    end
+
     -------------------
     -- Process_Input --
     -------------------

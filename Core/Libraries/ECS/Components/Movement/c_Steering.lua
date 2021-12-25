@@ -33,7 +33,7 @@ return {
       -- Private_Arrive --
       --------------------
       function component:Private_Arrive(_pTarget)
-        if(transform.position:Distance(_pTarget) < self.precision) then return Vector2.new(0, 0) end        
+        if(transform.position:Distance_To(_pTarget) < self.precision) then return Vector2.new(0, 0) end        
         
         local force = Vector2:Subtract(_pTarget, transform.position)
         
@@ -64,7 +64,7 @@ return {
       -- Private_Seek --
       ------------------
       function component:Private_Seek(_pTarget)        
-        if(transform.position:Distance(_pTarget) < self.precision) then return Vector2.new(0, 0) end
+        if(transform.position:Distance_To(_pTarget) < self.precision) then return Vector2.new(0, 0) end
         
         local force = Vector2:Subtract(_pTarget, transform.position)
         force:Normalize()

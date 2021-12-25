@@ -89,10 +89,11 @@ return {
       local transform = gameObject:Get_Component(tr)
       local tank = gameObject.ECS:Create()
             tank.name = "enemyTank"
-            tank:Add_Component(require('TESTS/ECS/Controllers/c_Enemy_Tank_Controller_TEST').new())
+            tank:Add_Component(require('Game/ECS/Controllers/c_Enemy_Tank_Controller').new())
       local tTrans = tank:Add_Component(require('Core/Libraries/ECS/Components/Movement/c_Transform').new(transform.position.x, transform.position.y, 0))
             tank:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Bounding_Box').new(0, 0, 24, 24))
-            --tank:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Rigid_Body').new())
+            --tank:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_Box_Renderer').new())
+            tank:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Rigid_Body').new())
       local anim = tank:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_Animator').new())
             anim:Add("idle", "Game/Images/Enemies/tank_body_blue.png", 96, 96, 0, 0, 1, 1, 2, 1)
             anim:Add("move", "Game/Images/Enemies/tank_body_blue.png", 96, 96, 0, 0, 1, 2, 2, 2)
@@ -100,7 +101,7 @@ return {
       local canon = gameObject.ECS:Create()
             canon.name = "turret"
       local cTrans = canon:Add_Component(require('Core/Libraries/ECS/Components/Movement/c_Transform').new(transform.position.x, transform.position.y, 0))                    
-            canon:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Bounding_Box').new(0, 0, 16, 16))
+            canon:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Bounding_Box').new(0, 0, 32, 32))
             canon:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_Sprite_Renderer').new("Game/Images/Player/Tank_canon.png"))
             
             tTrans:Add_Child(cTrans)            
@@ -143,9 +144,9 @@ return {
     end
     
     -----------------------
-    -- OnEntityCollision --
+    -- On_Entity_Collision --
     -----------------------
-    function component:OnEntityCollision(_pTable)
+    function component:On_Entity_Collision(_pTable)
       
     end    
     

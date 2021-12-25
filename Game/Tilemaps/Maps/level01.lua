@@ -104,7 +104,7 @@ return {
       height = 7,
       id = 3,
       name = "collisions",
-      visible = false,
+      visible = true,
       opacity = 1,
       offsetx = 0,
       offsety = 0,

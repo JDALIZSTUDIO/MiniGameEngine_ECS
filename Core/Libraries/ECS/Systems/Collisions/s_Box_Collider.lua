@@ -35,7 +35,7 @@ return {
         end 
         
         local character = _pEntity:Get_Component(ch)
-        if(character ~= nil) then character:OnEntityCollision(result) end        
+        if(character ~= nil) then character:On_Entity_Collision(result) end        
       end
 
       ----------

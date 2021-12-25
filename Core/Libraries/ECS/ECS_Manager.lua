@@ -1,12 +1,18 @@
 return {
   new = function()
     local Class = {
-      entities = {},
-      systems  = {}
+      entities  = {},
+      systems   = {},
+      z_sorting = false
     }
 
+    local p      = "player"
+    local bb     = "boundingBox"
+    
     local insert = table.insert
     local remove = table.remove
+    local sort   = table.sort
+    local lstSorted
 
     ---------
     -- Add --
@@ -63,19 +69,30 @@ return {
       return _pSystem
     end
 
-    function Class:Z_Sorting()
-      local temp = {}
-      local entity
-      for i = #self.entities, 1, -1 do
-        entity = self.entities[i]
-        insert(temp, entity)
+    ---------------
+    -- Z_Sorting --
+    ---------------
+    function Class:Sort_Entities(_pTable)
+      sort(_pTable, Sort_Algo)
+    end
+    
+    ---------------
+    -- Sort_Algo --
+    ---------------
+    function Sort_Algo(_pEntityA, _pEntityB)
+      local bBoxA = _pEntityA:Get_Component(bb)
+      local bBoxB = _pEntityB:Get_Component(bb)
+      if(bBoxA ~= nil and bBoxB ~= nil) then
+        return bBoxA.bottom < bBoxB.bottom
       end
+      return false
     end
 
     ------------
     -- Update --
     ------------
     function Class:Update(dt)
+      lstSorted = {}
       local entity
       for i = #self.entities, 1, -1 do
         entity = self.entities[i]
@@ -85,7 +102,7 @@ return {
               system:Destroy(entity)
             end
           end
-          
+
           remove(self.entities, i) 
         else      
           for j, system in ipairs(self.systems) do
@@ -99,8 +116,10 @@ return {
           end
           
           entity.loaded = true
+          if(self.z_sorting) then insert(lstSorted, entity) end
         end
       end
+      if(self.z_sorting) then self:Sort_Entities(lstSorted) end
     end
 
     ----------
@@ -108,8 +127,10 @@ return {
     ----------
     function Class:Draw()
       local entity
-      for i = 1, #self.entities do  
-        entity = self.entities[i]
+      local lstEntities
+      if(self.z_sorting) then lstEntities = lstSorted else lstEntities = self.entities end
+      for i = 1, #lstEntities do  
+        entity = lstEntities[i]
         for j, system in ipairs(self.systems) do
           if(system:Match(entity)) then        
             system:Draw(entity)
@@ -123,8 +144,9 @@ return {
     --------------
     function Class:Draw_GUI()
       local entity
-      for i = 1, #self.entities do  
-        entity = self.entities[i]
+      local entities = self.entities
+      for i = 1, #entities do  
+        entity = entities[i]
         for j, system in ipairs(self.systems) do
           if(system:Match(entity)) then        
             system:Draw_GUI(entity)

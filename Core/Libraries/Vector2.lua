@@ -39,6 +39,9 @@ Vector2.new = function(_pX, _pY)
           y = _pY or 0,
     }
 
+    local atan2 = math.atan2
+    local sqrt  = math.sqrt
+
     function v:Clone()
         return Vector2.new(v.x, v.y)
     end
@@ -81,11 +84,15 @@ Vector2.new = function(_pX, _pY)
     end
     
     function v:Direction()
-        return math.atan2(0 - v.y, 0 - v.x)
+        return atan2(0 - v.y, 0 - v.x)
     end
 
-    function v:DirectionTo(_pVector2)
-        return math.atan2(_pVector2.y - v.y, _pVector2.x - v.x)
+    function v:Direction_To(_pVector2)
+        return atan2(_pVector2.y - v.y, _pVector2.x - v.x)
+    end
+
+    function v:Distance_To(_pVector2)
+        return sqrt((_pVector2.x - v.x) ^ 2 + (_pVector2.y - v.y) ^ 2)
     end
 
     function v:Divide(_pVector2)
@@ -98,12 +105,8 @@ Vector2.new = function(_pX, _pY)
         v.y = v.y / _pScalar
     end
 
-    function v:Distance(_pVector2)
-        return math.sqrt((_pVector2.x - v.x) ^ 2 + (_pVector2.y - v.y) ^ 2)
-    end
-
     function v:Magnitude()
-        return math.sqrt(v.x * v.x + v.y * v.y)
+        return sqrt(v.x * v.x + v.y * v.y)
     end
 
     function v:Normalize()

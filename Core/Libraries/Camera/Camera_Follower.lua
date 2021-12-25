@@ -27,8 +27,8 @@ return {
                 local mx, my = camera:Screen_To_World(sx, sy)
                 if(sx > 0 and sx < w and
                    sy > 0 and sy < h) then
-                    local dir    = _pTarget.position:DirectionTo({x = mx, y = my})
-                    local dist   = _pTarget.position:Distance({x = mx, y = my})
+                    local dir    = _pTarget.position:Direction_To({x = mx, y = my})
+                    local dist   = _pTarget.position:Distance_To({x = mx, y = my})
                     local result = min(dist, self.maxDist)
                     self.ahead:Set(
                         _pTarget.position.x + (cos(dir) * result),

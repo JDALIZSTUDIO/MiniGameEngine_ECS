@@ -29,7 +29,7 @@ return {
                 if(obj.name == "player") then
                     local player = ECS:Create()
                         player.name = obj.name
-                        player:Add_Component(require('TESTS/ECS/Controllers/c_Tank_Controller_TEST').new())
+                        player:Add_Component(require('TESTS/ECS/Controllers/c_Tank_Body_Controller').new())
                         local t = player:Add_Component(require('Core/Libraries/ECS/Components/Movement/c_Transform').new(x, y, 0))
                         player:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Bounding_Box').new(0, 0, 16, 16))
                         player:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Rigid_Body').new())

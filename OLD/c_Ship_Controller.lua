@@ -27,7 +27,7 @@ return {
             local render = _pOwner:Get_Component("spriteRenderer")
                   render.shader:SetUniform("aberration", math.floor(math.random(2.0, 32.0)))
             
-            local dist = transform.position:Distance(target)
+            local dist = transform.position:Distance_To(target)
             if(dist > 1) then
               steering:Arrive(transform.position, target) 
             end

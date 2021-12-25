@@ -22,7 +22,7 @@ return {
       
       local bBox = _pEntity:Get_Component(bc)
       
-      love.graphics.setColor(1, 1, 1, 1)
+      love.graphics.setColor(1, 0, 0, 1)
       love.graphics.rectangle(bBox.drawMode, 
                               bBox.left, 
                               bBox.top, 
@@ -31,6 +31,7 @@ return {
                             
       local transform = _pEntity:Get_Component(tr)
       love.graphics.circle(bBox.drawMode, bBox.position.x, bBox.position.y, 1)
+      love.graphics.setColor(1, 1, 1, 1)
     end
     
     return system  

@@ -25,18 +25,18 @@ return {
       
     end
     
-    ------------------
-    -- Update_Logic --
-    ------------------
-    function component:Update_Logic(dt)  
-      
-    end
-    
     ----------
     -- Load --
     ----------
     function component:Load()
       component:Custom_Load()
+    end
+
+    ----------------
+    -- On_Destroy --
+    ----------------
+    function component:On_Destroy()  
+    
     end
 
     ------------
@@ -48,6 +48,13 @@ return {
       self:Animate()
     end
     
+    ------------------
+    -- Update_Logic --
+    ------------------
+    function component:Update_Logic(dt)  
+      
+    end
+    
     ----------
     -- Draw --
     ----------
@@ -56,16 +63,16 @@ return {
     end
     
     -----------------------
-    -- OnEntityCollision --
+    -- On_Entity_Collision --
     -----------------------
-    function component:OnEntityCollision(_pTable)
+    function component:On_Entity_Collision(_pTable)
       
     end
     
     ---------------------
-    -- OnTileCollision --
+    -- On_Tile_Collision --
     ---------------------
-    function component:OnTileCollision(_pTileID)
+    function component:On_Tile_Collision(_pTileID)
       
     end
     
