@@ -1,8 +1,8 @@
 local factory  = require('Core/Libraries/ECS/Components/Controllers/c_Parent_Controller')
 
 return {
-  new = function(_pECS)
-    local component = factory.new(_pECS)
+  new = function()
+    local component = factory.new()
         
     -------------
     -- Animate --
@@ -62,6 +62,13 @@ return {
       
     end
     
+    --------------
+    -- Draw_GUI --
+    --------------
+    function component:Draw_GUI()
+      
+    end
+
     return component
   end
 }

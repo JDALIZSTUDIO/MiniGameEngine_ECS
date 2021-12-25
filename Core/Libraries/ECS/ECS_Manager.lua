@@ -103,6 +103,7 @@ return {
             end
           end
 
+          entity:On_Destroy()
           remove(self.entities, i) 
         else      
           for j, system in ipairs(self.systems) do

@@ -98,6 +98,7 @@ return {
       function system:Get_Tile_At(_pX, _pY)
         local col = floor(_pX / tileWidth ) + 1
         local lig = floor(_pY / tileHeight) + 1
+        if(col < 1 or lig < 1 or col > layer.width or lig > layer.height) then return nil end
         return layer.data[col][lig]
       end
         

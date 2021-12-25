@@ -46,7 +46,7 @@
         ------------
         function CDStart:Update(dt)
           if(state:Compare("WAIT")) then
-            if(timers:Finished("wait")) then
+            if(timers:Is_Finished("wait")) then
               Create_Countdown()
               timers:Start("count")
               state:Set("COUNT")
@@ -54,7 +54,7 @@
             end
             
           elseif(state:Compare("COUNT")) then  
-            if(timers:Finished("count")) then
+            if(timers:Is_Finished("count")) then
               startCounter = startCounter - 1
               if(startCounter < 0) then
                 countDown.alpha = Lerp(countDown.alpha, 0, 0.2)

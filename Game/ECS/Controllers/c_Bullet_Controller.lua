@@ -1,10 +1,14 @@
 local factory  = require('Core/Libraries/ECS/Components/Controllers/c_Parent_Controller')
 
 return {
-  new = function(_pECS)
-    local component             = factory.new(_pECS)
+  new = function(_pParamaters)
+    local params = _pParamaters or {}
+    
+    local component             = factory.new()
+          component.damage      = params.damage or 20
           component.maxDistance = 192
           component.maxSpeed    = 260
+          component.owner       = params.owner or nil
 
     local origin
     local toDestroy = false
@@ -18,13 +22,6 @@ return {
 
     local tr = "transform"
         
-    -------------
-    -- Animate --
-    -------------
-    function component:Animate()  
-    
-    end
-
     -----------------
     -- Custom_Load --
     -----------------
@@ -42,17 +39,10 @@ return {
     ----------------
     -- On_Destroy --
     ----------------
-    function component:On_Destroy()  
-    
+    function component:On_Destroy()
+        self:Create_Impact()
     end
 
-    -------------------
-    -- Process_Input --
-    -------------------
-    function component:Process_Input(dt)  
-      
-    end
-    
     ------------------
     -- Update_Logic --
     ------------------
@@ -61,7 +51,6 @@ return {
         local dist = transform.position:Distance_To(origin)
         if(dist > self.maxDistance) then 
             if(toDestroy == false) then
-                self:Create_Impact()
                 component.gameObject.Destroy() 
                 toDestroy = true
             end
@@ -87,8 +76,7 @@ return {
     -- On_Entity_Collision --
     -----------------------
     function component:On_Entity_Collision(_pTable)
-        self.gameObject:Destroy()
-        self:Create_Impact()
+        --self.gameObject:Destroy()        
     end
     
     ---------------------
@@ -96,7 +84,7 @@ return {
     ---------------------
     function component:On_Tile_Collision(_pTileID)
         self.gameObject:Destroy()
-        self:Create_Impact()
+        --self:Create_Impact()
     end
     
     return component

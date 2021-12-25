@@ -56,6 +56,7 @@ return {
                     local player = ECS:Create()
                         player.name = obj.name
                         player:Add_Component(require('Game/ECS/Controllers/c_Tank_Body_Controller').new())
+                        player:Add_Component(require('Core/Libraries/ECS/Components/Health/c_Health').new())
                     local pTrans = player:Add_Component(require('Core/Libraries/ECS/Components/Movement/c_Transform').new(x, y, 0))
                         player:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Bounding_Box').new(0, 0, 24, 24))
                         player:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Rigid_Body').new())
@@ -82,8 +83,10 @@ return {
                     local spawner = ECS:Create()
                           spawner.name = obj.name
                           spawner:Add_Component(require('Game/ECS/Controllers/c_Spawner_Controller').new())
+                          spawner:Add_Component(require('Core/Libraries/ECS/Components/Health/c_Health').new())
                           spawner:Add_Component(require('Core/Libraries/ECS/Components/Movement/c_Transform').new(x, y, 0))
-                          spawner:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Bounding_Box').new(0, 0, 16, 16))
+                          spawner:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Bounding_Box').new(0, 0, 32, 32))
+                          spawner:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Box_Collider').new())
                           spawner:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Simple_Body').new())
 
                     local anim = spawner:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_Animator').new())
@@ -96,8 +99,10 @@ return {
                     local block = ECS:Create()
                           block.name = obj.name
                           block:Add_Component(require('Game/ECS/Controllers/c_Solid_Controller').new())
+                          block:Add_Component(require('Core/Libraries/ECS/Components/Health/c_Health').new())
                           block:Add_Component(require('Core/Libraries/ECS/Components/Movement/c_Transform').new(x, y, 0))
                           block:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Bounding_Box').new(0, 0, 32, 32))
+                          block:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Box_Collider').new())
                           block:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Rigid_Body').new({isStatic = true}))
                           block:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_Sprite_Renderer').new("Game/Images/Environment/block.png"))
                           
@@ -105,8 +110,10 @@ return {
                     local wall = ECS:Create()
                           wall.name = obj.name
                           wall:Add_Component(require('Game/ECS/Controllers/c_Solid_Controller').new())
+                          wall:Add_Component(require('Core/Libraries/ECS/Components/Health/c_Health').new())
                           wall:Add_Component(require('Core/Libraries/ECS/Components/Movement/c_Transform').new(x, y, 0))
                           wall:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Bounding_Box').new(0, 0, 32, 32))
+                          wall:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Box_Collider').new())
                           wall:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Rigid_Body').new({isStatic = true}))
                           wall:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_Sprite_Renderer').new("Game/Images/Environment/brickWall.png"))
                 
@@ -114,8 +121,10 @@ return {
                     local crate = ECS:Create()
                           crate.name = obj.name
                           crate:Add_Component(require('Game/ECS/Controllers/c_Solid_Controller').new())
+                          crate:Add_Component(require('Core/Libraries/ECS/Components/Health/c_Health').new())
                           crate:Add_Component(require('Core/Libraries/ECS/Components/Movement/c_Transform').new(x, y, 0))
                           crate:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Bounding_Box').new(0, 0, 32, 32))
+                          crate:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Box_Collider').new())
                           crate:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Rigid_Body').new({isStatic = true}))
                           crate:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_Sprite_Renderer').new("Game/Images/Environment/crate.png"))          
                 
@@ -124,15 +133,16 @@ return {
                     local barrel = ECS:Create()
                           barrel.name = obj.name
                           barrel:Add_Component(require('Game/ECS/Controllers/c_Solid_Controller').new())
+                          barrel:Add_Component(require('Core/Libraries/ECS/Components/Health/c_Health').new())
                           barrel:Add_Component(require('Core/Libraries/ECS/Components/Movement/c_Transform').new(x, y, 0))
                           barrel:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Bounding_Box').new(0, 0, 32, 32))
+                          barrel:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Box_Collider').new())
                           barrel:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Rigid_Body').new({isStatic = true}))
                           barrel:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_Sprite_Renderer').new("Game/Images/Environment/barrel.png"))
 
                 elseif(obj.name == "bush") then
                     local bush = ECS:Create()
                           bush.name = obj.name
-                          bush:Add_Component(require('Game/ECS/Controllers/c_Solid_Controller').new())
                           bush:Add_Component(require('Core/Libraries/ECS/Components/Movement/c_Transform').new(x, y, 0))
                           bush:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Bounding_Box').new(0, 0, 16, 16))
                           bush:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Rigid_Body').new({isStatic = true}))
@@ -148,6 +158,7 @@ return {
         function Load_Systems()
             ECS:Register(require('Core/Libraries/ECS/Systems/Controllers/s_Character_Controller').new()) 
             ECS:Register(require('Core/Libraries/ECS/Systems/Collisions/s_Bounding_Box').new())
+            ECS:Register(require('Core/Libraries/ECS/Systems/Collisions/s_Box_Collider').new())
             local sb = ECS:Register(require('Core/Libraries/ECS/Systems/Collisions/s_Simple_Body').new()) 
                   sb:Set_Tilemap(Tilemap)
 
@@ -155,6 +166,7 @@ return {
                   rb:Set_Tilemap(Tilemap)
             
             ECS:Register(require('Core/Libraries/ECS/Systems/Movement/s_Transform').new())
+            ECS:Register(require('Core/Libraries/ECS/Systems/Health/s_Health').new())
             ECS:Register(require('Core/Libraries/ECS/Systems/Rendering/s_Trail_Renderer').new())
             ECS:Register(require('Core/Libraries/ECS/Systems/Rendering/s_Animation_Renderer').new())
             ECS:Register(require('Core/Libraries/ECS/Systems/Rendering/s_Sprite_Renderer').new())

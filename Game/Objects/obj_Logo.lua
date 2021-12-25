@@ -97,7 +97,7 @@ return {
         end
         
       elseif(self.state:Compare("WAIT")) then
-        if(timers:Finished(h_aber)) then self.state:Set("ABERRATION") end
+        if(timers:Is_Finished(h_aber)) then self.state:Set("ABERRATION") end
         
       elseif(self.state:Compare("ABERRATION")) then
         aScale = lerp(aScale, 0, 0.05)
@@ -112,7 +112,7 @@ return {
         self.shader_aber:SetUniform(h_scale, aScale)
         
       elseif(self.state:Compare("TO_NEXT")) then        
-        if(timers:Finished(h_aber)) then 
+        if(timers:Is_Finished(h_aber)) then 
           self.expired = true
           self.state:Set("DONE")        
         end

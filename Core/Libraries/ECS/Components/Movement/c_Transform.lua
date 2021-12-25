@@ -29,6 +29,17 @@ return {
       
       insert(self.children, child)
     end
+    
+    -----------------------
+    -- Get_Cell_Position --
+    -----------------------
+    function component:Get_Cell_Position(_pTileW, _pTileH)
+      local transform = self.gameObject:Get_Component("transform")
+      return {
+          x = floor(self.position.x / _pTileW) + 1,
+          y = floor(self.position.y / _pTileH) + 1
+      }
+    end
 
     ---------------
     -- Get_Child --

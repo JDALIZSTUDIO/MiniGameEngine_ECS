@@ -1,8 +1,6 @@
 return {
-  new = function(_pECS)
+  new = function()
     local component = p_Component.new("characterController")
-          component.ECS = _pECS or nil
-    
 
     -------------
     -- Animate --
@@ -62,6 +60,13 @@ return {
       
     end
     
+    --------------
+    -- Draw_GUI --
+    --------------
+    function component:Draw_GUI()
+      
+    end
+
     -----------------------
     -- On_Entity_Collision --
     -----------------------

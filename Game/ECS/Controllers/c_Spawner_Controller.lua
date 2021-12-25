@@ -1,8 +1,8 @@
 local factory  = require('Core/Libraries/ECS/Components/Controllers/c_Character_Controller')
 
 return {
-  new = function(_pECS)
-    local component = factory.new(_pECS)
+  new = function()
+    local component = factory.new()
           
     local gameObject
     local lstTanks   = {}
@@ -119,7 +119,7 @@ return {
       local current  = state:Get_Name()
 
       if(current == "WAIT") then
-        if(timers:Finished(tName)) then
+        if(timers:Is_Finished(tName)) then
           state:Set("OPENING")
         end
       elseif(current == "OPENING") then
@@ -127,14 +127,14 @@ return {
       elseif(current == "CLOSING") then
 
       elseif(current == "OPEN") then
-        if(timers:Finished(tName)) then
+        if(timers:Is_Finished(tName)) then
           state:Set("CLOSING")
         end
       elseif(current == "CLOSED") then
         self:Clean_Up()
         if(#lstTanks < maxTanks) then
           if(animator.Get_Name() == "closed") then
-            if(timers:Finished(tName)) then
+            if(timers:Is_Finished(tName)) then
               state:Set("OPENING")
             end
           end

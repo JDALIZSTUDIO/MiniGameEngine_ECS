@@ -1,10 +1,13 @@
 return {
     new = function()
-      local system = p_System.new({"transform", "boundingBox"})
+      local system = p_System.new({"transform", "boundingBox", "boxCollider"})
       
       local entities = {}      
       local bc       = "boxCollider"
       local bb       = "boundingBox"
+      local ch       = "characterController"
+
+      local insert = table.insert
       
       ----------------------
       -- Collide_Entities --
@@ -16,26 +19,29 @@ return {
         local bBox   = _pEntity:Get_Component(bb)
         local boxCol = _pEntity:Get_Component(bc)
         local otherBBox
-  
-        local result   = {}
+        
+        local collide = false
+        local result  = {}
         
         for i = length, 1, -1 do
           other = entities[i]        
-          if(other ~= _pEntity      and 
-             other.expired == false and
+          if(other ~= _pEntity      and
              other.active  == true) then
              
             if(system:Match(other)) then
               otherBBox = other:Get_Component(bb)
               if(bBox:Intersects(otherBBox)) then
+                collide = true
                 insert(result, other)
               end
             end
           end
         end 
         
-        local character = _pEntity:Get_Component(ch)
-        if(character ~= nil) then character:On_Entity_Collision(result) end        
+        if(collide) then
+          local character = _pEntity:Get_Component(ch)
+          if(character ~= nil) then character:On_Entity_Collision(result) end
+        end      
       end
 
       ----------
@@ -47,7 +53,7 @@ return {
         
         entities = self.ECS:Get_Entities()
 
-        if(isDebug) then print("Systems, loaded:      s_Bounding_Box by ".._pEntity.name) end
+        if(isDebug) then print("Systems, loaded:      s_Box_Collider by ".._pEntity.name) end
       end
       
       ------------

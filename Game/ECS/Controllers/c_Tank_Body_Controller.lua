@@ -1,8 +1,8 @@
 local factory  = require('Core/Libraries/ECS/Components/Controllers/c_Character_Controller')
 
 return {
-  new = function(_pECS)
-    local component = factory.new(_pECS)
+  new = function()
+    local component = factory.new()
           
     local moving       = false
     local turret       = nil
