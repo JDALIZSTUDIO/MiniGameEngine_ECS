@@ -42,8 +42,8 @@ return {
           
           local alpha, pos
           for i = 1, length do            
-            alpha = i / length * renderer.alpha * 0.1
-            love.graphics.setColor(1, 1, 1, alpha)
+            alpha = i / length * renderer.alpha * 0.2
+            love.graphics.setColor(0.5, 0.5, 0.5, alpha)
             
             trail = emitter.trail[i]
             love.graphics.draw(renderer.sprite, 

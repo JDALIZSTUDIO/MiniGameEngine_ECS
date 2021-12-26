@@ -27,6 +27,13 @@ return {
       
     end
     
+    -------------
+    -- On_Load --
+    -------------
+    function coreGame:On_Load()
+
+    end
+
     ----------
     -- Load --
     ----------
@@ -40,10 +47,8 @@ return {
       self:Set_Aspect(screenWidth, screenHeight, screenScale, fullscreen)      
       vignette = require('Core/Libraries/Vignette').new()
       vignette:Set_Texture("Core/Images/Vignette/Vignette1280x720.png")
-
-      Input.keyboard:SetAxies({["left"] = "left", ["right"] = "right", ["up"] = "up", ["down"] = "down"})
-      Input.keyboard:SetButtons({["button1"] = "space", ["button2"] = "lctrl", ["button3"] = "lshift", ["button4"] = "return"})  
       
+      self:On_Load()
       self:Load_Scenes()
       Scene_Manager:Start()
     end

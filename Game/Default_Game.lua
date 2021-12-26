@@ -1,7 +1,18 @@
 return {
     new = function()
         local game = require('Core/Game_Loop/Core_Game_Loop').new("Default_Game")
+        
+        -------------
+        -- On_Load --
+        -------------
+        function game:On_Load()            
+            Input.keyboard:SetAxies({["left"] = 'q', ["right"] = 'd', ["up"] = 'z', ["down"] = 's'})
+            Input.keyboard:SetButtons({["button1"] = "space", ["button2"] = "lctrl", ["button3"] = "lshift", ["button4"] = "return"})
+        end
 
+        -----------------
+        -- Load_Scenes --
+        -----------------
         function game:Load_Scenes()
             --Scene_Manager:Add("Test_Lighting",    'TESTS/Scenes/Scene_Test_Lighting')
             --Scene_Manager:Add("Test_Tilemap",     'TESTS/Scenes/Scene_Test_Tilemap')

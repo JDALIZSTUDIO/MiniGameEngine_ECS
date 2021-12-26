@@ -93,7 +93,8 @@ return {
                           anim:Add("closed",  "Game/Images/Enemies/spawner_atlas.png", 32, 32, 0, 0, 1, 1, 1, 1, 0,  false)
                           anim:Add("open",    "Game/Images/Enemies/spawner_atlas.png", 32, 32, 0, 0, 2, 1, 2, 1, 0,  false)
                           anim:Add("opening", "Game/Images/Enemies/spawner_atlas.png", 32, 32, 0, 0, 1, 2, 3, 2, 15, false)
-                          anim:Add("closing", "Game/Images/Enemies/spawner_atlas.png", 32, 32, 0, 0, 1, 3, 3, 3, 15, false)                   
+                          anim:Add("closing", "Game/Images/Enemies/spawner_atlas.png", 32, 32, 0, 0, 1, 3, 3, 3, 15, false)
+                          anim:Add("death",   "Game/Images/FX/spawner_death_128x128_40.png", 32, 32, 0, 0, 1, 3, 3, 3, 120, false)                    
 
                 elseif(obj.name == "block") then
                     local block = ECS:Create()
@@ -104,7 +105,9 @@ return {
                           block:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Bounding_Box').new(0, 0, 32, 32))
                           block:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Box_Collider').new())
                           block:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Rigid_Body').new({isStatic = true}))
-                          block:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_Sprite_Renderer').new("Game/Images/Environment/block.png"))
+                    local anim = block:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_Animator').new())
+                          anim:Add("idle",  "Game/Images/Environment/block.png", 32, 32, 0, 0, 1, 1, 1, 1, 0,  false)
+                          anim:Add("death", "Game/Images/FX/block_death_128x128_n37.png", 128, 128, 0, 0, 1, 1, 37, 1, 120,  false)
                           
                 elseif(obj.name == "brickWall") then
                     local wall = ECS:Create()
@@ -115,7 +118,9 @@ return {
                           wall:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Bounding_Box').new(0, 0, 32, 32))
                           wall:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Box_Collider').new())
                           wall:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Rigid_Body').new({isStatic = true}))
-                          wall:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_Sprite_Renderer').new("Game/Images/Environment/brickWall.png"))
+                    local anim = wall:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_Animator').new())
+                          anim:Add("idle",  "Game/Images/Environment/brickWall.png", 32, 32, 0, 0, 1, 1, 1, 1, 0,  false)
+                          anim:Add("death", "Game/Images/FX/brickWall_death_128x128_n41.png", 128, 128, 0, 0, 1, 1, 41, 1, 120,  false)
                 
                 elseif(obj.name == "crate") then
                     local crate = ECS:Create()
@@ -126,19 +131,24 @@ return {
                           crate:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Bounding_Box').new(0, 0, 32, 32))
                           crate:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Box_Collider').new())
                           crate:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Rigid_Body').new({isStatic = true}))
-                          crate:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_Sprite_Renderer').new("Game/Images/Environment/crate.png"))          
+                    local anim = crate:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_Animator').new())
+                          anim:Add("idle",  "Game/Images/Environment/crate.png", 32, 32, 0, 0, 1, 1, 1, 1, 0,  false)
+                          anim:Add("death", "Game/Images/FX/crate_death_128x128_n43.png", 128, 128, 0, 0, 1, 1, 43, 1, 120,  false)
                 
                 
                 elseif(obj.name == "barrel") then
                     local barrel = ECS:Create()
                           barrel.name = obj.name
-                          barrel:Add_Component(require('Game/ECS/Controllers/c_Solid_Controller').new())
+                          barrel:Add_Component(require('Game/ECS/Controllers/c_Barrel_Controller').new())
                           barrel:Add_Component(require('Core/Libraries/ECS/Components/Health/c_Health').new())
+                          barrel:Add_Component(require('Core/Libraries/ECS/Components/FX/c_Animated_FX_Emitter').new())
                           barrel:Add_Component(require('Core/Libraries/ECS/Components/Movement/c_Transform').new(x, y, 0))
                           barrel:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Bounding_Box').new(0, 0, 32, 32))
                           barrel:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Box_Collider').new())
                           barrel:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Rigid_Body').new({isStatic = true}))
-                          barrel:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_Sprite_Renderer').new("Game/Images/Environment/barrel.png"))
+                    local anim = barrel:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_Animator').new())
+                          anim:Add("idle",  "Game/Images/Environment/barrel.png", 32, 32, 0, 0, 1, 1, 1, 1, 0,  false)
+                          anim:Add("death", "Game/Images/FX/barrel_death_128x128_n34.png", 128, 128, 0, 0, 1, 1, 34, 1, 120,  false)
 
                 elseif(obj.name == "bush") then
                     local bush = ECS:Create()

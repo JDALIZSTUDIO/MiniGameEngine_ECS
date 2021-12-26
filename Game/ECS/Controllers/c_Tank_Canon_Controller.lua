@@ -41,6 +41,7 @@ return {
             
             local bullet    = self.gameObject.ECS:Create()
                   bullet:Add_Component(require('Game/ECS/Controllers/c_Bullet_Controller').new({owner = transform.parent.gameObject.name}))
+                  bullet:Add_Component(require('Core/Libraries/ECS/Components/FX/c_Animated_FX_Emitter').new())
                   bullet:Add_Component(require('Core/Libraries/ECS/Components/Movement/c_Transform').new(x, y, deg(dir)))
                   bullet:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Bounding_Box').new(0, 0, 8, 8))
                   bullet:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Box_Collider').new())

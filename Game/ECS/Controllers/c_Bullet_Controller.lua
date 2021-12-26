@@ -13,15 +13,30 @@ return {
     local origin
     local toDestroy = false
 
-    local impactPath
-
     local rad = math.rad
     local rnd = math.random
     local cos = math.cos
     local sin = math.sin
 
-    local tr = "transform"
+    local fx  = "animatedFxEmitter"
+    local tr  = "transform"
         
+    -------------------
+    -- Create_Impact --
+    -------------------
+    function component:Create_Impact()
+        local emitter = self.gameObject:Get_Component(fx)
+              emitter:Create("Game/Images/FX/impact_bullet_48x48_n36.png", 
+                             48, 
+                             48, 
+                             0, 
+                             0, 
+                             1, 
+                             1, 
+                             36, 
+                             1)
+    end
+
     -----------------
     -- Custom_Load --
     -----------------
@@ -33,7 +48,7 @@ return {
             sin(rot) * self.maxSpeed
         )
         origin = Vector2.new(transform.position.x, transform.position.y)
-        impactPath = "Game/Images/FX/impact_bullet_48x48.png"
+        impactPath = "Game/Images/FX/impact_bullet_48x48_n36.png"
     end
     
     ----------------
@@ -55,21 +70,6 @@ return {
                 toDestroy = true
             end
         end
-    end
-
-    -------------------
-    -- Create_Impact --
-    -------------------
-    function component:Create_Impact()
-        local transform = self.gameObject:Get_Component(tr)
-        local impact = self.gameObject.ECS:Create()
-              impact:Add_Component(require('Game/ECS/Controllers/c_FX_Controller').new())
-              impact:Add_Component(require('Core/Libraries/ECS/Components/Movement/c_Transform').new(transform.position.x, 
-                                                                                                     transform.position.y, 
-                                                                                                     rnd(359)))
-              impact:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Bounding_Box').new(0, 0, 16, 16))
-        local anim = impact:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_Animator').new())
-              anim:Add("run", impactPath, 48, 48, 0, 0, 1, 1, 36, 1, 60, false)
     end
 
     -----------------------
