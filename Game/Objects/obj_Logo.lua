@@ -22,6 +22,9 @@ return {
     local cos  = math.cos
     local lerp = Lerp
 
+    ----------
+    -- Load --
+    ----------
     function obj:Load()
       timers     = require('Core/Libraries/Timers').new()
       timers:Add_Timer(h_aber, 1)
@@ -68,6 +71,9 @@ return {
       
     end
 
+    ------------
+    -- Update --
+    ------------
     function obj:Update(dt)
       timers:Update(dt)
       
@@ -131,28 +137,36 @@ return {
       self.logo.scale.y       = love.graphics:getHeight() / self.logo.image:getHeight() / Aspect.scale
     end
 
+    ----------
+    -- Draw --
+    ----------
     function obj:Draw()
       love.graphics.setColor(1, 1, 1, 1)
       
-      love.graphics.draw(self.background.image,
-                         self.background.position.x,
-                         self.background.position.y,
-                         0,
-                         self.background.scale.x,
-                         self.background.scale.y)
+      love.graphics.draw(
+        self.background.image,
+        self.background.position.x,
+        self.background.position.y,
+        0,
+        self.background.scale.x,
+        self.background.scale.y
+      )
       
       if(self.state:Compare("ABERRATION")) then        
         self.shader_aber:Set()        
       else
         self.shader_wave:Set()        
       end
+
       love.graphics.setColor(1, 1, 1, self.alpha)
-          love.graphics.draw(self.logo.image,
-                             self.logo.position.x,
-                             self.logo.position.y,
-                             0,
-                             self.logo.scale.x,
-                             self.logo.scale.y)
+          love.graphics.draw(
+            self.logo.image,
+            self.logo.position.x,
+            self.logo.position.y,
+            0,
+            self.logo.scale.x,
+            self.logo.scale.y
+          )
                            
       self.shader_aber:UnSet()
       self.shader_wave:UnSet()

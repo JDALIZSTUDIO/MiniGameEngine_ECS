@@ -57,8 +57,7 @@ return {
     function Aspect:UnSet()
       love.graphics.scale(1/self.scale, 1/self.scale)
       love.graphics.translate(-self.dX, -self.dY)
-      love.graphics.pop()
-      
+      love.graphics.pop()      
     end
   
     return Aspect

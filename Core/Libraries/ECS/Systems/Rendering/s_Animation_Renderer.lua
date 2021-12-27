@@ -69,15 +69,17 @@ return {
       
       love.graphics.setColor(1, 1, 1, animator.alpha)
 
-      love.graphics.draw(current.atlas, 
-                         current.quadData[animator.currentFrame], 
-                         transform.position.x + current.offset.x, 
-                         transform.position.y + current.offset.y,
-                         rad(transform.rotation),
-                         transform.scale.x,
-                         transform.scale.y,
-                         current.frameWidth  * 0.5,
-                         current.frameHeight * 0.5) 
+      love.graphics.draw(
+        current.atlas, 
+        current.quadData[animator.currentFrame], 
+        transform.position.x + current.offset.x, 
+        transform.position.y + current.offset.y,
+        rad(transform.rotation),
+        transform.scale.x,
+        transform.scale.y,
+        current.frameWidth  * 0.5,
+        current.frameHeight * 0.5
+      ) 
 
       love.graphics.setColor(1, 1, 1, 1)
     end

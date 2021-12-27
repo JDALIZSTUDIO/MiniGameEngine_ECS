@@ -29,30 +29,34 @@ return {
         if(dropShadow ~= nil) then
           love.graphics.setColor(0, 0, 0, dropShadow.alpha)
         
-          love.graphics.draw(renderer.sprite, 
-                             transform.position.x + dropShadow.offset.x, 
-                             transform.position.y + dropShadow.offset.y, 
-                             math.rad(transform.rotation), 
-                             transform.scale.x, 
-                             transform.scale.y, 
-                             renderer.halfW, 
-                             renderer.halfH,
-                             0,
-                             0)
+          love.graphics.draw(
+            renderer.sprite, 
+            transform.position.x + dropShadow.offset.x, 
+            transform.position.y + dropShadow.offset.y, 
+            math.rad(transform.rotation), 
+            transform.scale.x, 
+            transform.scale.y, 
+            renderer.halfW, 
+            renderer.halfH,
+            0,
+            0
+          )
         end
         
         love.graphics.setColor(1, 1, 1, renderer.alpha)
         
-        love.graphics.draw(renderer.sprite, 
-                           transform.position.x, 
-                           transform.position.y, 
-                           math.rad(transform.rotation), 
-                           transform.scale.x, 
-                           transform.scale.y, 
-                           renderer.halfW, 
-                           renderer.halfH,
-                           0,
-                           0)
+        love.graphics.draw(
+          renderer.sprite, 
+          transform.position.x, 
+          transform.position.y, 
+          math.rad(transform.rotation), 
+          transform.scale.x, 
+          transform.scale.y, 
+          renderer.halfW, 
+          renderer.halfH,
+          0,
+          0
+        )
                          
         if(renderer.shader ~= nil) then renderer.shader:UnSet() end
       end

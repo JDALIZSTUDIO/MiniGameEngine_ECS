@@ -53,8 +53,7 @@ return {
         end
       end
       return table
-    end
-    
+    end    
     return Table
   end
 }

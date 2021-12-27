@@ -128,10 +128,12 @@ return {
                             quad = self.quads[id]
                             if(quad ~= nil) then
                                 love.graphics.setColor(1, 1, 1, layer.opacity)
-                                love.graphics.draw(self.image, 
-                                                   quad,
-                                                   (xx-1)*self.map.tilewidth, 
-                                                   (yy-1)*self.map.tileheight)
+                                love.graphics.draw(
+                                    self.image, 
+                                    quad,
+                                    (xx-1)*self.map.tilewidth, 
+                                    (yy-1)*self.map.tileheight
+                                )
                             end
                         end
                     end 

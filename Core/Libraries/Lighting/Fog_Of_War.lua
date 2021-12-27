@@ -82,7 +82,16 @@ return {
             for i = 1, #self.removers do
                 l     = self.removers[i]
                 scale = l.power / 50
-                love.graphics.draw(self.hole, l.position[1], l.position[2], 0, scale, scale, self.halfW, self.halfH )
+                love.graphics.draw(
+                    self.hole, 
+                    l.position[1], 
+                    l.position[2], 
+                    0, 
+                    scale, 
+                    scale, 
+                    self.halfW, 
+                    self.halfH 
+                )
             end
             
             love.graphics.setCanvas()

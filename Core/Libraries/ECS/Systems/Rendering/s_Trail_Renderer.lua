@@ -46,16 +46,18 @@ return {
             love.graphics.setColor(0.5, 0.5, 0.5, alpha)
             
             trail = emitter.trail[i]
-            love.graphics.draw(renderer.sprite, 
-                               trail.x, 
-                               trail.y, 
-                               math.rad(trail.rotation), 
-                               transform.scale.x, 
-                               transform.scale.y, 
-                               renderer.halfW, 
-                               renderer.halfH,
-                               0,
-                               0)
+            love.graphics.draw(
+              renderer.sprite, 
+              trail.x, 
+              trail.y, 
+              math.rad(trail.rotation), 
+              transform.scale.x, 
+              transform.scale.y, 
+              renderer.halfW, 
+              renderer.halfH,
+              0,
+              0
+            )
         end
         
         renderer  = _pEntity:Get_Component(an)

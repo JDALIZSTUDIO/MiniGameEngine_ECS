@@ -18,8 +18,7 @@ return {
         -- Follow_Target --
         -------------------
         function Class:Follow_Target(_pTarget)  
-            local lerp = Lerp 
-
+            local lerp = Lerp
             if(self.isLook) then
                 local w = love.graphics.getWidth()
                 local h = love.graphics.getHeight()

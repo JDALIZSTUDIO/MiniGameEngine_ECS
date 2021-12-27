@@ -77,7 +77,13 @@ return {
 
       function f:Draw()
         love.graphics.setColor(0, 0, 0, f.alpha)
-          love.graphics.rectangle("fill", 0, 0, f.width, f.height)
+          love.graphics.rectangle(
+            "fill", 
+            0, 
+            0, 
+            f.width, 
+            f.height
+          )
         love.graphics.setColor(1, 1, 1, 1)
       end
 
