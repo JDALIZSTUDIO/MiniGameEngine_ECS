@@ -1,6 +1,6 @@
 return {
   new = function(_pName)
-    local coreGame = {
+    local Class = {
       name    = _pName or "Default game Name",
       globals = nil,
       helpers = nil
@@ -14,31 +14,70 @@ return {
     
     local surface, vignette, vignetteSX, vignetteSY
     
-    function coreGame:Set_Aspect(_pW, _pH, _pScale, _pFullscreen)
+    function Class:Set_Aspect(_pW, _pH, _pScale, _pFullscreen)
       Aspect:SetWindow(_pW, _pH, _pScale, _pFullscreen)      
       surface = love.graphics.newCanvas(_pW, _pH)
       surface:setFilter("nearest", "nearest", 16)
     end
+    
+    ------------------
+    -- _Load_Assets --
+    ------------------
+    function Class:_Load_Assets()      
+      self:On_Load_Assets()
+    end
 
-    -----------------
-    -- Load_Scenes --
-    -----------------
-    function coreGame:Load_Scenes()
-      
+    ------------------
+    -- _Load_Scenes --
+    ------------------
+    function Class:_Load_Scenes()
+      self:On_Load_Scenes()
     end
     
+    --------------------
+    -- _Load_Services --
+    --------------------
+    function Class:_Load_Services()
+      Locator:Add_Service("spriteLoader", require('Core/Libraries/Sprite_Loader').new())      
+      self:On_Load_Services()
+    end
+
     -------------
     -- On_Load --
     -------------
-    function coreGame:On_Load()
+    function Class:On_Load()
 
     end
 
+    --------------------
+    -- On_Load_Assets --
+    --------------------
+    function Class:On_Load_Assets()
+      
+    end
+
+    -------------------------
+    -- On_Load_Load_Scenes --
+    -------------------------
+    function Class:On_Load_Load_Scenes()      
+      
+    end
+    
+    ----------------------
+    -- On_Load_Services --
+    ----------------------
+    function Class:On_Load_Services()
+      
+    end    
+    
     ----------
     -- Load --
     ----------
-    function coreGame:Load()
-      love.window.setTitle(coreGame.name)
+    function Class:Load()
+      love.window.setTitle(Class.name)
+
+      self:_Load_Services()
+
       self.globals = require('Core/Globals/Globals')
       self.globals:Load()
       
@@ -48,15 +87,16 @@ return {
       vignette = require('Core/Libraries/Vignette').new()
       vignette:Set_Texture("Core/Images/Vignette/Vignette1280x720.png")
       
+      self:_Load_Assets()
       self:On_Load()
-      self:Load_Scenes()
+      self:_Load_Scenes()
       Scene_Manager:Start()
     end
     
     ------------
     -- Update --
     ------------
-    function coreGame:Update(dt)
+    function Class:Update(dt)
       Input:Update(dt)
       Scene_Manager:Update(dt)
       Camera:Update(dt)
@@ -68,7 +108,7 @@ return {
     ----------
     -- Draw --
     ----------
-    function coreGame:Draw()
+    function Class:Draw()
       love.graphics.setBackgroundColor(colorBG)
         love.graphics.setColor(1, 1, 1, 1)
         love.graphics.setCanvas(surface)
@@ -94,6 +134,6 @@ return {
       Transition:Draw()
     end
     
-    return coreGame
+    return Class
   end
 }

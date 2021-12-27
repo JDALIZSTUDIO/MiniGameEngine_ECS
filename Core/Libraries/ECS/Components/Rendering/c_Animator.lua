@@ -23,21 +23,15 @@ return {
     ---------
     -- Add --
     ---------
-    function component:Add(_pID, _pPath, _pW, _pH, _pOffsetX, _pOffsetY, _pStartX, _pStartY, _pEndX, _pEndY, _pSpeed, _pLoop)
-      local image         = love.graphics.newImage(_pPath)
-      local imageWidth    = image:getWidth()
-      local imageHeight   = image:getHeight()
-      
+    function component:Add(_pID, _pSprite, _pFrameW, _pFrameH, _pOffsetX, _pOffsetY, _pStartX, _pStartY, _pEndX, _pEndY, _pSpeed, _pLoop)
       local loop = _pLoop
       if(loop == nil) then loop = true end
 
       local animation     = {
-            atlas         = image,
-            atlasWidth    = imageWidth,
-            atlasHeight   = imageHeight,
+            sprite        = _pSprite,
             finished      = false,
-            frameWidth    = _pW or imageWidth,
-            frameHeight   = _pH or imageHeight,
+            frameWidth    = _pFrameW,
+            frameHeight   = _pFrameH,
             isLoop        = loop,
             name          = _pID,
             offset        = Vector2.new(-_pOffsetX or 0, -_pOffsetY or 0),
@@ -48,17 +42,20 @@ return {
       
       local col   = _pStartX or 1
       local lig   = _pStartY or 1
-      local nbCol = max(1, _pEndX or floor(animation.atlasWidth  / animation.frameWidth ))
-      local nbLig = max(1, _pEndY or floor(animation.atlasHeight / animation.frameHeight))
+      local nbCol = max(1, _pEndX or floor(animation.sprite.width  / animation.frameWidth ))
+      local nbLig = max(1, _pEndY or floor(animation.sprite.height / animation.frameHeight))
       
       local quad
       for y = lig, nbLig, 1 do
         for x = col, nbCol, 1 do
-          quad = newQuad((x-1) * animation.frameWidth,
-                         (y-1) * animation.frameHeight,
-                          animation.frameWidth,
-                          animation.frameHeight,
-                          animation.atlas:getDimensions());
+          quad = newQuad(
+            (x-1) * animation.frameWidth,
+            (y-1) * animation.frameHeight,
+            animation.frameWidth,
+            animation.frameHeight,
+            animation.sprite.width,
+            animation.sprite.height
+          )
                                      
           insert(animation.quadData, quad)
         end

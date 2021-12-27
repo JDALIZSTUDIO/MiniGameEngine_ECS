@@ -10,7 +10,7 @@ return {
     local acceleration = 8
     local rSpeed       = 6
 
-    local ps = "lParticleSystem"
+    local ps = "particleSystem"
     local ch = "characterController"
     local an = "animator"
     local rb = "rigidBody"
@@ -117,8 +117,8 @@ return {
           y = transform.position.y + sin(direction) * distance
         }
 
-        local partSystem = self.gameObject:Get_Component(ps)
-              partSystem:Emit(particles:Smoke_Properties(position), rnd(3, 5))
+        --local partSystem = self.gameObject:Get_Component(ps)
+              --partSystem:Emit(particles:Smoke_Properties(position), rnd(3, 5))
 
         timers:Start(smokeStr)
       end

@@ -32,30 +32,30 @@ return {
         love.graphics.setColor(0, 0, 0, dropShadow.alpha)
       
         love.graphics.draw(
-          renderer.sprite, 
+          renderer.sprite.image, 
           transform.position.x + dropShadow.offset.x, 
           transform.position.y + dropShadow.offset.y, 
           rad(transform.rotation), 
           transform.scale.x, 
           transform.scale.y, 
-          renderer.halfW, 
-          renderer.halfH,
+          renderer.sprite.halfW, 
+          renderer.sprite.halfH,
           0,
           0
-          )
+        )
       end
       
       love.graphics.setColor(1, 1, 1, renderer.alpha)
       
       love.graphics.draw(
-        renderer.sprite, 
+        renderer.sprite.image, 
         transform.position.x, 
         transform.position.y, 
         rad(transform.rotation), 
         transform.scale.x, 
         transform.scale.y, 
-        renderer.halfW, 
-        renderer.halfH,
+        renderer.sprite.halfW, 
+        renderer.sprite.halfH,
         0,
         0
       )

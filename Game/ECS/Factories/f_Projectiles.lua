@@ -8,6 +8,9 @@ return {
         -- Init_Tank_Bullet --
         ----------------------
         function Class:Init_Tank_Bullet(_pEntity, _pOwner, _pX, _pY, _pRotation)
+            local spriteLoader = Locator:Get_Service("spriteLoader")
+            local spr_bullet   = spriteLoader:Get_Sprite("tank_bullet")
+
             _pEntity:Add_Component(require('Game/ECS/Controllers/c_Bullet_Controller').new({owner = _pOwner}))
             _pEntity:Add_Component(require('Core/Libraries/ECS/Components/FX/c_Animated_FX_Emitter').new())
             _pEntity:Add_Component(require('Core/Libraries/ECS/Components/Movement/c_Transform').new(_pX, _pY, deg(_pRotation)))
@@ -18,7 +21,7 @@ return {
                 body.isSolid = false
                  
             _pEntity:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_Trail_Emitter').new())
-            _pEntity:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_Sprite_Renderer').new("Game/Images/Projectiles/tank_bullet.png"))
+            _pEntity:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_Sprite_Renderer').new(spr_bullet))
             _pEntity.name = "bullet"
         end
 

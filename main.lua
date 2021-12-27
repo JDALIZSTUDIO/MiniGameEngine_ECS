@@ -10,11 +10,14 @@ isDebug = false
 
 local game = nil
 
+Locator = nil
+
 ----------
 -- load --
 ----------
 function love.load()
-  game = require('Game/Default_Game').new("New_Game")
+  Locator = require('Core/Libraries/Service_Locator').new()
+  game    = require('Game/Default_Game').new("New_Game")
   game:Load()
 end
 

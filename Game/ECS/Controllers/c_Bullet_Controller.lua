@@ -25,8 +25,9 @@ return {
     -- Create_Impact --
     -------------------
     function component:Create_Impact()
-        local emitter = self.gameObject:Get_Component(fx)
-              emitter:Emit("Game/Images/FX/impact_bullet_48x48_n36.png", 
+        local spr_impact = Locator:Get_Service("spriteLoader"):Get_Sprite("impact_bullet")
+        local emitter    = self.gameObject:Get_Component(fx)
+              emitter:Emit(spr_impact, 
                            48, 
                            48, 
                            0, 

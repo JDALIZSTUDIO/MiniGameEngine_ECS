@@ -58,8 +58,6 @@ return {
                     fPlayer:Init_Player(player, x, y)                
                 FOW:Add(player)
 
-                --ECS:Set_Focus(player)
-
                 elseif(obj.name == "spawner") then
                     local spawner = ECS:Create()
                           spawner.name = obj.name
@@ -85,12 +83,7 @@ return {
                     local barrel = ECS:Create()
                           barrel.name = obj.name
                     fEnvironment:Init_Barrel(barrel, x, y)
-
-                elseif(obj.name == "bush") then
-                    local bush = ECS:Create()
-                          bush.name = obj.name
-                    fEnvironment:Init_Bush(bush, x, y)
-                          
+                         
                 end
             end
         end
@@ -115,7 +108,8 @@ return {
             ECS:Register(require('Core/Libraries/ECS/Systems/Rendering/s_Sprite_Renderer').new())
             ECS:Register(require('Core/Libraries/ECS/Systems/Rendering/s_Sprite_GUI_Renderer').new())
             ECS:Register(require('Core/Libraries/ECS/Systems/Rendering/s_Box_Renderer').new())
-            ECS:Register(require('Core/Libraries/ECS/Systems/FX/s_Love_Particle_System').new())
+            ECS:Register(require('Core/Libraries/ECS/Systems/FX/s_Particle_System').new())
+            --ECS:Register(require('Core/Libraries/ECS/Systems/FX/s_Love_Particle_System').new())
         end
 
         ----------

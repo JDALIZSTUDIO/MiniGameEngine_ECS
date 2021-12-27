@@ -2,7 +2,8 @@ return {
     new = function()
         local Class = {}
 
-        local deg = math.deg
+        local spriteLoader = Locator:Get_Service("spriteLoader")
+        local deg          = math.deg
 
         -----------------------
         -- Init_Destructible --
@@ -35,40 +36,48 @@ return {
         -- Init_Block --
         ----------------
         function Class:Init_Block(_pEntity, _pX, _pY)
+            local spr_idle  = spriteLoader:Get_Sprite("block")
+            local spr_death = spriteLoader:Get_Sprite("block_death")
             self:Init_Destructible(_pEntity, _pX, _pY)
             local anim = _pEntity:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_Animator').new())
-                  anim:Add("idle",  "Game/Images/Environment/block.png", 32, 32, 0, 0, 1, 1, 1, 1, 0,  false)
-                  anim:Add("death", "Game/Images/FX/block_death_128x128_n37.png", 128, 128, 0, 0, 1, 1, 37, 1, 120,  false)
+                  anim:Add("idle",  spr_idle,  32, 32, 0, 0, 1, 1, 1, 1, 0,  false)
+                  anim:Add("death", spr_death, 128, 128, 0, 0, 1, 1, 37, 1, 120,  false)
         end
         
         --------------------
         -- Init_BrickWall --
         --------------------
         function Class:Init_BrickWall(_pEntity, _pX, _pY)
+            local spr_idle  = spriteLoader:Get_Sprite("brickWall")
+            local spr_death = spriteLoader:Get_Sprite("brickWall_death")
             self:Init_Destructible(_pEntity, _pX, _pY)
             local anim = _pEntity:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_Animator').new())
-                  anim:Add("idle",  "Game/Images/Environment/brickWall.png", 32, 32, 0, 0, 1, 1, 1, 1, 0,  false)
-                  anim:Add("death", "Game/Images/FX/brickWall_death_128x128_n41.png", 128, 128, 0, 0, 1, 1, 41, 1, 120,  false)
+                  anim:Add("idle",  spr_idle,  32, 32, 0, 0, 1, 1, 1, 1, 0,  false)
+                  anim:Add("death", spr_death, 128, 128, 0, 0, 1, 1, 41, 1, 120,  false)
         end
         
         ----------------
         -- Init_Crate --
         ----------------
         function Class:Init_Crate(_pEntity, _pX, _pY)
+            local spr_idle  = spriteLoader:Get_Sprite("crate")
+            local spr_death = spriteLoader:Get_Sprite("crate_death")
             self:Init_Destructible(_pEntity, _pX, _pY)
             local anim = _pEntity:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_Animator').new())
-                  anim:Add("idle",  "Game/Images/Environment/crate.png", 32, 32, 0, 0, 1, 1, 1, 1, 0,  false)
-                  anim:Add("death", "Game/Images/FX/crate_death_128x128_n43.png", 128, 128, 0, 0, 1, 1, 43, 1, 120,  false)
+                  anim:Add("idle",  spr_idle,  32, 32, 0, 0, 1, 1, 1, 1, 0,  false)
+                  anim:Add("death", spr_death, 128, 128, 0, 0, 1, 1, 43, 1, 120,  false)
         end
 
         -----------------
         -- Init_Barrel --
         -----------------
         function Class:Init_Barrel(_pEntity, _pX, _pY)
+            local spr_idle  = spriteLoader:Get_Sprite("barrel")
+            local spr_death = spriteLoader:Get_Sprite("barrel_death")
             self:Init_Explosive(_pEntity, _pX, _pY)
             local anim = _pEntity:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_Animator').new())
-                  anim:Add("idle",  "Game/Images/Environment/barrel.png", 32, 32, 0, 0, 1, 1, 1, 1, 0,  false)
-                  anim:Add("death", "Game/Images/FX/barrel_death_128x128_n34.png", 128, 128, 0, 0, 1, 1, 34, 1, 120,  false)
+                  anim:Add("idle",  spr_idle,  32, 32, 0, 0, 1, 1, 1, 1, 0,  false)
+                  anim:Add("death", spr_death, 128, 128, 0, 0, 1, 1, 34, 1, 120,  false)
         end
 
         ---------------

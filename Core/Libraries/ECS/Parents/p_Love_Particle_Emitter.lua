@@ -34,7 +34,6 @@ return {
                     insert(result, table[j])
                 end
             end
-            print(Dump(result))
             return result
         end
 

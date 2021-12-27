@@ -9,7 +9,7 @@ return {
         ----------
         -- Emit --
         ----------
-        function component:Emit(_pPath, _pFrameW, _pFrameH, _pOffsetX, _pOffsetY, _pStartCol, _pStartLig, _pEndCol, _pEndLig, _pSpeed)
+        function component:Emit(_pSprite, _pFrameW, _pFrameH, _pOffsetX, _pOffsetY, _pStartCol, _pStartLig, _pEndCol, _pEndLig, _pSpeed)
             local transform = self.gameObject:Get_Component(tr)
             local explosion = self.gameObject.ECS:Create()
                 explosion:Add_Component(require('Core/Libraries/ECS/Components/Controllers/c_FX_Controller').new())
@@ -24,7 +24,7 @@ return {
 
                 explosion:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Bounding_Box').new(0, 0, 16, 16))
             local anim = explosion:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_Animator').new())
-                  anim:Add("run", _pPath, _pFrameW, _pFrameH, _pOffsetX, _pOffsetY, _pStartCol, _pStartLig, _pEndCol, _pEndLig, _pSpeed or 120, false)
+                  anim:Add("run", _pSprite, _pFrameW, _pFrameH, _pOffsetX, _pOffsetY, _pStartCol, _pStartLig, _pEndCol, _pEndLig, _pSpeed or 120, false)
         end
 
         function component:Set_Scale(_pSX, _pSY)

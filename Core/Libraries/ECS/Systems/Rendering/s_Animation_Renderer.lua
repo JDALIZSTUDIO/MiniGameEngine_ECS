@@ -70,7 +70,7 @@ return {
       love.graphics.setColor(1, 1, 1, animator.alpha)
 
       love.graphics.draw(
-        current.atlas, 
+        current.sprite.image, 
         current.quadData[animator.currentFrame], 
         transform.position.x + current.offset.x, 
         transform.position.y + current.offset.y,

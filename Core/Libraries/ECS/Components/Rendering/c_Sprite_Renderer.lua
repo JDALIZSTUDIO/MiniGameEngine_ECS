@@ -1,13 +1,9 @@
 return {
-  new = function(_pPath, _pShader)
+  new = function(_pSprite, _pShader)
     local component = p_Component.new("spriteRenderer")
           component.alpha       = 1
           component.isGUI       = false
-          component.sprite      = love.graphics.newImage(_pPath)
-          component.width       = component.sprite:getWidth()
-          component.height      = component.sprite:getHeight()
-          component.halfW       = component.width  * 0.5
-          component.halfH       = component.height * 0.5
+          component.sprite      = _pSprite
           component.shader      = _pShader or nil
           component.surfacePing = nil
           component.surfacePong = nil

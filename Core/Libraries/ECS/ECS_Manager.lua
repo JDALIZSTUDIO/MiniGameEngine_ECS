@@ -1,8 +1,7 @@
 return {
   new = function()
     local Class = {
-      isFocus   = false,
-      focus     = nil,
+      expired   = false,
       entities  = {},
       systems   = {},
       z_sorting = false
@@ -102,17 +101,18 @@ return {
     -- Update --
     ------------
     function Class:Update(dt)
+      -- UnLoad
+      if(self.expired) then
+        self.entities = {}
+        self.systems  = {}
+        self.expired  = false
+      end
+
+      -- Update
       lstSorted = {}
       local entity, focusID
       for i = #self.entities, 1, -1 do
-        entity = self.entities[i]        
-        if(self.isFocus) then 
-          if(entity ~= nil and 
-             entity == self.focus) then
-            focusID = i
-          end 
-        end
-
+        entity = self.entities[i]
         if(entity.expired) then
           for j, system in ipairs(self.systems) do
             if(system:Match(entity)) then
@@ -138,13 +138,15 @@ return {
         end
       end
 
+      -- Z_Sorting
       if(self.z_sorting) then self:Sort_Entities(lstSorted) end
+    end
 
-      if(self.isFocus) then
-        if(self.focus ~= nil) then
-          insert(self.entities, #self.entities, remove(self.entities, focusID))
-        end
-      end
+    ------------
+    -- Unload --
+    ------------
+    function Class:UnLoad()
+      self.expired = true
     end
 
     ----------

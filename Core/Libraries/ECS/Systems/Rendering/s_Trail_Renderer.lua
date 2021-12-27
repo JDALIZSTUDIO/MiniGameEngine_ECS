@@ -47,14 +47,14 @@ return {
             
             trail = emitter.trail[i]
             love.graphics.draw(
-              renderer.sprite, 
+              renderer.sprite.image, 
               trail.x, 
               trail.y, 
               math.rad(trail.rotation), 
               transform.scale.x, 
               transform.scale.y, 
-              renderer.halfW, 
-              renderer.halfH,
+              renderer.sprite.halfW, 
+              renderer.sprite.halfH,
               0,
               0
             )

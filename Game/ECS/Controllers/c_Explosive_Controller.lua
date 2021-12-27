@@ -12,9 +12,10 @@ return {
     -- Explode --
     -------------
     function component:Explode()
+        local spr_explosion = Locator:Get_Service("spriteLoader"):Get_Sprite("explosion1")
         local transform = self.gameObject:Get_Component(tr)
         local emitter   = self.gameObject:Get_Component(fx)
-              emitter:Emit("Game/Images/FX/explosion_100x100_n59.png", 
+              emitter:Emit(spr_explosion, 
                            100, 
                            100, 
                            0, 
