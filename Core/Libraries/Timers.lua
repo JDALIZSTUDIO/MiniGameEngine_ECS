@@ -7,7 +7,7 @@ return {
     ---------
     -- Add --
     ---------
-    function Class:Add(_pID, _pDuration)
+    function Class:Add_Timer(_pID, _pDuration)
       local timer     = self:_Return_New_Timer(_pDuration)
       lstTimers[_pID] = timer
       return timer

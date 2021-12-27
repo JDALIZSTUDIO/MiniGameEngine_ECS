@@ -77,7 +77,10 @@ return {
         Aspect.screen.width  * 0.5,
         Aspect.screen.height * 0.5
       )
-      self.GUI = require('Core/Libraries/GUI/GUI_Factory')
+      
+      self.GUI = require('Core/Libraries/GUI/GUI_Controller').new()
+      self.GUI:Load()
+
       self:Awake()
       
       if (isDebug) then print("Scenes,  awoken:      "..Scene.name) end

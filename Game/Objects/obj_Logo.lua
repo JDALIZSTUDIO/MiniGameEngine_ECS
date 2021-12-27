@@ -24,7 +24,7 @@ return {
 
     function obj:Load()
       timers     = require('Core/Libraries/Timers').new()
-      timers:Add(h_aber, 1)
+      timers:Add_Timer(h_aber, 1)
       
       self.state = require('Core/Libraries/State_Machine').new({"MOVE", "STOP", "WAIT", "ABERRATION", "TO_NEXT", "DONE"})
       self.state:Set("MOVE")  

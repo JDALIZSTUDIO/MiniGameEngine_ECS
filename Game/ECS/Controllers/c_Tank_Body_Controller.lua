@@ -1,30 +1,39 @@
-local factory  = require('Core/Libraries/ECS/Components/Controllers/c_Character_Controller')
+local factory   = require('Core/Libraries/ECS/Components/Controllers/c_Character_Controller')
+local particles = require('Game/Particles/Particles_Factory') 
 
 return {
   new = function()
     local component = factory.new()
           
     local moving       = false
-    local turret       = nil
-    local gameObject   = nil
+    local cannon       = nil
     local acceleration = 8
     local rSpeed       = 6
 
+    local ps = "lParticleSystem"
     local ch = "characterController"
     local an = "animator"
     local rb = "rigidBody"
     local tr = "transform"
 
     local deg         = math.deg
+    local cos         = math.cos
+    local sin         = math.sin
     local rad         = math.rad
     local atan2       = math.atan2
+    local pi          = math.pi
+    local rnd         = math.random
     local smoothAngle = Smooth_Angle
+
+    local timers        = nil
+    local smokeStr      = "smoke"
+    local smokeDuration = 0.15
 
     -------------
     -- Animate --
     -------------
     function component:Animate() 
-      local animator  = gameObject:Get_Component(an) 
+      local animator  = self.gameObject:Get_Component(an) 
       if(moving) then
         animator:Play("move")
       else
@@ -35,24 +44,33 @@ return {
     -----------------
     -- Custom_Load --
     -----------------
-    function component:Custom_Load()  
-      gameObject = component.gameObject
-      
+    function component:Custom_Load()
+      timers = require('Core/Libraries/Timers').new()
+      timers:Add_Timer(smokeStr, smokeDuration)
+
+      local rigid = self.gameObject:Get_Component(rb)
+      normalSpeed = rigid:Get_MaxForce()
+      turboSpeed  = normalSpeed * 2
     end
     
     -------------------
     -- Process_Input --
     -------------------
     function component:Process_Input(dt)
-      local rigidbody = gameObject:Get_Component(rb)
+      local rigidbody = self.gameObject:Get_Component(rb)
+
+      local force = acceleration
+      if(Input.keyboard:Get_Button("button3")) then
+        force = acceleration * 1.5
+      end
 
       moving = false
-      if(Input.keyboard:GetAxis("up"))    then rigidbody:Add_Force({x = 0, y = -acceleration}) moving = true end
-      if(Input.keyboard:GetAxis("down"))  then rigidbody:Add_Force({x = 0, y = acceleration})  moving = true end
-      if(Input.keyboard:GetAxis("left"))  then rigidbody:Add_Force({x = -acceleration, y = 0}) moving = true end
-      if(Input.keyboard:GetAxis("right")) then rigidbody:Add_Force({x =  acceleration, y = 0}) moving = true end
+      if(Input.keyboard:Get_Axis("up"))    then rigidbody:Add_Force({x = 0, y = -force}) moving = true end
+      if(Input.keyboard:Get_Axis("down"))  then rigidbody:Add_Force({x = 0, y = force})  moving = true end
+      if(Input.keyboard:Get_Axis("left"))  then rigidbody:Add_Force({x = -force, y = 0}) moving = true end
+      if(Input.keyboard:Get_Axis("right")) then rigidbody:Add_Force({x =  force, y = 0}) moving = true end
 
-      local transform = gameObject:Get_Component(tr)
+      local transform = self.gameObject:Get_Component(tr)
 
       if(rigidbody._Get_Magnitude() ~= 0) then
         local direction = rigidbody:_Get_Direction()
@@ -62,7 +80,7 @@ return {
           rSpeed,
           dt
         ))
-    end
+      end
 
       local child = transform:Get_Child(1)      
       if(child ~= nil) then
@@ -87,8 +105,24 @@ return {
     ------------------
     -- Update_Logic --
     ------------------
-    function component:Update_Logic(dt)  
-      
+    function component:Update_Logic(dt)
+      if(moving and timers:Is_Finished(smokeStr)) then
+        local rigid      = self.gameObject:Get_Component(rb)
+        local transform  = self.gameObject:Get_Component(tr)
+
+        local distance  = 16
+        local direction = rigid:_Get_Direction()
+        local position  = {
+          x = transform.position.x + cos(direction) * distance,
+          y = transform.position.y + sin(direction) * distance
+        }
+
+        local partSystem = self.gameObject:Get_Component(ps)
+              partSystem:Emit(particles:Smoke_Properties(position), rnd(3, 5))
+
+        timers:Start(smokeStr)
+      end
+      timers:Update(dt)
     end
     
     -----------------------
@@ -103,8 +137,7 @@ return {
     ---------------------
     function component:On_Tile_Collision(_pTileID)
       
-    end
-    
+    end    
     
     return component
   end

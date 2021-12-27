@@ -9,11 +9,11 @@ return {
       nbButtons   = 0
     }
 
-    function kb:GetAxis(_pName)
+    function kb:Get_Axis(_pName)
       return self.axis[_pName]
     end
 
-    function kb:GetButton(_pName)
+    function kb:Get_Button(_pName)
       return self.buttons[_pName]
     end
 

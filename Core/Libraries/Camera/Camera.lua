@@ -115,7 +115,7 @@ return {
     ---------------------
     -- World_To_Screen --
     ---------------------
-    function Camera:World_To_Screen(_pX, _pY)    
+    function Camera:World_To_Screen(_pX, _pY)
       return (_pX - self.position.x + self.offset.x) * Aspect.scale, 
              (_pY - self.position.y + self.offset.y) * Aspect.scale
     end  

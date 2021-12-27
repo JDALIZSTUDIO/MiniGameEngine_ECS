@@ -18,12 +18,15 @@ return {
     local tName      = "reload"
     local tDuration  = 0.2
     
+    local projectiles
+
     ----------
     -- Load --
     ----------
     function component:Load()
-        timers = require('Core/Libraries/Timers').new()
-        timers:Add(tName, tDuration)
+        projectiles = require('Game/ECS/Factories/f_Projectiles').new()
+        timers      = require('Core/Libraries/Timers').new()
+        timers:Add_Timer(tName, tDuration)
         timers:Start(tName)
     end
 
@@ -40,17 +43,14 @@ return {
             local y         = transform.parent.position.y + (sin(dir) * self.radius)
             
             local bullet    = self.gameObject.ECS:Create()
-                  bullet:Add_Component(require('Game/ECS/Controllers/c_Bullet_Controller').new({owner = transform.parent.gameObject.name}))
-                  bullet:Add_Component(require('Core/Libraries/ECS/Components/FX/c_Animated_FX_Emitter').new())
-                  bullet:Add_Component(require('Core/Libraries/ECS/Components/Movement/c_Transform').new(x, y, deg(dir)))
-                  bullet:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Bounding_Box').new(0, 0, 8, 8))
-                  bullet:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Box_Collider').new())
-                  local body = bullet:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Simple_Body').new())
-                        body.isSolid = false
-                 
-                  bullet:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_Trail_Emitter').new())
-                  bullet:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_Sprite_Renderer').new("Game/Images/Projectiles/tank_bullet.png"))
-                  bullet.name = "bullet"
+
+            projectiles:Init_Tank_Bullet(
+                bullet,
+                transform.parent.gameObject.name,
+                x,
+                y,
+                dir
+            )
 
                   self.isReady = false
             timers:Start(tName)

@@ -65,10 +65,17 @@ return {
     end
     
     --------------------
-    -- _Get_Direction --
+    -- _Get_Magnitude --
     --------------------
     function component:_Get_Magnitude()
       return component.velocity:Magnitude()
+    end
+    
+    ------------------
+    -- Get_MaxForce --
+    ------------------
+    function component:Get_MaxForce()
+      return self.maxForce
     end
 
     -------------------
@@ -90,6 +97,13 @@ return {
     ----------
     function component:Load()
       gameObject = self.gameObject
+    end
+
+    ------------------
+    -- Set_MaxForce --
+    ------------------
+    function component:Set_MaxForce(_pValue)
+      self.maxForce = _pValue
     end
 
     ------------------

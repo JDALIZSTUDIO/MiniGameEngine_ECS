@@ -1,6 +1,8 @@
 return {
   new = function()
     local Class = {
+      isFocus   = false,
+      focus     = nil,
       entities  = {},
       systems   = {},
       z_sorting = false
@@ -70,6 +72,14 @@ return {
     end
 
     ---------------
+    -- Set_Focus --
+    ---------------
+    function Class:Set_Focus(_pEntity)
+      self.isFocus = true
+      self.focus   = _pEntity
+    end
+
+    ---------------
     -- Z_Sorting --
     ---------------
     function Class:Sort_Entities(_pTable)
@@ -93,9 +103,16 @@ return {
     ------------
     function Class:Update(dt)
       lstSorted = {}
-      local entity
+      local entity, focusID
       for i = #self.entities, 1, -1 do
-        entity = self.entities[i]
+        entity = self.entities[i]        
+        if(self.isFocus) then 
+          if(entity ~= nil and 
+             entity == self.focus) then
+            focusID = i
+          end 
+        end
+
         if(entity.expired) then
           for j, system in ipairs(self.systems) do
             if(system:Match(entity)) then
@@ -120,7 +137,14 @@ return {
           if(self.z_sorting) then insert(lstSorted, entity) end
         end
       end
+
       if(self.z_sorting) then self:Sort_Entities(lstSorted) end
+
+      if(self.isFocus) then
+        if(self.focus ~= nil) then
+          insert(self.entities, #self.entities, remove(self.entities, focusID))
+        end
+      end
     end
 
     ----------

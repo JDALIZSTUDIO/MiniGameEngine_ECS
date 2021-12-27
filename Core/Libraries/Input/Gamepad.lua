@@ -5,11 +5,11 @@ local gp = {
   buttons     = {},
 }
 
-function gp:GetAxis(_pName)
+function gp:Get_Axis(_pName)
   return self.axis[_pName]
 end
 
-function gp:GetButton(_pName)
+function gp:Get_Button(_pName)
   return self.buttons[_pName]
 end
 

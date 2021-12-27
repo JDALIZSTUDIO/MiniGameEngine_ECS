@@ -1,7 +1,7 @@
 return {
   new = function(_pPath, _pActive)    
     local data = {
-      active   = _pActive or true
+      active   = _pActive or true,
       shader   = love.graphics.newShader(_pPath),
       uniforms = {}
     }    

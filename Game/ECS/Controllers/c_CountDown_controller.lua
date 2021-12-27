@@ -10,7 +10,7 @@ return {
           local counter = 3
           
           function Controller:Load()
-            timer = timers:Add("start", 30)
+            timer = timers:Add_Timer("start", 30)
           end
           
           function Controller:SetTarget(_pTransform)

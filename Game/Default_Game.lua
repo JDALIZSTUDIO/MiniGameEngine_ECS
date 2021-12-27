@@ -6,8 +6,18 @@ return {
         -- On_Load --
         -------------
         function game:On_Load()            
-            Input.keyboard:SetAxies({["left"] = 'q', ["right"] = 'd', ["up"] = 'z', ["down"] = 's'})
-            Input.keyboard:SetButtons({["button1"] = "space", ["button2"] = "lctrl", ["button3"] = "lshift", ["button4"] = "return"})
+            Input.keyboard:SetAxies({["left"]  = 'q', 
+                                     ["right"] = 'd', 
+                                     ["up"]    = 'z', 
+                                     ["down"]  = 's'
+                                    }
+            )
+            Input.keyboard:SetButtons({["button1"] = "space", 
+                                       ["button2"] = "lctrl", 
+                                       ["button3"] = "lshift", 
+                                       ["button4"] = "return"
+                                      }
+            )
         end
 
         -----------------

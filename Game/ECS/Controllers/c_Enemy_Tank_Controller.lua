@@ -50,7 +50,7 @@ return {
         state = require('Core/Libraries/State_Machine').new({"SPAWN", "WAIT", "SEARCH", "MOVETO", "ARRIVE", "SHOOT"})
         timers = require('Core/Libraries/Timers').new()
 
-        timers:Add(tName, tDuration)
+        timers:Add_Timer(tName, tDuration)
         timers:Start(tName)
         state:Set("SPAWN")
     end

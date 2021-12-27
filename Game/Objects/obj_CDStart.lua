@@ -16,7 +16,7 @@
         local GUI          = nil
         
         function Create_Countdown()
-          local imgFont = love.graphics.newImageFont('Core/Libraries/GUI/Sprites/spr_Kromasky.png',' abcdefghijklmnopqrstuvwxyz0123456789!?:;,è./+%ç@à#')
+          local imgFont = love.graphics.newImageFont('Game/Images/SpriteFonts/spr_Kromasky.png',' abcdefghijklmnopqrstuvwxyz0123456789!?:;,è./+%ç@à#')
           countDown     = GUI:Add(GUI:SpriteFont(Round(Aspect.window.width/2) - 16, Round(Aspect.window.height/2), tostring(startCounter), imgFont, 3))
           countDown.sX  = maxScale
           countDown.sY  = maxScale
@@ -31,8 +31,8 @@
           state  = require('Core/Libraries/State_Machine').new({"WAIT", "COUNT", "FINISH", "END"})          
           GUI    = require('Core/Libraries/GUI/GUI_Factory')          
           
-          timers:Add("wait",  1)
-          timers:Add("count", 1)          
+          timers:Add_Timer("wait",  1)
+          timers:Add_Timer("count", 1)          
           timers:Start("wait")          
           state:Set("WAIT")
         end

@@ -30,7 +30,7 @@ return {
         timers = require('Core/Libraries/Timers').new()
 
         state:Set("HIDE")
-        timers:Add(tName, tDuration)
+        timers:Add_Timer(tName, tDuration)
 
         targetHealth = self.health
       end

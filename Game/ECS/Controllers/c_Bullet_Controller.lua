@@ -26,15 +26,15 @@ return {
     -------------------
     function component:Create_Impact()
         local emitter = self.gameObject:Get_Component(fx)
-              emitter:Create("Game/Images/FX/impact_bullet_48x48_n36.png", 
-                             48, 
-                             48, 
-                             0, 
-                             0, 
-                             1, 
-                             1, 
-                             36, 
-                             1)
+              emitter:Emit("Game/Images/FX/impact_bullet_48x48_n36.png", 
+                           48, 
+                           48, 
+                           0, 
+                           0, 
+                           1, 
+                           1, 
+                           36, 
+                           1)
     end
 
     -----------------

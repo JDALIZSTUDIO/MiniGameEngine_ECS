@@ -135,8 +135,7 @@ function GUI:SpriteFont(_pX, _pY, _pString, _pFont, _pSize)
     sf.height = #sf.array * sf.charH
     
     sf.totalW = sf.font:getWidth(sf.label)  + sf.padding
-    sf.totalH = sf.font:getHeight(sf.label) + sf.padding 
-    
+    sf.totalH = sf.font:getHeight(sf.label) + sf.padding    
   end
   
   function sf:Update(dt)    

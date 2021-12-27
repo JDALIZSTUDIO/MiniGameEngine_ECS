@@ -48,7 +48,7 @@ return {
       
       local col   = _pStartX or 1
       local lig   = _pStartY or 1
-      local nbCol = max(1, _pEndX or floor(animation.atlasWidth  /  animation.frameWidth))
+      local nbCol = max(1, _pEndX or floor(animation.atlasWidth  / animation.frameWidth ))
       local nbLig = max(1, _pEndY or floor(animation.atlasHeight / animation.frameHeight))
       
       local quad
