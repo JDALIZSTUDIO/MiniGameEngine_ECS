@@ -1,15 +1,14 @@
-local factory   = require('Core/Libraries/ECS/Components/Controllers/c_Character_Controller')
 local particles = require('Game/Particles/Particles_Factory') 
 
 return {
   new = function()
-    local component = factory.new()
+    local f_character = Locator:Get_Service("f_character")
+    local component   = f_character.new()
     
-    local camera       = nil 
     local moving       = false
     local cannon       = nil
     local acceleration = 8
-    local rSpeed       = 6
+    local offsetCannon = {}
 
     local ps = "particleSystem"
     local ch = "characterController"
@@ -26,6 +25,7 @@ return {
     local rnd         = math.random
     local smoothAngle = Smooth_Angle
 
+    local rSpeed        = 6
     local timers        = nil
     local smokeStr      = "smoke"
     local smokeDuration = 0.15
@@ -46,14 +46,13 @@ return {
     -- Custom_Load --
     -----------------
     function component:Custom_Load()
-      camera = Locator:Get_Service("camera")
       timers = require('Core/Libraries/Timers').new()
       timers:Add_Timer(smokeStr, smokeDuration)
 
       local rigid = self.gameObject:Get_Component(rb)
       normalSpeed = rigid:Get_MaxForce()
       turboSpeed  = normalSpeed * 2
-
+ 
       local partSystem = self.gameObject:Get_Component(ps)
       local emitter    = partSystem:Create(smokeStr)
             emitter:Set_Parameters(
@@ -91,25 +90,6 @@ return {
           dt
         ))
       end
-
-      local child = transform:Get_Child(1)      
-      if(child ~= nil) then
-        local mx, my = camera:Screen_To_World(love.mouse.getPosition())
-        local dx =   mx - transform.position.x
-        local dy = -(my - transform.position.y)
-        child.transform.rotation = deg(smoothAngle(
-          rad(child.transform.rotation),
-          atan2(dx, dy),
-          rSpeed,
-          dt
-        ))
-      end
-
-      local canon = child.transform.gameObject:Get_Component(ch)
-      if(love.mouse.isDown(1)) then
-        canon:Shoot()
-      end
-
     end
 
     ------------------

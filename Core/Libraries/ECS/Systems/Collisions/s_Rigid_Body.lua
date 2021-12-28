@@ -97,15 +97,16 @@ return {
         if(length < 2) then return end
   
         local bBox  = _pEntity:Get_Component(bb)
-        local otherBBox
+        local otherBBox, otherRigid
         
         for i = length, 1, -1 do
-          other = entities[i]        
+          other = entities[i]      
           if(other ~= _pEntity      and 
              other.expired == false and
-             other.active  == true) then
-             
-            if(system:Match(other)) then
+             other.active  == true) then              
+            otherRigid = other:Get_Component(rb)
+            if(system:Match(other) and 
+               otherRigid.active == true) then
               otherBBox = other:Get_Component(bb)
               if(bBox:Intersects(otherBBox)) then
                 self:Resolve_Collision(_pEntity, other)
@@ -218,6 +219,8 @@ return {
         local rigidBody = _pEntity:Get_Component(rb)
         local transform = _pEntity:Get_Component(tr)
         
+        if(rigidBody.active == false) then return end
+
         rigidBody:_Apply_Gravity(self.gravity)        
         rigidBody:_Clamp_Velocity()
 

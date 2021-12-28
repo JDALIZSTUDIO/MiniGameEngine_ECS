@@ -17,32 +17,29 @@ return {
         local length = #entities
         if(length < 2) then return end
   
+        local result = {}
         local bBox   = _pEntity:Get_Component(bb)
         local boxCol = _pEntity:Get_Component(bc)
+        
+        if(bBox.active   == false or
+           boxCol.active == false) then return end
+        
         local otherBBox
-        
-        local collide = false
-        local result  = {}
-        
         for i = length, 1, -1 do
           other = entities[i]        
-          if(other ~= _pEntity      and
-             other.active  == true) then
-             
+          if(other ~= _pEntity and
+             other.active  == true) then             
             if(system:Match(other)) then
               otherBBox = other:Get_Component(bb)
               if(bBox:Intersects(otherBBox)) then
-                collide = true
                 insert(result, other)
               end
             end
           end
         end 
-        
-        if(collide) then
-          local character = _pEntity:Get_Component(ch)
-          if(character ~= nil) then character:On_Entity_Collision(result) end
-        end      
+
+        local character = _pEntity:Get_Component(ch)
+        if(character ~= nil) then character:On_Entity_Collision(result) end          
       end
 
       ----------
@@ -61,8 +58,6 @@ return {
       -- Update --
       ------------
       function system:Update(dt, _pEntity)
-        local bBox = _pEntity:Get_Component(bb)
-        if(bBox.active == false) then return end
         self:Collide_Entities(_pEntity)
       end
       

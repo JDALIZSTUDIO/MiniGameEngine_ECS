@@ -1,13 +1,14 @@
-local factory  = require('Core/Libraries/ECS/Components/Controllers/c_Parent_Controller')
-
 return {
   new = function()
-    local component = factory.new()
+    local f_controller = Locator:Get_Service("f_controller")
+    local component    = f_controller.new()
       
     local an = "animator"
     local bb = "boundingBox"
+    local bc = "boxCollider"
     local ch = "characterController"
     local he = "health"
+    local rb = "rigidBody"
     local tr = "transform"
 
     local state  = nil
@@ -36,6 +37,13 @@ return {
     function component:Kill_Self()
       local animator = self.gameObject:Get_Component(an)
             animator:Play("death")
+
+      local collider = self.gameObject:Get_Component(bc)
+            collider.active = false
+
+      local rigid = self.gameObject:Get_Component(rb)
+            rigid.active = false
+
       state:Set("DEATH")
     end
     

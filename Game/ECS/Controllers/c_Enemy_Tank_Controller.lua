@@ -1,8 +1,7 @@
-local factory  = require('Core/Libraries/ECS/Components/Controllers/c_Character_Controller')
-
 return {
   new = function()
-    local component = factory.new()
+    local f_character = Locator:Get_Service("f_character")
+    local component   = f_character.new()
           
     local alpha      = 0
     local gameObject

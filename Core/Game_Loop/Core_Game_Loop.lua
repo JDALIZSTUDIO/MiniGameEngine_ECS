@@ -43,6 +43,8 @@ return {
       Locator:Add_Service("f_entity",     require('Core/Libraries/ECS/Factories/f_Entity'))
       Locator:Add_Service("f_component",  require('Core/Libraries/ECS/Factories/f_Component'))
       Locator:Add_Service("f_system",     require('Core/Libraries/ECS/Factories/f_System'))
+      Locator:Add_Service("f_controller", require('Core/Libraries/ECS/Factories/f_Controller'))
+      Locator:Add_Service("f_character",  require('Core/Libraries/ECS/Factories/f_Character'))
       Locator:Add_Service("f_particle",   require('Core/Libraries/ECS/Factories/f_Particle'))
       Locator:Add_Service("f_emitter",    require('Core/Libraries/ECS/Factories/f_Emitter'))
       Locator:Add_Service("sceneManager", require('Core/Libraries/Scenes/Scene_Manager').new())

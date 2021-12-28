@@ -49,7 +49,8 @@ return {
         -- Update --
         ------------
         function Class:Update(dt)
-
+            self.lifeTime = self.lifeTime - dt
+            if(self.lifeTime <= 0) then self.lifeTime = 0 end
         end
         
         ----------

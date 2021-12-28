@@ -1,10 +1,9 @@
-local factory  = require('Core/Libraries/ECS/Components/Controllers/c_Parent_Controller')
-
 return {
   new = function(_pParamaters)
-    local params = _pParamaters or {}
+    local f_controller = Locator:Get_Service("f_controller")
+    local params       = _pParamaters or {}
     
-    local component             = factory.new()
+    local component             = f_controller.new()
           component.damage      = params.damage or 20
           component.maxDistance = 192
           component.maxSpeed    = 260

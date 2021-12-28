@@ -2,6 +2,7 @@ return {
     new = function(_pName)
         local Scene = require('Core/Libraries/Scenes/Scene_Parent').new(_pName)
         
+        local camera
         local ECS
         local FOW
         local Tilemap
@@ -116,6 +117,7 @@ return {
         -- Load --
         ----------
         function Scene:Load()
+            camera       = Locator:Get_Service("camera")
             fEnemies     = require('Game/ECS/Factories/f_Enemies').new()
             fEnvironment = require('Game/ECS/Factories/f_Environment').new()
             fPlayer      = require('Game/ECS/Factories/f_Player').new()

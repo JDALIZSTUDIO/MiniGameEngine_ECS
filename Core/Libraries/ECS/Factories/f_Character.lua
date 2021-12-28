@@ -1,8 +1,7 @@
-local factory  = require('Core/Libraries/ECS/Components/Controllers/c_Parent_Controller')
-
 return {
   new = function()
-    local component = factory.new()
+    local f_controller = Locator:Get_Service("f_controller")
+    local component    = f_controller.new()
         
     -------------
     -- Animate --

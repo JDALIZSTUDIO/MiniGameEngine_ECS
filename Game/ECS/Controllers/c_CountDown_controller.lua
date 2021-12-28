@@ -1,8 +1,7 @@
-local character_controller = require('Core/Libraries/ECS/Components/c_Parent_Controller')
-
 return {
   new = function()
-    local Controller = character_controller.new()
+    local f_controller  = Locator:Get_Service("f_controller")
+    local Controller    = f_controller.new()
           local state   = require('Core/Libraries/State_Machine').new({"NONE"})
           local timers  = require('Core/Libraries/Timers')
           local timer   = nil                
