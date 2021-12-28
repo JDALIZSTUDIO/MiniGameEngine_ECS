@@ -1,6 +1,7 @@
 return {
   new = function()
-    local component = p_Component.new("characterController")
+    local f_component = Locator:Get_Service("f_component")
+    local component   = f_component.new("characterController")
 
     -------------
     -- Animate --

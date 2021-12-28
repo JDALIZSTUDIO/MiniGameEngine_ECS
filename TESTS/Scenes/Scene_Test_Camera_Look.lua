@@ -2,6 +2,7 @@ return {
     new = function(_pName)
         local Scene = require('Core/Libraries/Scenes/Scene_Parent').new(_pName)
         
+        local camera
         local ECS
         local Tilemap
 
@@ -9,6 +10,7 @@ return {
         -- Load --
         ----------
         function Scene:Load()
+            camera  = Locator:Get_Service("camera")
             ECS     = require('Core/Libraries/ECS/ECS_Manager').new()
             Tilemap = require('Core/Libraries/Tilemap/Tilemap').new()
 
@@ -24,14 +26,14 @@ return {
                   player:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Bounding_Box').new(0, 0, 16, 16))
                   player:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_Box_Renderer').new())
 
-            Camera:Attach(t)
+            camera:Attach(t)
         end
 
         ------------
         -- Update --
         ------------
         function Scene:Update(dt)
-            if(love.keyboard.isDown("space")) then Camera:Shake(2, 10) end
+            if(love.keyboard.isDown("space")) then camera:Shake(2, 10) end
 
             ECS:Update(dt)
             Tilemap:Update(dt)

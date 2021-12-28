@@ -1,13 +1,14 @@
 return {
   new = function()
-    local Camera   = {
+    local aspect   = Locator:Get_Service("aspect")
+    local Class    = {
           clamped  = false,
           follower = nil,
-          offset   = Vector2.new(),
-          position = Vector2.new(),
+          offset   = { x = 0, y = 0 },
+          position = { x = 0, y = 0 },
           rotation = 0,
           shaker   = nil,
-          scale    = Vector2.new(1, 1),
+          scale    = { x = 1, y = 1 },
           target   = nil,
     }
 
@@ -17,29 +18,29 @@ return {
     ------------
     -- Attach --
     ------------
-    function Camera:Attach(_pObj)
+    function Class:Attach(_pObj)
       self.target = _pObj
     end
     
     ------------
     -- Detach --
     ------------
-    function Camera:Detach()
+    function Class:Detach()
       self.target = nil
     end    
 
     ---------------------
     -- Screen_To_World --
     ---------------------
-    function Camera:Screen_To_World(_pX, _pY)    
-      return _pX / Aspect.scale + self.position.x - self.offset.x, 
-             _pY / Aspect.scale + self.position.y - self.offset.y
+    function Class:Screen_To_World(_pX, _pY)    
+      return _pX / aspect.scale + self.position.x - self.offset.x, 
+             _pY / aspect.scale + self.position.y - self.offset.y
     end  
 
     ----------
     -- Load --
     ----------
-    function Camera:Load()
+    function Class:Load()
       self.follower = require('Core/Libraries/Camera/Camera_Follower').new(self)
       self.shaker   = require('Core/Libraries/Camera/Camera_Shaker').new()      
     end    
@@ -47,7 +48,7 @@ return {
     -------------
     -- Look_At --
     -------------
-    function Camera:Look_At(_pX, _pY)
+    function Class:Look_At(_pX, _pY)
       self.position.x = floor(_pX) or 0
       self.position.y = floor(_pY) or 0
     end
@@ -55,7 +56,7 @@ return {
     ---------
     -- Set --
     ---------
-    function Camera:Set()
+    function Class:Set()
       love.graphics.push()
         love.graphics.rotate (-self.rotation)
         love.graphics.scale (self.scale.x, self.scale.y)
@@ -66,7 +67,7 @@ return {
     --------------
     -- SetScale --
     --------------
-    function Camera:Set_Scale(_sX, _sY)
+    function Class:Set_Scale(_sX, _sY)
       self.scale.x = floor(_sX) or 1
       self.scale.y = floor(_sY) or 1
     end
@@ -74,25 +75,25 @@ return {
     -----------
     -- Shake --
     -----------
-    function Camera:Shake(_pMagnitude, _pDuration)
+    function Class:Shake(_pMagnitude, _pDuration)
       self.shaker:Shake(_pMagnitude, _pDuration)
     end
 
     -----------
     -- UnSet --
     -----------
-    function Camera:UnSet()
+    function Class:UnSet()
       love.graphics.pop()
     end
 
     ------------
     -- Update --
     ------------
-    function Camera:Update(dt)
-      self.offset:Set(
-        Aspect.screen.width  * 0.5,
-        Aspect.screen.height * 0.5
-      )
+    function Class:Update(dt)
+      self.offset = {
+        x = aspect.screen.width  * 0.5,
+        y = aspect.screen.height * 0.5
+      }
       
       self.shaker:Update(dt)
 
@@ -115,18 +116,18 @@ return {
     ---------------------
     -- World_To_Screen --
     ---------------------
-    function Camera:World_To_Screen(_pX, _pY)
-      return (_pX - self.position.x + self.offset.x) * Aspect.scale, 
-             (_pY - self.position.y + self.offset.y) * Aspect.scale
+    function Class:World_To_Screen(_pX, _pY)
+      return (_pX - self.position.x + self.offset.x) * aspect.scale, 
+             (_pY - self.position.y + self.offset.y) * aspect.scale
     end  
 
     ----------
     -- Draw --
     ----------
-    function Camera:Draw()
+    function Class:Draw()
       
     end
     
-    return Camera
+    return Class
   end
 }

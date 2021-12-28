@@ -1,6 +1,7 @@
 return {
     new = function()
-        local component = p_Component.new("animatedFxEmitter")
+        local factory = Locator:Get_Service("f_component")
+        local component = factory.new("animatedFxEmitter")
               component.scale = Vector2.new(1, 1)
         
         local rnd = math.random

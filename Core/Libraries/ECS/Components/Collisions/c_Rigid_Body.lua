@@ -1,8 +1,8 @@
 return {
   new = function(_pParameters)
-    local p = _pParameters or {}
-
-    local component = p_Component.new("rigidBody")
+    local f_component           = Locator:Get_Service("f_component")
+    local p                     = _pParameters or {}
+    local component             = f_component.new("rigidBody")
           component.friction    = p.friction or 0.9
           component.isBounce    = p.isBounce or false
           component.isStatic    = p.isStatic or false

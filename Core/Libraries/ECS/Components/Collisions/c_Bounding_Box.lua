@@ -1,6 +1,7 @@
 return {
   new = function(_pOffsetX, _pOffsetY, _pWidth, _pHeight)
-    local component = p_Component.new("boundingBox")
+    local f_component         = Locator:Get_Service("f_component")
+    local component           = f_component.new("boundingBox")
           component.drawMode  = 'line'
           component.top       = 0
           component.bottom    = 0

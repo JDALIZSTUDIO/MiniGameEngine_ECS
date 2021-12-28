@@ -1,6 +1,7 @@
 return {
     new = function()
-      local component = p_Component.new("boxCollider")
+      local factory = Locator:Get_Service("f_component")
+      local component = factory.new("boxCollider")
             component.isTrigger = false
          
       ------------

@@ -4,7 +4,7 @@ return {
             duration  = 0,
             magnitude = 0,
             remaining = 0,
-            offset    = Vector2.new()
+            offset    = { x = 0, y = 0 }
         }
 
         -----------
@@ -28,7 +28,7 @@ return {
                     math.random(-self.remaining, self.remaining)
                 )
                 self.remaining = math.max(0, self.remaining - ((1/self.duration) * self.magnitude))
-                if(self.remaining <= 0) then self.offset:Set(0, 0) end
+                if(self.remaining <= 0) then self.offset = { x = 0, y = 0 } end
             end
         end       
 

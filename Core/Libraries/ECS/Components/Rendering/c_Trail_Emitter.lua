@@ -1,6 +1,7 @@
 return {
   new = function(_pMaxTrail)
-    local component = p_Component.new("trailEmitter")
+    local f_component      = Locator:Get_Service("f_component")
+    local component        = f_component.new("trailEmitter")
           component.active = true
           component.trail  = {}
           component.maxT   = _pMaxTrail or 50

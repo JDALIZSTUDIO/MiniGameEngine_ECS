@@ -1,6 +1,7 @@
 return {
   new = function() 
-    local system = p_System.new({"transform"})
+    local f_system = Locator:Get_Service("f_system")
+    local system   = f_system.new({"transform"})
     
     local cos    = math.cos
     local sin    = math.sin

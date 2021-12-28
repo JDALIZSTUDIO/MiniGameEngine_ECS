@@ -1,6 +1,7 @@
 return {
   new = function() 
-    local system = p_System.new({"transform", "animator"})
+    local f_system = Locator:Get_Service("f_system")
+    local system   = f_system.new({"transform", "animator"})
     
     local rad = math.rad
     local an  = "animator"

@@ -2,6 +2,7 @@ return {
     new = function(_pName)
         local Scene = require('Core/Libraries/Scenes/Scene_Parent').new(_pName)
         
+        local camera
         local ECS
         local Tilemap
         
@@ -35,7 +36,7 @@ return {
                         player:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Rigid_Body').new())
                         player:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_Box_Renderer').new())
 
-                    Camera:Attach(t)
+                    camera:Attach(t)
                 elseif(obj.name == "block") then
                     local block = ECS:Create()
                           block.name = obj.name
@@ -85,6 +86,7 @@ return {
         function Scene:Load()
             love.mouse.setVisible(false)
 
+            camera  = Locator:Get_Service("camera")
             ECS     = require('Core/Libraries/ECS/ECS_Manager').new()
             Tilemap = require('Core/Libraries/Tilemap/Tilemap').new()
 

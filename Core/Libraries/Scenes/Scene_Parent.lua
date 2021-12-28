@@ -1,6 +1,9 @@
 return {
   new = function(_pName)
 
+    local aspect = Locator:Get_Service("aspect")
+    local camera = Locator:Get_Service("camera")
+
     local Scene   = {
           active  = true,
           loaded  = false,
@@ -73,9 +76,9 @@ return {
     -- _Awake --
     ------------  
     function Scene:_Awake()
-      Camera:Look_At(
-        Aspect.screen.width  * 0.5,
-        Aspect.screen.height * 0.5
+      camera:Look_At(
+        aspect.screen.width  * 0.5,
+        aspect.screen.height * 0.5
       )
       
       self.GUI = require('Core/Libraries/GUI/GUI_Controller').new()

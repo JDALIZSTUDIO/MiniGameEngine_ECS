@@ -1,8 +1,9 @@
 return {
     new = function(_pImagePath)
-        local factory   = require('Core/Libraries/ECS/Parents/p_Love_Particle_Emitter')
+        local factory = Locator:Get_Service("f_component")
+        local fEmitter   = require('Core/Libraries/ECS/Parents/p_Love_Particle_Emitter')
         
-        local component = p_Component.new("lParticleSystem")
+        local component = factory.new("lParticleSystem")
               component.systems = {}
         
         local insert = table.insert
@@ -34,7 +35,7 @@ return {
         -- _Return_New_Emitter --
         -------------------------
         function component:_Return_New_Emitter(_pParameters)
-            return factory.new(_pParameters)
+            return fEmitter.new(_pParameters)
         end
 
         ------------

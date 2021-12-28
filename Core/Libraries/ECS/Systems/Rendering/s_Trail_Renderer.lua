@@ -1,6 +1,7 @@
 return {
   new = function() 
-    local system = p_System.new({"transform", "boundingBox", "trailEmitter"})
+    local f_system = Locator:Get_Service("f_system")
+    local system   = f_system.new({"transform", "boundingBox", "trailEmitter"})
 
     local an = "animator"
     local sr = "spriteRenderer"

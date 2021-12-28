@@ -12,10 +12,10 @@ return {
     local screenWidth  = 640
     local screenHeight = 360
     
-    local surface, vignette, vignetteSX, vignetteSY
+    local aspect, camera, scene_manager, surface, transition, vignette, vignetteSX, vignetteSY
     
     function Class:Set_Aspect(_pW, _pH, _pScale, _pFullscreen)
-      Aspect:SetWindow(_pW, _pH, _pScale, _pFullscreen)      
+      aspect:SetWindow(_pW, _pH, _pScale, _pFullscreen)      
       surface = love.graphics.newCanvas(_pW, _pH)
       surface:setFilter("nearest", "nearest", 16)
     end
@@ -38,7 +38,18 @@ return {
     -- _Load_Services --
     --------------------
     function Class:_Load_Services()
-      Locator:Add_Service("spriteLoader", require('Core/Libraries/Sprite_Loader').new())      
+      Locator:Add_Service("aspect",       require('Core/Libraries/Aspect').new())
+      Locator:Add_Service("easing",       require('Core/Libraries/Easing'))
+      Locator:Add_Service("f_entity",     require('Core/Libraries/ECS/Factories/f_Entity'))
+      Locator:Add_Service("f_component",  require('Core/Libraries/ECS/Factories/f_Component'))
+      Locator:Add_Service("f_system",     require('Core/Libraries/ECS/Factories/f_System'))
+      Locator:Add_Service("f_particle",   require('Core/Libraries/ECS/Factories/f_Particle'))
+      Locator:Add_Service("f_emitter",    require('Core/Libraries/ECS/Factories/f_Emitter'))
+      Locator:Add_Service("sceneManager", require('Core/Libraries/Scenes/Scene_Manager').new())
+      Locator:Add_Service("spriteLoader", require('Core/Libraries/Sprite_Loader').new())
+      Locator:Add_Service("camera",       require('Core/Libraries/Camera/Camera').new())
+      Locator:Add_Service("transition",   require('Core/Libraries/Transition').new())
+      
       self:On_Load_Services()
     end
 
@@ -78,6 +89,13 @@ return {
 
       self:_Load_Services()
 
+      aspect        = Locator:Get_Service("aspect")
+      camera        = Locator:Get_Service("camera")
+      scene_manager = Locator:Get_Service("sceneManager")
+      transition    = Locator:Get_Service("transition")
+
+      camera:Load()
+
       self.globals = require('Core/Globals/Globals')
       self.globals:Load()
       
@@ -90,7 +108,7 @@ return {
       self:_Load_Assets()
       self:On_Load()
       self:_Load_Scenes()
-      Scene_Manager:Start()
+      scene_manager:Start()
     end
     
     ------------
@@ -98,9 +116,9 @@ return {
     ------------
     function Class:Update(dt)
       Input:Update(dt)
-      Scene_Manager:Update(dt)
-      Camera:Update(dt)
-      Transition:Update(dt)
+      scene_manager:Update(dt)
+      camera:Update(dt)
+      transition:Update(dt)
 
       vignette:Update(dt)
     end
@@ -113,9 +131,9 @@ return {
         love.graphics.setColor(1, 1, 1, 1)
         love.graphics.setCanvas(surface)
         love.graphics.clear()
-          Camera:Set()
-            Scene_Manager:Draw()
-          Camera:UnSet()
+          camera:Set()
+            scene_manager:Draw()
+          camera:UnSet()
         love.graphics.setCanvas()
 
         if(fullscreen) then
@@ -123,15 +141,15 @@ return {
           local h = love.graphics.getHeight() / surface:getHeight()
           love.graphics.draw(surface, 0, 0, 0, w, h)
         else
-          Aspect:Set()
+          aspect:Set()
             love.graphics.draw(surface, 0, 0, 0)
-          Aspect:UnSet()
+          aspect:UnSet()
         end      
         
       vignette:Draw()
       
-      Scene_Manager:Draw_GUI()  
-      Transition:Draw()
+      scene_manager:Draw_GUI()  
+      transition:Draw()
     end
     
     return Class

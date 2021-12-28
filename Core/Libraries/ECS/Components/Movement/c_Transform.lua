@@ -1,6 +1,7 @@
 return {
   new = function(_pX, _pY, _pRotation)
-    local component = p_Component.new("transform")
+    local f_component           = Locator:Get_Service("f_component")
+    local component             = f_component.new("transform")
           component.children    = {}
           component.direction   = 0
           component.maxSpeed    = 180

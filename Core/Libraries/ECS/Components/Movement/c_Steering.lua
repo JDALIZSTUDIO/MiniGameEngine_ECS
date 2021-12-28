@@ -1,6 +1,7 @@
 return {
   new = function()
-    local component = p_Component.new("steering")
+    local f_component              = Locator:Get_Service("f_component")
+    local component                = f_component.new("steering")
           component.angle          = 0
           component.friction       = 0.1
           component.lookAhead      = 64

@@ -1,6 +1,7 @@
 return {
     new = function()
-      local system = p_System.new({"transform", "boundingBox", "boxCollider"})
+      local f_system = Locator:Get_Service("f_system")
+      local system   = f_system.new({"transform", "boundingBox", "boxCollider"})
       
       local entities = {}      
       local bc       = "boxCollider"

@@ -1,7 +1,8 @@
   return {
-    new = function()
+    new = function()      
+      local aspect  = Locator:Get_Service("aspect")
       local CDStart = {
-        finished = false
+        finished    = false
       }
         
         ------------------
@@ -17,7 +18,7 @@
         
         function Create_Countdown()
           local imgFont = love.graphics.newImageFont('Game/Images/SpriteFonts/spr_Kromasky.png',' abcdefghijklmnopqrstuvwxyz0123456789!?:;,è./+%ç@à#')
-          countDown     = GUI:Add(GUI:SpriteFont(Round(Aspect.window.width/2) - 16, Round(Aspect.window.height/2), tostring(startCounter), imgFont, 3))
+          countDown     = GUI:Add(GUI:SpriteFont(Round(aspect.window.width/2) - 16, Round(aspect.window.height/2), tostring(startCounter), imgFont, 3))
           countDown.sX  = maxScale
           countDown.sY  = maxScale
           

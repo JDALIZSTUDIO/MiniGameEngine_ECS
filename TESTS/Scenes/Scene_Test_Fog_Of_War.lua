@@ -2,6 +2,8 @@ return {
     new = function(_pName)
         local Scene = require('Core/Libraries/Scenes/Scene_Parent').new(_pName)
         
+        local aspect
+        local camera
         local ECS
         local FOW
         local Logo
@@ -14,15 +16,17 @@ return {
         -- Load --
         ----------
         function Scene:Load()
-            BG   = love.graphics.newImage("Game/Images/Logo/BG.png")
-            Logo = love.graphics.newImage("Game/Images/Logo/Logo.png")
-            ECS  = require('Core/Libraries/ECS/ECS_Manager').new()
-            FOW  = require('Core/Libraries/Lighting/Fog_Of_War').new()
+            aspect  = Locator:Get_Service("aspect")
+            camera  = Locator:Get_Service("camera")
+            BG      = love.graphics.newImage("Game/Images/Logo/BG.png")
+            Logo    = love.graphics.newImage("Game/Images/Logo/Logo.png")
+            ECS     = require('Core/Libraries/ECS/ECS_Manager').new()
+            FOW     = require('Core/Libraries/Lighting/Fog_Of_War').new()
             
-            LogoSX = love.graphics:getWidth()  / Logo:getWidth()  / Aspect.scale
-            LogoSY = love.graphics:getHeight() / Logo:getHeight() / Aspect.scale
-            BGSX   = love.graphics:getWidth()  / BG:getWidth()  / Aspect.scale
-            BGSY   = love.graphics:getHeight() / BG:getHeight() / Aspect.scale
+            LogoSX  = love.graphics:getWidth()  / Logo:getWidth()  / aspect.scale
+            LogoSY  = love.graphics:getHeight() / Logo:getHeight() / aspect.scale
+            BGSX    = love.graphics:getWidth()  / BG:getWidth()    / aspect.scale
+            BGSY    = love.graphics:getHeight() / BG:getHeight()   / aspect.scale
 
             FOW:Load(love.graphics.getWidth(), love.graphics.getHeight())
 
@@ -41,7 +45,7 @@ return {
         ------------
         function Scene:Update(dt)
             if(love.mouse.isDown(1)) then
-                local x, y = Camera:Screen_To_World(love.mouse.getPosition())
+                local x, y = camera:Screen_To_World(love.mouse.getPosition())
                 lightposition:Set(x, y)
             end
 

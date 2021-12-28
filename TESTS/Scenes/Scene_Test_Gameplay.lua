@@ -143,7 +143,7 @@ return {
         -- Update --
         ------------
         function Scene:Update(dt)
-            if(love.keyboard.isDown("space")) then Camera:Shake(2, 10) end
+            if(love.keyboard.isDown("space")) then camera:Shake(2, 10) end
 
             ECS:Update(dt)
             FOW:Update(dt)

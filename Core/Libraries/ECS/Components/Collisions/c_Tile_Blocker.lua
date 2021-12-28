@@ -1,6 +1,7 @@
 return {
     new = function()
-        local component = p_Component.new("tileBlocker")
+        local factory = Locator:Get_Service("f_component")
+        local component = factory.new("tileBlocker")
         
         return component  
     end

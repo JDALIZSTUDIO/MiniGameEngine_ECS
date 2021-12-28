@@ -1,5 +1,6 @@
 return {
   new = function()
+    local aspect   = Locator:Get_Service("aspect")
     local obj      = {
       alpha        = 0,
       background   = nil,
@@ -131,10 +132,10 @@ return {
       self.shader_wave:SetUniform(h_disp,  disp)
       self.shader_wave:SetUniform(h_scale, scale)
 
-      self.background.scale.x = love.graphics:getWidth()  / self.background.image:getWidth() / Aspect.scale
-      self.background.scale.y = love.graphics:getHeight() / self.background.image:getHeight() / Aspect.scale
-      self.logo.scale.x       = love.graphics:getWidth()  / self.logo.image:getWidth()  / Aspect.scale
-      self.logo.scale.y       = love.graphics:getHeight() / self.logo.image:getHeight() / Aspect.scale
+      self.background.scale.x = love.graphics:getWidth()  / self.background.image:getWidth()  / aspect.scale
+      self.background.scale.y = love.graphics:getHeight() / self.background.image:getHeight() / aspect.scale
+      self.logo.scale.x       = love.graphics:getWidth()  / self.logo.image:getWidth()  / aspect.scale
+      self.logo.scale.y       = love.graphics:getHeight() / self.logo.image:getHeight() / aspect.scale
     end
 
     ----------

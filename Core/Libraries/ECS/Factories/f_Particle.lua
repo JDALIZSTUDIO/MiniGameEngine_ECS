@@ -6,7 +6,7 @@ return {
             lifeRemaining      = 0,  
             linearAcceleration = { 0, 0, 0, 0 },
             linearDampening    = { 0, 0, 0, 0 },
-            position           = { x = _pX, y = _pY },
+            position           = { x = _pX or 0, y = _pY or 0 },
             rotation           = { 0, 0, 0 },
             sizes              = { 1, 1, 1 },
             speed              = { 0, 0, 0 },
@@ -58,6 +58,7 @@ return {
         function Class:Draw()
 
         end
-
+        
+        return Class
     end
 }

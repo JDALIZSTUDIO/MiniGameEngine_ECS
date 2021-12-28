@@ -6,7 +6,8 @@ return {
     local Logo     = nil
 
     local fNext = function()
-      Scene_Manager:Next()
+      local scene_manager = Locator:Get_Service("sceneManager")
+      scene_manager:Next()
     end
 
     function Scene:Load()
@@ -25,7 +26,8 @@ return {
       
       if(finished == false and Logo.expired) then
         finished = true
-        Transition:Start(fNext)
+        local transition = Locator:Get_Service("transition")
+        transition:Start(fNext)
       end
     end
 

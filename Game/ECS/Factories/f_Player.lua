@@ -1,7 +1,8 @@
 return {
     new = function()
         local Class = {}
-
+        
+        local camera       = Locator:Get_Service("camera")
         local spriteLoader = Locator:Get_Service("spriteLoader")
         local deg          = math.deg
 
@@ -36,7 +37,7 @@ return {
             --_pEntity:Add_Component(require('Core/Libraries/ECS/Components/FX/c_Love_Particle_System').new())
             _pEntity:Add_Component(require('Core/Libraries/ECS/Components/FX/c_Particle_System').new())
 
-            Camera:Attach(transformBody)
+            camera:Attach(transformBody)
 
             local cannon = _pEntity.ECS:Create()
 

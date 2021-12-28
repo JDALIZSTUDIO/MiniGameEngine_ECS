@@ -1,10 +1,10 @@
 return {
     new = function(_pCamera)
         local Class = {
-            ahead    = Vector2.new(),
+            ahead    = { x = 0, y = 0 },
             isLook   = true,
             maxDist  = 32,
-            position = Vector2.new(),         
+            position = { x = 0, y = 0 },         
             speed    = 0.05
         }  
 
@@ -29,10 +29,10 @@ return {
                     local dir    = _pTarget.position:Direction_To({x = mx, y = my})
                     local dist   = _pTarget.position:Distance_To({x = mx, y = my})
                     local result = min(dist, self.maxDist)
-                    self.ahead:Set(
-                        _pTarget.position.x + (cos(dir) * result),
-                        _pTarget.position.y + (sin(dir) * result)
-                    )
+                    self.ahead = {
+                        x = _pTarget.position.x + (cos(dir) * result),
+                        y = _pTarget.position.y + (sin(dir) * result)
+                    }
                     self.position.x = lerp(self.position.x, self.ahead.x, self.speed)
                     self.position.y = lerp(self.position.y, self.ahead.y, self.speed)
                 else

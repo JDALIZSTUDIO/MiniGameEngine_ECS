@@ -1,5 +1,6 @@
 return {
   new = function()
+    local factoryEntity = Locator:Get_Service("f_entity")
     local Class = {
       expired   = false,
       entities  = {},
@@ -27,7 +28,7 @@ return {
     -- Create --
     ------------
     function Class:Create()
-      local entity = p_Entity.new()
+      local entity = factoryEntity.new()
             entity.ECS = self
             
       insert(self.entities, entity)

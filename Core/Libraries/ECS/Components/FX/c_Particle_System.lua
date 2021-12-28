@@ -1,7 +1,8 @@
 return {
     new = function(_pImagePath)
-        local factory   = require('Core/Libraries/ECS/Parents/p_Particle_Emitter')        
-        local component = p_Component.new("particleSystem")
+        local f_component = Locator:Get_Service("f_component")
+        local f_emitter   = Locator:Get_Service("f_emitter") --require('Core/Libraries/ECS/Parents/p_Particle_Emitter')        
+        local component   = f_component.new("particleSystem")
               component.emitters = {}
         
         local insert = table.insert
@@ -11,11 +12,12 @@ return {
         
         local tr  = "transform"
 
-        ---------
-        -- Add --
-        ---------
-        function component:Add(_pName, _pParameters)
-            self.emitters[_pName] = self:_Create_New_Emitter(_pParameters)
+        ------------
+        -- Create --
+        ------------
+        function component:Create(_pName, _pX, _pY)
+            self.emitters[_pName] = f_emitter.new(_pX or 0, _pY or 0)
+            return self:Get_Emitter(_pName)
         end
         
         ----------
@@ -26,22 +28,11 @@ return {
             if(emitter ~= nil) then emitter:Emit(_pNumber) end
         end
 
-        --------------
-        -- Clean_Up --
-        --------------
-        function component:Clean_Up()
-            local emitter
-            for i = #self.emitters, 1, -1 do
-                emitter = self.emitters[i]
-                if(emitter:Get_Count() <= 0) then remove(self.emitters, i) end
-            end
-        end
-
-        -------------------------
-        -- _Create_New_Emitter --
-        -------------------------
-        function component:_Create_New_Emitter(_pParameters)
-            return factory.new(_pParameters)
+        -----------------
+        -- Get_Emitter --
+        -----------------
+        function component:Get_Emitter(_pName)
+            return self.emitters[_pName]
         end
         
         ------------------
@@ -59,6 +50,15 @@ return {
             return result
         end
 
+        ------------
+        -- Remove --
+        ------------
+        function component:Remove(_pName)
+            local emitter = self.emitters[_pName]
+            if(emitter ~= nil) then emitter.expired = true end
+        end
+        
+
         ------------------
         -- Set_Position --
         ------------------
@@ -71,9 +71,12 @@ return {
         -- Update --
         ------------
         function component:Update(dt)
-            self:Clean_Up()
-            for key, value in ipairs(self.emitters) do
-                value:Update(dt)
+            for key, value in pairs(self.emitters) do
+                if(value.expired) then
+                    remove(self.emitters, key)
+                else
+                    value:Update(dt)
+                end
             end
         end
 
@@ -82,7 +85,7 @@ return {
         ----------
         function component:Draw()
             love.graphics.setColor(1, 1, 1, 1)
-            for key, value in ipairs(self.emitters) do
+            for key, value in pairs(self.emitters) do
                 value:Draw()
             end
         end

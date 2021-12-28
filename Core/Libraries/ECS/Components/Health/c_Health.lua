@@ -1,15 +1,19 @@
 return {
     new = function(_pParamaters)
-      local _params = _pParamaters or {}
+      local f_component = Locator:Get_Service("f_component")
+      local _params     = _pParamaters or {}
 
-      local component = p_Component.new("health")
+      local component = f_component.new("health")
             component.defense    = _params.defense    or 0 
             component.damage     = _params.damage     or 0
             component.health     = _params.maxHealth  or 100
             component.maxDefense = _params.maxDefense or 100
             component.maxHealth  = _params.maxHealth  or 100
             
+      
+      local aspect    = nil
       local alpha     = 1
+      local camera    = nil
       local state     = nil
       local timers    = nil
       local tName     = "wait"
@@ -26,6 +30,8 @@ return {
       -- Load --
       ----------
       function component:Load()
+        aspect = Locator:Get_Service("aspect")
+        camera = Locator:Get_Service("camera")
         state  = require('Core/Libraries/State_Machine').new({"SHOW", "HIDE"})
         timers = require('Core/Libraries/Timers').new()
 
@@ -120,11 +126,11 @@ return {
 
         local padding = bBox.width * 0.2
         local panelW = (bBox.width * 2) - (padding*2)
-        local panelH = bBox.height * Aspect.scale * 0.2
+        local panelH = bBox.height * aspect.scale * 0.2
         local panelX = bBox.left   + (padding*0.5)
         local panelY = bBox.top    - (bBox.height * 0.4)
 
-        local _x, _y = Camera:World_To_Screen(panelX, panelY)
+        local _x, _y = camera:World_To_Screen(panelX, panelY)
 
         local hValue  = self.health  / self.maxHealth
         local tValue  = targetHealth / self.maxHealth

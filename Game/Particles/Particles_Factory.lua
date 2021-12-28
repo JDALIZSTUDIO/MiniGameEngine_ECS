@@ -1,13 +1,14 @@
 local factory = {}
-
-    local range = 64 
-    local rad   = math.rad
-    local rnd   = math.random
+    
+    local aspect = Locator:Get_Service("aspect")
+    local range  = 64 
+    local rad    = math.rad
+    local rnd    = math.random
 
     local function Translate(_pPosition)
         return {
-            _pPosition.x  / Aspect.scale,
-            _pPosition.y  / Aspect.scale
+            _pPosition.x  / aspect.scale,
+            _pPosition.y  / aspect.scale
         }
     end
 
