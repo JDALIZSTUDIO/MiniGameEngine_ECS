@@ -107,7 +107,7 @@ return {
             ECS:Register(require('Core/Libraries/ECS/Systems/Rendering/s_Trail_Renderer').new())
             ECS:Register(require('Core/Libraries/ECS/Systems/Rendering/s_Animation_Renderer').new())
             ECS:Register(require('Core/Libraries/ECS/Systems/Rendering/s_Sprite_Renderer').new())
-            ECS:Register(require('Core/Libraries/ECS/Systems/Rendering/s_Sprite_GUI_Renderer').new())
+            ECS:Register(require('Core/Libraries/ECS/Systems/Rendering/s_Sprite_Renderer_GUI').new())
             ECS:Register(require('Core/Libraries/ECS/Systems/Rendering/s_Box_Renderer').new())
             ECS:Register(require('Core/Libraries/ECS/Systems/FX/s_Particle_System').new())
             --ECS:Register(require('Core/Libraries/ECS/Systems/FX/s_Love_Particle_System').new())

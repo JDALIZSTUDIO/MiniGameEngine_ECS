@@ -25,10 +25,6 @@ return {
       local renderer     = _pEntity:Get_Component(sr)      
       if(renderer.active == false) then return end
       
-      if(renderer.shader ~= nil) then 
-        if(renderer.shader.active) then renderer.shader:Set() end 
-      end
-      
       if(dropShadow ~= nil) then
         love.graphics.setColor(0, 0, 0, dropShadow.alpha)
       
@@ -44,6 +40,10 @@ return {
           0,
           0
         )
+      end
+      
+      if(renderer.shader ~= nil) then 
+        if(renderer.shader.active) then renderer.shader:Set() end 
       end
       
       love.graphics.setColor(1, 1, 1, renderer.alpha)

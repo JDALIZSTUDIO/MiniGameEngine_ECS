@@ -5,6 +5,7 @@ return {
     
     local rad = math.rad
     local an  = "animator"
+    local ds  = "dropShadow"
     local tr  = "transform"
 
     ----------
@@ -64,9 +65,27 @@ return {
       if(animator.active == false) then return end
       
       local current  = animator.currentAnimation
-      if current == nil then return end      
-      
-      local transform = _pEntity:Get_Component(tr)
+      if current == nil then return end
+
+      local dropShadow = _pEntity:Get_Component(ds)
+      local transform  = _pEntity:Get_Component(tr)
+
+      if(dropShadow ~= nil) then        
+        love.graphics.setColor(0, 0, 0, dropShadow.alpha)
+
+        love.graphics.draw(
+          current.sprite.image, 
+          current.quadData[animator.currentFrame], 
+          transform.position.x + current.offset.x + dropShadow.offset.x, 
+          transform.position.y + current.offset.y + dropShadow.offset.y,
+          rad(transform.rotation),
+          transform.scale.x,
+          transform.scale.y,
+          current.frameWidth  * 0.5,
+          current.frameHeight * 0.5
+        )
+
+      end
       
       love.graphics.setColor(1, 1, 1, animator.alpha)
 

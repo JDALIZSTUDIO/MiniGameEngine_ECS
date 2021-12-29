@@ -13,7 +13,7 @@ return {
             local cursor = ECS:Create()
                   cursor:Add_Component(require('Game/ECS/Controllers/c_Cursor_Controller').new())
                   cursor:Add_Component(require('Core/Libraries/ECS/Components/Movement/c_Transform').new(0, 0, 0))
-                  cursor:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_Sprite_GUI_Renderer').new("Game/Images/Misc/cursor_gameplay.png"))
+                  cursor:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_Sprite_Renderer_GUI').new("Game/Images/Misc/cursor_gameplay.png"))
         end
 
 
@@ -75,7 +75,7 @@ return {
                   rb:Set_Tilemap(Tilemap)
        
             ECS:Register(require('Core/Libraries/ECS/Systems/Rendering/s_Sprite_Renderer').new())
-            ECS:Register(require('Core/Libraries/ECS/Systems/Rendering/s_Sprite_GUI_Renderer').new())
+            ECS:Register(require('Core/Libraries/ECS/Systems/Rendering/s_Sprite_Renderer_GUI').new())
             ECS:Register(require('Core/Libraries/ECS/Systems/Rendering/s_Box_Renderer').new())
 
         end

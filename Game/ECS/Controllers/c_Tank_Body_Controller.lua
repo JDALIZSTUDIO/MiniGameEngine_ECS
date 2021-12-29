@@ -33,8 +33,8 @@ return {
     -------------
     -- Animate --
     -------------
-    function component:Animate() 
-      local animator  = self.gameObject:Get_Component(an) 
+    function component:Animate()
+      local animator  = self.gameObject:Get_Component(an)
       if(moving) then
         animator:Play("move")
       else

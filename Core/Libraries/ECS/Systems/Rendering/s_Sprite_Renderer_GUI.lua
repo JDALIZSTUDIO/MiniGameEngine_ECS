@@ -1,10 +1,10 @@
 return {
     new = function()
       local f_system = Locator:Get_Service("f_system")
-      local system   = f_system.new({"transform", "spriteGUIRenderer"})
+      local system   = f_system.new({"transform", "spriteRendererGUI"})
       
       local ds = "dropShadow"
-      local sr = "spriteGUIRenderer"
+      local sr = "spriteRendererGUI"
       local tr = "transform"
       
       ----------

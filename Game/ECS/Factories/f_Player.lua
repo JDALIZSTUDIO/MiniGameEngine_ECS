@@ -11,7 +11,8 @@ return {
 
             _pEntity:Add_Component(require('Game/ECS/Controllers/c_Cursor_Controller').new())
             _pEntity:Add_Component(require('Core/Libraries/ECS/Components/Movement/c_Transform').new(0, 0, 0))
-            _pEntity:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_Sprite_GUI_Renderer').new(spr_cursor))
+            _pEntity:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_DropShadow').new(4, 4))
+            _pEntity:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_Sprite_Renderer_GUI').new(spr_cursor))
         end
 
         -----------------
@@ -29,10 +30,11 @@ return {
             _pEntity:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Bounding_Box').new(0, 0, 24, 24))
             _pEntity:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Rigid_Body').new({maxForce = 100}))
             _pEntity:Add_Component(require('Core/Libraries/ECS/Components/Lighting/c_Fog_Remover').new())
+            _pEntity:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_DropShadow').new(4, 4))
 
             local anim = _pEntity:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_Animator').new())
                     anim:Add("idle", spr_body, 96, 96, 0, 0, 1, 1, 2, 1)
-                    anim:Add("move", spr_body, 96, 96, 0, 0, 1, 2, 2, 2)
+                    anim:Add("move", spr_body, 96, 96, 0, 0, 1, 2, 2, 2, 15)
             
             --_pEntity:Add_Component(require('Core/Libraries/ECS/Components/FX/c_Love_Particle_System').new())
             _pEntity:Add_Component(require('Core/Libraries/ECS/Components/FX/c_Particle_System').new())
@@ -47,6 +49,7 @@ return {
             local transformCannon = cannon:Add_Component(require('Core/Libraries/ECS/Components/Movement/c_Transform').new(x, y, 0))
 
             cannon:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Bounding_Box').new(0, 0, 32, 32))
+            cannon:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_DropShadow').new(4, 4))
             cannon:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_Sprite_Renderer').new(spr_cannon))
 
             transformBody:Add_Child(transformCannon)
