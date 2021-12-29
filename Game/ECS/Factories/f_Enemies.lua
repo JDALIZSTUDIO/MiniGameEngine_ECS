@@ -54,7 +54,8 @@ return {
             _pEntity:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Bounding_Box').new(0, 0, 32, 32))
             _pEntity:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Box_Collider').new())
             _pEntity:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Simple_Body').new())            
-
+            _pEntity:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_DropShadow').new(4, 4))
+            
             local anim = _pEntity:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_Animator').new())
                   anim:Add("closed",  spr_atlas, 32, 32, 0, 0, 1, 1, 1, 1, 0,  false)
                   anim:Add("open",    spr_atlas, 32, 32, 0, 0, 2, 1, 2, 1, 0,  false)

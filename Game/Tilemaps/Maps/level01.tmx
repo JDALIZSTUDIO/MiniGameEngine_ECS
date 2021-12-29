@@ -56,9 +56,9 @@
   <object id="9" name="brickWall" gid="212" x="288" y="192" width="32" height="32"/>
   <object id="10" name="brickWall" gid="212" x="320" y="192" width="32" height="32"/>
   <object id="11" name="brickWall" gid="212" x="352" y="192" width="32" height="32"/>
-  <object id="12" name="brickWall" gid="212" x="352" y="64" width="32" height="32"/>
+  <object id="12" name="brickWall" gid="212" x="288" y="64" width="32" height="32"/>
   <object id="13" name="brickWall" gid="212" x="320" y="64" width="32" height="32"/>
-  <object id="14" name="brickWall" gid="212" x="288" y="64" width="32" height="32"/>
+  <object id="14" name="brickWall" gid="212" x="352" y="64" width="32" height="32"/>
   <object id="2" name="block" gid="210" x="128" y="96" width="32" height="32"/>
   <object id="15" name="block" gid="210" x="352" y="96" width="32" height="32"/>
   <object id="5" name="block" gid="210" x="160" y="96" width="32" height="32"/>

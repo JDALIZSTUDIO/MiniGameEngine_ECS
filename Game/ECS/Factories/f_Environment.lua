@@ -15,6 +15,7 @@ return {
             _pEntity:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Bounding_Box').new(0, 0, 32, 32))
             _pEntity:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Box_Collider').new())
             _pEntity:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Rigid_Body').new({isStatic = true}))
+            _pEntity:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_DropShadow').new(4, 4))
         end
 
         
@@ -29,6 +30,7 @@ return {
             _pEntity:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Bounding_Box').new(0, 0, 32, 32))
             _pEntity:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Box_Collider').new())
             _pEntity:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Rigid_Body').new({isStatic = true}))
+            _pEntity:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_DropShadow').new(4, 4))
         end
 
 

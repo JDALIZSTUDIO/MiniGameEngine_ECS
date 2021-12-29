@@ -1,7 +1,8 @@
 return {
     new = function()
-        local factory = Locator:Get_Service("f_component")
-        local component = factory.new("animatedFxEmitter")
+        local f_FX            = Locator:Get_Service("f_fx")
+        local f_component     = Locator:Get_Service("f_component")
+        local component       = f_component.new("animatedFxEmitter")
               component.scale = Vector2.new(1, 1)
         
         local rnd = math.random
@@ -13,10 +14,10 @@ return {
         function component:Emit(_pSprite, _pFrameW, _pFrameH, _pOffsetX, _pOffsetY, _pStartCol, _pStartLig, _pEndCol, _pEndLig, _pSpeed)
             local transform = self.gameObject:Get_Component(tr)
             local explosion = self.gameObject.ECS:Create()
-                explosion:Add_Component(require('Core/Libraries/ECS/Components/Controllers/c_FX_Controller').new())
+                  explosion:Add_Component(f_FX.new())
                 local t = explosion:Add_Component(require('Core/Libraries/ECS/Components/Movement/c_Transform').new(transform.position.x, 
-                                                                                                                transform.position.y, 
-                                                                                                                rnd(359)))
+                                                                                                                    transform.position.y, 
+                                                                                                                    rnd(359)))
 
                 t.scale:Set(
                     self.scale.x,

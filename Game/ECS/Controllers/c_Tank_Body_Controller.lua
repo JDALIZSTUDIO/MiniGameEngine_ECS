@@ -55,11 +55,7 @@ return {
  
       local partSystem = self.gameObject:Get_Component(ps)
       local emitter    = partSystem:Create(smokeStr)
-            emitter:Set_Parameters(
-              {
-                
-              }
-            )
+            emitter:Set_Parameters(particles:Test_parameters())
     end
     
     -------------------
@@ -109,7 +105,8 @@ return {
 
         local partSystem = self.gameObject:Get_Component(ps)
         local emitter    = partSystem:Get_Emitter(smokeStr)
-              emitter:Set_Parameters()
+              emitter:Emit(position.x, position.y, rnd(3, 5))
+              
               --partSystem:Emit(particles:Smoke_Properties(position), rnd(3, 5))
 
         timers:Start(smokeStr)

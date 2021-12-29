@@ -15,17 +15,19 @@ return {
         ------------
         -- Create --
         ------------
-        function component:Create(_pName, _pX, _pY)
-            self.emitters[_pName] = f_emitter.new(_pX or 0, _pY or 0)
+        function component:Create(_pName)
+            self.emitters[_pName] = f_emitter.new()
             return self:Get_Emitter(_pName)
         end
         
         ----------
         -- Emit --
         ----------
-        function component:Emit(_pName, _pNumber)
+        function component:Emit(_pName, _pX, _pY, _pNumber)
             local emitter = self.emitters[_pName]
-            if(emitter ~= nil) then emitter:Emit(_pNumber) end
+            if(emitter ~= nil) then
+                emitter:Emit(_pX, _pY, _pNumber) 
+            end
         end
 
         -----------------
@@ -56,8 +58,7 @@ return {
         function component:Remove(_pName)
             local emitter = self.emitters[_pName]
             if(emitter ~= nil) then emitter.expired = true end
-        end
-        
+        end        
 
         ------------------
         -- Set_Position --
@@ -84,7 +85,6 @@ return {
         -- Draw --
         ----------
         function component:Draw()
-            love.graphics.setColor(1, 1, 1, 1)
             for key, value in pairs(self.emitters) do
                 value:Draw()
             end
