@@ -5,7 +5,7 @@ return {
             expired      = false,
             lstActive    = {},
             lstParticles = {},
-            maxParticles = 200,
+            maxParticles = 32,
             parameters   = {},
             position     = { 
                 x        = _pX, 
@@ -32,7 +32,8 @@ return {
             local available = count - #self.lstActive
             local counter = 0, particle
             for i = 1, count do
-                if(counter < _pNumber and counter < available) then
+                if(counter <= _pNumber and 
+                   counter <= available) then
                     particle = self.lstParticles[i]
                     if(particle.active == false) then              
                         insert(self.lstActive, self:Init_Particle(particle))
@@ -58,6 +59,9 @@ return {
             if(_pParticle == nil) then return end
             _pParticle.active             = true
 
+            -----------
+            -- color --
+            -----------
             _pParticle.colors = {}
             for i = 1, #self.parameters.colors do
                 _pParticle.colors[i] = {}
@@ -71,6 +75,9 @@ return {
                 _pParticle.color[i] = self.parameters.colors[1][i]
             end
 
+            ----------
+            -- life --
+            ----------
             _pParticle.lifeTime           = rnd(
                 self.parameters.lifeTime[1], 
                 self.parameters.lifeTime[2]
@@ -80,6 +87,10 @@ return {
                 x = rnd(self.parameters.linearAcceleration[1], self.parameters.linearAcceleration[2]),
                 y = rnd(self.parameters.linearAcceleration[3], self.parameters.linearAcceleration[4])
             }
+
+            --------------
+            -- movement --
+            --------------
             _pParticle.gravity            = {
                 x = rnd(self.parameters.linearDampening[1], self.parameters.linearDampening[2]),
                 y = rnd(self.parameters.linearDampening[3], self.parameters.linearDampening[4])

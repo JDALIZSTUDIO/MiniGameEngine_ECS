@@ -10,14 +10,26 @@ return {
     local he = "health"
     local rb = "rigidBody"
     local tr = "transform"
-
+    
     local state  = nil
 
-    -----------------
-    -- Custom_Load --
-    -----------------
-    function component:Custom_Load()
-      state  = require('Core/Libraries/State_Machine').new({"IDLE", "DEATH", "DEAD"})
+    -------------
+    -- Animate --
+    -------------
+    function component:Animate()
+      local animator = self.gameObject:Get_Component(an)
+      if(state:Compare("HURT")) then
+        if(animator:Is_Finished("hurt")) then 
+          animator:Play("idle")
+          state:Set("IDLE") end
+        end
+    end
+
+    ----------
+    -- Load --
+    ----------
+    function component:Load()
+      state  = require('Core/Libraries/State_Machine').new({"IDLE", "HURT", "DEATH", "DEAD"})
       state:Set("IDLE")
 
       --local transform = self.gameObject:Get_Component(tr)
@@ -31,22 +43,30 @@ return {
 
     end
 
-    ---------------
-    -- Kill_Self --
-    ---------------
-    function component:Kill_Self()
+    ----------
+    -- Kill --
+    ----------
+    function component:Kill()
       local animator = self.gameObject:Get_Component(an)
-            animator:Play("death")
-
       local collider = self.gameObject:Get_Component(bc)
-            collider.active = false
-
-      local rigid = self.gameObject:Get_Component(rb)
-            rigid.active = false
-
+      local rigid = self.gameObject:Get_Component(rb)      
+      animator:Play("death")
+      collider.active = false
+      rigid.active    = false
       state:Set("DEATH")
     end
     
+    ---------------
+    -- On_Damage --
+    ---------------
+    function component:On_Damage()  
+      local animator = self.gameObject:Get_Component(an)
+            animator:Play("idle")
+            animator:Play("hurt")
+
+      state:Set("HURT")
+    end
+
     ----------------
     -- On_Destroy --
     ----------------
@@ -59,29 +79,25 @@ return {
     -- On_Entity_Collision --
     -----------------------
     function component:On_Entity_Collision(_pTable)
-      if(state:Compare("IDLE")) then
+      if(not state:Compare("DEATH")) then
         local other
         for i = 1, #_pTable do
           other = _pTable[i]
           if(other.name == "bullet") then
-            local health = self.gameObject:Get_Component(he)
-            if(health ~= nil) then
-              health:Hurt(other:Get_Component(ch).damage)
-              if(health.health <= 0) then
-                self:Kill_Self()
-                self:Explode()
-              end
-              other.Destroy() 
+            if(self:Hurt(other:Get_Component(ch).damage)) then
+              self:Kill()
+              self:Explode()
             end
+            other.Destroy()
           end
         end
       end
     end
     
-    ------------
-    -- Update --
-    ------------
-    function component:Update(dt)
+    ------------------
+    -- Update_Logic --
+    ------------------
+    function component:Update_Logic(dt)
       local current = state:Get_Name()
       if(current == "DEATH") then
         local animator = self.gameObject:Get_Component(an)

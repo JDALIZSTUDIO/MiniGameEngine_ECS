@@ -42,10 +42,10 @@ return {
       end
     end
 
-    -----------------
-    -- Custom_Load --
-    -----------------
-    function component:Custom_Load()
+    ----------
+    -- Load --
+    ----------
+    function component:Load()
       timers = require('Core/Libraries/Timers').new()
       timers:Add_Timer(smokeStr, smokeDuration)
 

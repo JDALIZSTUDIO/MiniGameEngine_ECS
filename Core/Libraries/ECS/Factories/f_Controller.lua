@@ -9,26 +9,39 @@ return {
     function component:Animate()  
     
     end
-
-    -----------------
-    -- Custom_Load --
-    -----------------
-    function component:Custom_Load()  
     
-    end
+    ----------
+    -- Hurt --
+    ----------
+    function component:Hurt(_pDamage)
+      local health = self.gameObject:Get_Component("health")
+      if(health == nil) then return false end
+      if(health:Hurt(_pDamage)) then
+        return true
+      end
+      self:On_Damage()
+      return false
+    end    
     
-    -------------------
-    -- Process_Input --
-    -------------------
-    function component:Process_Input(dt)  
+    ----------
+    -- Kill --
+    ----------
+    function component:Kill()
       
-    end
+    end    
     
     ----------
     -- Load --
     ----------
     function component:Load()
-      component:Custom_Load()
+      
+    end    
+
+    ---------------
+    -- On_Damage --
+    ---------------
+    function component:On_Damage()  
+    
     end
 
     ----------------
@@ -36,6 +49,13 @@ return {
     ----------------
     function component:On_Destroy()  
     
+    end
+
+    -------------------
+    -- Process_Input --
+    -------------------
+    function component:Process_Input(dt)  
+      
     end
 
     ------------

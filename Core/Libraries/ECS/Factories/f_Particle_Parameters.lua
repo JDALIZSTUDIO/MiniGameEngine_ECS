@@ -2,11 +2,13 @@ return {
     new = function()
         local Parameters       = {
             colors             = { {1, 1, 1, 1}, {1, 1, 1, 1}, {1, 1, 1, 1} },
+            isShadow           = false,
             lifeTime           = { 1, 1 },
             linearAcceleration = { 0, 0, 0, 0 },
             linearDampening    = { 0, 0, 0, 0 },
             offset             = { 0, 0, 0, 0 },
             rotation           = { 0, 0 },
+            shadow             = 0,
             sizes              = { 1, 1, 1 },
             sprite             = nil,
             sizeVariation      = { 1, 1 },

@@ -62,10 +62,10 @@ return {
       end
     end
 
-    -----------------
-    -- Custom_Load --
-    -----------------
-    function component:Custom_Load()
+    ----------
+    -- Load --
+    ----------
+    function component:Load()
       factory    = require('Game/ECS/Factories/f_Enemies').new()
       gameObject = self.gameObject 
 

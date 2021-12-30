@@ -34,93 +34,93 @@ function Vector2:Divide(_pVector2A, _pVector2B)
 end
 
 Vector2.new = function(_pX, _pY)
-    local v = {
-          x = _pX or 0,
-          y = _pY or 0,
+    local vec2 = {
+          x    = _pX or 0,
+          y    = _pY or 0,
     }
 
     local atan2 = math.atan2
     local sqrt  = math.sqrt
 
-    function v:Clone()
-        return Vector2.new(v.x, v.y)
+    function vec2:Clone()
+        return Vector2.new(self.x, self.y)
     end
 
-    function v:Add(_pVector2)
-        v.x = v.x + _pVector2.x
-        v.y = v.y + _pVector2.y
+    function vec2:Add(_pVector2)
+        self.x = self.x + _pVector2.x
+        self.y = self.y + _pVector2.y
     end
 
-    function v:AddN(_pScalar)
-        v.x = v.x + _pScalar
-        v.y = v.y + _pScalar
+    function vec2:AddN(_pScalar)
+        self.x = self.x + _pScalar
+        self.y = self.y + _pScalar
     end
 
-    function v:Subtract(_pVector2)
-        v.x = v.x - _pVector2.x
-        v.y = v.y - _pVector2.y
+    function vec2:Subtract(_pVector2)
+        self.x = self.x - _pVector2.x
+        self.y = self.y - _pVector2.y
     end
 
-    function v:SubtractN(_pScalar)
-        v.x = v.x - _pScalar
-        v.y = v.y - _pScalar
+    function vec2:SubtractN(_pScalar)
+        self.x = self.x - _pScalar
+        self.y = self.y - _pScalar
     end
 
-    function v:Multiply(_pVector2)
-        v.x = v.x * _pVector2.x
-        v.y = v.y * _pVector2.y
+    function vec2:Multiply(_pVector2)
+        self.x = self.x * _pVector2.x
+        self.y = self.y * _pVector2.y
     end
 
-    function v:MultiplyN(_pScalar)
-        v.x = v.x * _pScalar
-        v.y = v.y * _pScalar
+    function vec2:MultiplyN(_pScalar)
+        self.x = self.x * _pScalar
+        self.y = self.y * _pScalar
     end
     
-    function v:Clamp(_pScalar)
-      if(v.x > _pScalar) then v.x = _pScalar end
-      if(v.y > _pScalar) then v.y = _pScalar end
-      if(v.x < -_pScalar) then v.x = -_pScalar end
-      if(v.y < -_pScalar) then v.y = -_pScalar end
+    function vec2:Clamp(_pScalar)
+      if(self.x > _pScalar)  then self.x = _pScalar end
+      if(self.y > _pScalar)  then self.y = _pScalar end
+      if(self.x < -_pScalar) then self.x = -_pScalar end
+      if(self.y < -_pScalar) then self.y = -_pScalar end
     end
     
-    function v:Direction()
-        return atan2(0 - v.y, 0 - v.x)
+    function vec2:Direction()
+        return atan2(0 - self.y, 0 - self.x)
     end
 
-    function v:Direction_To(_pVector2)
-        return atan2(_pVector2.y - v.y, _pVector2.x - v.x)
+    function vec2:Direction_To(_pVector2)
+        return atan2(_pVector2.y - self.y, _pVector2.x - self.x)
     end
 
-    function v:Distance_To(_pVector2)
-        return sqrt((_pVector2.x - v.x) ^ 2 + (_pVector2.y - v.y) ^ 2)
+    function vec2:Distance_To(_pVector2)
+        return sqrt((_pVector2.x - self.x) ^ 2 + (_pVector2.y - self.y) ^ 2)
     end
 
-    function v:Divide(_pVector2)
-        v.x = v.x / _pVector2.x
-        v.y = v.y / _pVector2.y
+    function vec2:Divide(_pVector2)
+        self.x = self.x / _pVector2.x
+        self.y = self.y / _pVector2.y
     end
 
-    function v:DivideN(_pScalar)
-        v.x = v.x / _pScalar
-        v.y = v.y / _pScalar
+    function vec2:DivideN(_pScalar)
+        self.x = self.x / _pScalar
+        self.y = self.y / _pScalar
     end
 
-    function v:Magnitude()
-        return sqrt(v.x * v.x + v.y * v.y)
+    function vec2:Magnitude()
+        return sqrt(self.x * self.x + self.y * self.y)
     end
 
-    function v:Normalize()
+    function vec2:Normalize()
         local length = v:Magnitude()
-        v.x = v.x / length
-        v.y = v.y / length
+        self.x = self.x / length
+        self.y = self.y / length
     end
 
-    function v:Set(_pX, _pY)
-        v.x = _pX
-        v.y = _pY
+    function vec2:Set(_pX, _pY)
+        self.x = _pX
+        self.y = _pY
     end
 
-  return v
+  return vec2
 end
 
 function Vector2:Zero()

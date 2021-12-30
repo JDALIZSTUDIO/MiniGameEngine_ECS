@@ -10,6 +10,9 @@ return {
       scene_manager:Next()
     end
 
+    -----------
+    -- Load --
+    -----------
     function Scene:Load()
       Logo = require('Game/Objects/obj_Logo').new()
       Logo:Load()
@@ -17,10 +20,16 @@ return {
       if (isDebug) then print("Scenes,  loaded:      "..Scene.name) end
     end
 
+    ------------
+    -- Unload --
+    ------------
     function Scene:Unload()
       if (isDebug) then print("Scenes,  unLoaded:    "..Scene.name) end
     end
 
+    ------------
+    -- Update --
+    ------------
     function Scene:Update(dt)
       Logo:Update(dt)
       

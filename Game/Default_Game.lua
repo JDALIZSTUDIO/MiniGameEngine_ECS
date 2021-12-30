@@ -1,7 +1,6 @@
 return {
     new = function()
-        local Class = require('Core/Game_Loop/Core_Game_Loop').new("Default_Game")
-        
+        local Class = require('Core/Game_Loop/Core_Game_Loop').new("Default_Game")        
 
         -----------------
         -- On_Load_Assets --
@@ -24,6 +23,12 @@ return {
                   spriteLoader:Add_Sprite("block",           "Game/Images/Environment/spr_block.png")
                   spriteLoader:Add_Sprite("brickWall",       "Game/Images/Environment/spr_brickWall.png")
                   spriteLoader:Add_Sprite("crate",           "Game/Images/Environment/spr_crate.png")
+
+                  spriteLoader:Add_Sprite("barrel_hurt",     "Game/Images/Environment/spr_barrel_hurt_128x128_n20.png")
+                  spriteLoader:Add_Sprite("block_hurt",      "Game/Images/Environment/spr_block_hurt_128x128_n20.png")
+                  spriteLoader:Add_Sprite("brickWall_hurt",  "Game/Images/Environment/spr_brickWall_hurt_128x128_n20.png")
+                  spriteLoader:Add_Sprite("crate_hurt",      "Game/Images/Environment/spr_crate_hurt_128x128_n20.png")
+                  
                   -- FX --
                   --spriteLoader:Add_Sprite("barrel_death",    "Game/Images/FX/spr_barrel_death_128x128_n34.png")
                   spriteLoader:Add_Sprite("barrel_death",    "Game/Images/FX/spr_barrel_death_n35.png")
@@ -70,14 +75,14 @@ return {
         --------------------
         function Class:On_Load_Scenes()
             local scene_manager = Locator:Get_Service("sceneManager")
+            scene_manager:Add("Scene_Logo",       'Game/Scenes/Scene_Logo')
+            scene_manager:Add("Scene_Menu",       'Game/Scenes/Scene_Menu')
+            scene_manager:Add("Test_Gameplay",    'TESTS/Scenes/Scene_Test_Gameplay')
             --scene_manager:Add("Test_Lighting",    'TESTS/Scenes/Scene_Test_Lighting')
             --scene_manager:Add("Test_Tilemap",     'TESTS/Scenes/Scene_Test_Tilemap')
             --scene_manager:Add("Test_Camera_Look", 'TESTS/Scenes/Scene_Test_Camera_Look')
             --scene_manager:Add("Test_Physics",     'TESTS/Scenes/Scene_Test_Physics')
-            scene_manager:Add("Test_Gameplay",    'TESTS/Scenes/Scene_Test_Gameplay')
             --scene_manager:Add("Test_Fog_Of_War",  'TESTS/Scenes/Scene_Test_Fog_Of_War')
-            --scene_manager:Add("Scene_Logo",       'Game/Scenes/Scene_Logo')
-            --scene_manager:Add("Scene_Menu",       'Game/Scenes/Scene_Menu')
         end
 
         return Class

@@ -49,7 +49,7 @@ return {
             local spr_death = spriteLoader:Get_Sprite("tank_cannon")
 
             _pEntity:Add_Component(require('Game/ECS/Controllers/c_Spawner_Controller').new())
-            _pEntity:Add_Component(require('Core/Libraries/ECS/Components/Health/c_Health').new())
+            _pEntity:Add_Component(require('Core/Libraries/ECS/Components/Effectors/c_Health').new())
             _pEntity:Add_Component(require('Core/Libraries/ECS/Components/Movement/c_Transform').new(_pX, _pY, 0))
             _pEntity:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Bounding_Box').new(0, 0, 32, 32))
             _pEntity:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Box_Collider').new())

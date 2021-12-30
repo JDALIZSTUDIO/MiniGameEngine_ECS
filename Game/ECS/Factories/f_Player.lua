@@ -23,7 +23,7 @@ return {
             local spr_cannon = spriteLoader:Get_Sprite("tank_cannon")
 
             _pEntity:Add_Component(require('Game/ECS/Controllers/c_Tank_Body_Controller').new())
-            _pEntity:Add_Component(require('Core/Libraries/ECS/Components/Health/c_Health').new())
+            _pEntity:Add_Component(require('Core/Libraries/ECS/Components/Effectors/c_Health').new())
 
             local transformBody = _pEntity:Add_Component(require('Core/Libraries/ECS/Components/Movement/c_Transform').new(_pX, _pY, 0))
 

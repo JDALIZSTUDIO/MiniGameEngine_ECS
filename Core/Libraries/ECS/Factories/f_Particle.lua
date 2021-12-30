@@ -6,10 +6,12 @@ return {
             colors             = { {1, 1, 1, 1}, {1, 1, 1, 1}, {1, 1, 1, 1} },
             friction           = { x = 0, y = 0 },
             gravity            = { x = 0, y = 0 },
+            isShadow           = false,
             lifeTime           = { 1, 1 },
             lifeRemaining      = 0,
             position           = { x = 0, y = 0 },
             rotation           = 0,
+            shadow             = 0,
             size               = 1,
             sizes              = { 1, 1, 1 },
             sprite             = nil,
@@ -110,6 +112,10 @@ return {
         -- Draw --
         ----------
         function Class:Draw()
+            if(self.isShadow) then
+                self:Draw_Dropshadow()
+            end
+
             love.graphics.setColor(self.color)
             love.graphics.draw(
                 self.sprite.image,
@@ -121,6 +127,21 @@ return {
                 self.sprite.halfW,
                 self.sprite.halfH
             )
+        end
+
+        function Class:Draw_Dropshadow()
+            love.graphics.setColor(0, 0, 0, self.color[4] * 0.3)
+            love.graphics.draw(
+                self.sprite.image,
+                self.position.x + self.shadow, 
+                self.position.y + self.shadow,
+                rad(self.rotation),
+                self.size,
+                self.size,
+                self.sprite.halfW,
+                self.sprite.halfH
+            )
+
         end
         
         return Class

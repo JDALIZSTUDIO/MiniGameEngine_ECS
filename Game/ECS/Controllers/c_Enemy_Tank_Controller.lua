@@ -40,10 +40,10 @@ return {
       end
     end
 
-    -----------------
-    -- Custom_Load --
-    -----------------
-    function component:Custom_Load()
+    ----------
+    -- Load --
+    ----------
+    function component:Load()
         gameObject = self.gameObject
 
         state = require('Core/Libraries/State_Machine').new({"SPAWN", "WAIT", "SEARCH", "MOVETO", "ARRIVE", "SHOOT"})

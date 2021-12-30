@@ -10,13 +10,20 @@ return {
     
     end
 
-    -----------------
-    -- Custom_Load --
-    -----------------
-    function component:Custom_Load()  
-      
+    ----------
+    -- Kill --
+    ----------
+    function component:Kill()
+
     end
     
+    ----------
+    -- Load --
+    ----------
+    function component:Load()
+      
+    end
+        
     ----------------
     -- On_Destroy --
     ----------------
@@ -36,13 +43,6 @@ return {
     ------------------
     function component:Update_Logic(dt)  
       
-    end
-    
-    ----------
-    -- Load --
-    ----------
-    function component:Load()
-      self:Custom_Load()
     end
 
     ------------

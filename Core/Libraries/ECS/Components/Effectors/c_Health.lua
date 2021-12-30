@@ -125,12 +125,12 @@ return {
         if(bBox == nil) then return end
 
         local padding = bBox.width * 0.2
-        local panelW = (bBox.width * 2) - (padding*2)
-        local panelH = bBox.height * aspect.scale * 0.2
-        local panelX = bBox.left   + (padding*0.5)
-        local panelY = bBox.top    - (bBox.height * 0.4)
+        local panelW  = (bBox.width * 2) - (padding*2)
+        local panelH  = bBox.height * aspect.scale * 0.2
+        local panelX  = bBox.left   + (padding*0.5)
+        local panelY  = bBox.top    - (bBox.height * 0.4)
 
-        local _x, _y = camera:World_To_Screen(panelX, panelY)
+        local _x, _y  = camera:World_To_Screen(panelX, panelY)
 
         local hValue  = self.health  / self.maxHealth
         local tValue  = targetHealth / self.maxHealth
@@ -155,6 +155,8 @@ return {
 
         love.graphics.setColor(1, 1, 1, 1)
       end
+
+      component:Load()
 
       return component
     end

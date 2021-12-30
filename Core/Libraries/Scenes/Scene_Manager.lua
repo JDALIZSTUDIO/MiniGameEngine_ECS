@@ -5,13 +5,14 @@ return {
       current_scene  = nil,
     }
 
-    local index = 0
+    local index  = 0
+    local insert = table.insert
 
     function Controller:Add(_pName, _pPath)
       local obj = {}
-      obj.name = _pName
-      obj.path = _pPath
-      table.insert(Controller.lst_scenes, obj)
+      obj.name  = _pName
+      obj.path  = _pPath
+      insert(Controller.lst_scenes, obj)
     end
 
     function Controller:Next()

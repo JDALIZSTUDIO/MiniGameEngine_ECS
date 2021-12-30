@@ -37,10 +37,10 @@ return {
                            1)
     end
 
-    -----------------
-    -- Custom_Load --
-    -----------------
-    function component:Custom_Load()
+    ----------
+    -- Load --
+    ----------
+    function component:Load()
         local transform = self.gameObject:Get_Component(tr)
         local rot       = rad(transform.rotation)
                 transform.velocity:Set(

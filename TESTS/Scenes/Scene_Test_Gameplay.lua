@@ -103,7 +103,7 @@ return {
                   rb:Set_Tilemap(Tilemap)
             
             ECS:Register(require('Core/Libraries/ECS/Systems/Movement/s_Transform').new())
-            ECS:Register(require('Core/Libraries/ECS/Systems/Health/s_Health').new())
+            ECS:Register(require('Core/Libraries/ECS/Systems/Effectors/s_Health').new())
             ECS:Register(require('Core/Libraries/ECS/Systems/Rendering/s_Trail_Renderer').new())
             ECS:Register(require('Core/Libraries/ECS/Systems/Rendering/s_Animation_Renderer').new())
             ECS:Register(require('Core/Libraries/ECS/Systems/Rendering/s_Sprite_Renderer').new())
