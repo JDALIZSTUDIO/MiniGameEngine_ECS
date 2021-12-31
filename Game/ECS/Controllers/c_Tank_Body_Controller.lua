@@ -1,4 +1,4 @@
-local particles = require('Game/Particles/Particles_Factory') 
+local particles = require('Game/ECS/Factories/f_Particles') 
 
 return {
   new = function()
@@ -26,9 +26,12 @@ return {
     local smoothAngle = Smooth_Angle
 
     local rSpeed        = 6
+    local time          = 0
+    local duration      = .3
+    
     local timers        = nil
     local smokeStr      = "smoke"
-    local smokeDuration = 0.15
+    local smokeDuration = 0
 
     -------------
     -- On_Animation --
@@ -92,26 +95,26 @@ return {
     -- On_Update --
     ------------------
     function component:On_Update(dt)
-      if(moving and timers:Is_Finished(smokeStr)) then
-        local rigid      = self.gameObject:Get_Component(rb)
-        local transform  = self.gameObject:Get_Component(tr)
+      if(moving) then
+        if(time >= duration) then
+          local rigid      = self.gameObject:Get_Component(rb)
+          local transform  = self.gameObject:Get_Component(tr)
 
-        local distance  = 16
-        local direction = rigid:_Get_Direction()
-        local position  = {
-          x = transform.position.x + cos(direction) * distance,
-          y = transform.position.y + sin(direction) * distance
-        }
+          local distance  = 16
+          local direction = rigid:_Get_Direction()
+          local position  = {
+            x = transform.position.x + cos(direction) * distance,
+            y = transform.position.y + sin(direction) * distance
+          }
 
-        local partSystem = self.gameObject:Get_Component(ps)
-        local emitter    = partSystem:Get_Emitter(smokeStr)
-              emitter:Emit(position.x, position.y, rnd(3, 5))
-              
-              --partSystem:Emit(particles:Smoke_Properties(position), rnd(3, 5))
+          local partSystem = self.gameObject:Get_Component(ps)
+          local emitter    = partSystem:Get_Emitter(smokeStr)
+                emitter:Emit(position.x, position.y, rnd(3, 5))
 
-        timers:Start(smokeStr)
+          time = 0
+        end
       end
-      timers:Update(dt)
+      time = time + dt
     end
     
     -----------------------

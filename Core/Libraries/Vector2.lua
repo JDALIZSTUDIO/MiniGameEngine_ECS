@@ -1,5 +1,7 @@
 local Vector2 = {}
 
+local max = math.max
+
 function Vector2:Add(_pVector2A, _pVector2B)
     return Vector2.new(_pVector2A.x + _pVector2B.x, _pVector2A.y + _pVector2B.y)
 end
@@ -110,9 +112,14 @@ Vector2.new = function(_pX, _pY)
     end
 
     function vec2:Normalize()
-        local length = v:Magnitude()
-        self.x = self.x / length
-        self.y = self.y / length
+        local length = vec2:Magnitude()
+        if(length <= 0) then
+            self.x = 0
+            self.y = 0
+        else
+            self.x = self.x / length
+            self.y = self.y / length
+        end
     end
 
     function vec2:Set(_pX, _pY)

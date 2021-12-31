@@ -27,13 +27,6 @@ return {
         local floor = math.floor
         local rad   = math.rad
         
-        ----------------
-        -- local Lerp --
-        ----------------
-        local function lerp(_pInitial, _pTarget, _pSpeed)
-            return _pInitial - (_pInitial - _pTarget) * _pSpeed
-        end
-
         ------------
         -- Update --
         ------------
@@ -44,10 +37,11 @@ return {
                 self.lifeRemaining = 0 
             else
                 local percent = self.lifeRemaining / self.lifeTime
+                local speed   = ((self.lifeTime) * dt)
                 
-                self:Update_Color(dt, percent)
+                self:Update_Color(dt, percent, speed)
+                self:Update_Size(dt, percent, speed)
                 self:Update_Rotation(dt)
-                self:Update_Size(dt, percent)
                 self:Apply_Gravity()
                 self:Update_Position(dt)
             end
@@ -56,13 +50,12 @@ return {
         ------------------
         -- Update_Color --
         ------------------
-        function Class:Update_Color(dt, _pPercent)
+        function Class:Update_Color(dt, _pPercent, _pSpeed)
             local count   = #self.colors
             local index   = floor((1 - _pPercent) * count) + 1
             local current = self.colors[index]
-            local speed   = (self.lifeTime / count) * dt
             for i = 1, #current do
-                self.color[i] = lerp(self.color[i], current[i], speed)
+                self.color[i] = self.color[i] + ((current[i] - self.color[i]) * _pSpeed)
             end           
         end
         
@@ -76,12 +69,11 @@ return {
         -----------------
         -- Update_Size --
         -----------------
-        function Class:Update_Size(dt, _pPercent)
+        function Class:Update_Size(dt, _pPercent, _pSpeed)
             local count   = #self.sizes
-            local index   = floor(_pPercent * count) + 1
+            local index   = floor((1 - _pPercent) * count) + 1
             local current = self.sizes[index]
-            local speed   = (self.lifeTime / count) * dt
-            self.size     = lerp(self.size, current, speed)         
+            self.size     = self.size + ((current - self.size) * _pSpeed)        
         end
         
         -------------------

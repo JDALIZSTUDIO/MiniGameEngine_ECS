@@ -15,10 +15,10 @@ local factory = {}
 
     function factory:Smoke_Properties(_pPosition, _pNumber)
         local properties       = {
-            colors             = { {1, 1, 1, 0}, {0.5, 0.5, 0.5, 0.5}, {0, 0, 0, 0} },
+            colors             = { {1, 1, 1, 1}, {0.5, 0.5, 0.5, 1}, {0, 0, 0, 0} },
             image              = love.graphics.newImage("Game/Images/FX/smoke_particle.png"),
             linearAcceleration = {rnd(-range, range), rnd(-range, range), rnd(-range, range), rnd(-range, range)},
-            lifeTime           = { 0.5, 1 },
+            lifeTime           = { 1, 1 },
             maxParticles       = _pNumber,
             position           = Translate(_pPosition),
             rotation           = { rad(0), rad(359) },
@@ -32,15 +32,15 @@ local factory = {}
     function factory:Test_parameters()
         local sprite = s_loader:Get_Sprite("smoke_particle1")
         local Parameters       = {
-            colors             = { {1, 1, 1, 0.25}, {0.5, 0.5, 0.5, 0.55}, {0, 0, 0, 0} },
+            colors             = { {1, 1, 1, 0.25}, {24/255, 20/255, 37/255, 0.6}, {0.5, 0.5, 0.5, 0} },
             isShadow           = true,
             lifeTime           = { 2, 3 },
             linearAcceleration = { -10, 10, -10, 10 },
             linearDampening    = { 0, 0, 0, 0 },
-            offset             = { -4, 4, -4, 4 },
+            offset             = { -8, 8, -8, 8 },
             rotation           = { 0, 359 },
             shadow             = 4,
-            sizes              = { 0.05, 0.15, 0 },
+            sizes              = { 0.1, 0.12, 0.13 },
             sprite             = sprite,
             sizeVariation      = { 0.1, 0.2 },
             spinVariation      = { -20, 20 }

@@ -2,7 +2,7 @@ if pcall(require, "lldebugger") then
   require("lldebugger").start()
 end
 
-love.graphics.setDefaultFilter("nearest")
+--love.graphics.setDefaultFilter("nearest")
 io.stdout:setvbuf('no')
 love.window.maximize(false)
 math.randomseed(os.time())

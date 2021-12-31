@@ -8,9 +8,9 @@ return {
     
     local colorBG      = {24/255, 20/255, 37/255, 1}
     local fullscreen   = false
-    local screenScale  = 2
-    local screenWidth  = 640
-    local screenHeight = 360
+    local screenScale  = 4
+    local screenWidth  = 360
+    local screenHeight = 180
     
     local aspect, camera, scene_manager, surface, transition, vignette, vignetteSX, vignetteSY
     
@@ -48,7 +48,7 @@ return {
       Locator:Add_Service("f_fx",          require('Core/Libraries/ECS/Factories/f_FX'))
       Locator:Add_Service("f_particle",    require('Core/Libraries/ECS/Factories/f_Particle'))
       Locator:Add_Service("f_Part_Params", require('Core/Libraries/ECS/Factories/f_Particle_Parameters'))
-      Locator:Add_Service("f_emitter",     require('Core/Libraries/ECS/Factories/f_Emitter'))
+      Locator:Add_Service("f_emitter",     require('Core/Libraries/ECS/Factories/f_Particle_Emitter'))
       Locator:Add_Service("sceneManager",  require('Core/Libraries/Scenes/Scene_Manager').new())
       Locator:Add_Service("spriteLoader",  require('Core/Libraries/Sprite_Loader').new())
       Locator:Add_Service("camera",        require('Core/Libraries/Camera/Camera').new())

@@ -5,7 +5,7 @@ return {
             expired      = false,
             lstActive    = {},
             lstParticles = {},
-            maxParticles = 32,
+            maxParticles = 1000,
             parameters   = {},
             position     = { 
                 x        = _pX, 
@@ -30,17 +30,16 @@ return {
             
             local count     = #self.lstParticles
             local available = count - #self.lstActive
-            local counter = 0, particle
+            local counter   = 0
+            local particle
             for i = 1, count do
-                if(counter <= _pNumber and 
-                   counter <= available) then
-                    particle = self.lstParticles[i]
-                    if(particle.active == false) then              
-                        insert(self.lstActive, self:Init_Particle(particle))
-                        counter = counter + 1
-                    end
-                else
-                    return
+                particle = self.lstParticles[i]
+                if(particle.active == false) then
+                    particle.active = true         
+                    insert(self.lstActive, self:Init_Particle(particle))
+                    counter = counter + 1
+                    if(counter >= available) then return end
+                    if(counter >= _pNumber)  then return end
                 end
             end
         end
@@ -56,9 +55,6 @@ return {
         -- Init_Particle --
         -------------------
         function Class:Init_Particle(_pParticle)
-            if(_pParticle == nil) then return end
-            _pParticle.active             = true
-
             -----------
             -- color --
             -----------
@@ -106,8 +102,8 @@ return {
 
             for i = 1, #self.parameters.sizes do
                 _pParticle.sizes[i]       = self.parameters.sizes[i]
-            end
-
+            end            
+            
             _pParticle.size               = _pParticle.sizes[1]
             _pParticle.sprite             = self.parameters.sprite
             _pParticle.sizeVariation      = rnd(

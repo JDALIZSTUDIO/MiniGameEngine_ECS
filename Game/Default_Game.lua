@@ -1,6 +1,6 @@
 return {
     new = function()
-        local Class = require('Core/Game_Loop/Core_Game_Loop').new("Default_Game")        
+        local Class = require('Core/Core_Game_Loop').new("Default_Game")        
 
         -----------------
         -- On_Load_Assets --
@@ -14,7 +14,6 @@ return {
                   spriteLoader:Add_Sprite("crosshair",        "Game/Images/UI/spr_crosshair.png")
                   -- Projectiles --     
                   spriteLoader:Add_Sprite("tank_bullet",      "Game/Images/Projectiles/spr_tank_bullet.png")
-                  spriteLoader:Add_Sprite("tank_bullet_anim", "Game/Images/Projectiles/spr_tank_bullet_anim.png")
                   -- Units --     
                   spriteLoader:Add_Sprite("tank_cannon",      "Game/Images/Units/spr_tank_cannon.png")
                   spriteLoader:Add_Sprite("tank_beige",       "Game/Images/Units/spr_tank_body_beige.png")

@@ -15,6 +15,7 @@ return {
     local sin  = math.sin
     local max  = math.max
     local min  = math.min
+    local rad  = math.rad
     local gameObject = nil
 
     ---------------
@@ -44,7 +45,7 @@ return {
     ---------------------
     -- _Clamp_Velocity --
     ---------------------
-    function component:_Clamp_Velocity()
+    function component:_Clamp_Velocity()      
       if(self.velocity.x > 0) then
         self.velocity.x = min(self.velocity.x, self.maxForce)
       elseif(self.velocity.x < 0) then
@@ -54,7 +55,7 @@ return {
         self.velocity.y = min(self.velocity.y, self.maxForce)
       elseif(self.velocity.y < 0) then
         self.velocity.y = max(self.velocity.y, -self.maxForce)
-      end
+      end      
     end
 
     --------------------
@@ -81,15 +82,15 @@ return {
     -------------------
     -- _Length_Dir_X --
     -------------------
-    function component:_Length_Dir_X(_pSpeed, _pDirection)
-      return cos(_pDirection) * _pSpeed
+    function component:_Length_Dir_X(_pMagnitude, _pDirection)
+      return cos(_pDirection) * _pMagnitude
     end
 
     -------------------
     -- _Length_Dir_Y --
     -------------------
-    function component:_Length_Dir_Y(_pSpeed, _pDirection)
-      return sin(_pDirection) * _pSpeed
+    function component:_Length_Dir_Y(_pMagnitude, _pDirection)
+      return sin(_pDirection) * _pMagnitude
     end
     
     ----------
