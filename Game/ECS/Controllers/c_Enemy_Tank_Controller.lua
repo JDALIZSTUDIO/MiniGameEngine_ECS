@@ -13,15 +13,16 @@ return {
     local tDuration  = 2
 
     local an         = "animator"
+    local ch         = "characterController"
     local tr         = "transform"
 
     local lerp       = Lerp
     local remove     = table.remove
 
     -------------
-    -- Animate --
+    -- On_Animation --
     -------------
-    function component:Animate()
+    function component:On_Animation()
       local animator = gameObject:Get_Component(an)
       local current  = state:Get_Name()
 
@@ -55,16 +56,16 @@ return {
     end
     
     -------------------
-    -- Process_Input --
+    -- On_Input --
     -------------------
-    function component:Process_Input()  
+    function component:On_Input()  
       
     end
 
     ------------------
-    -- Update_Logic --
+    -- On_Update --
     ------------------
-    function component:Update_Logic(dt)
+    function component:On_Update(dt)
       local animator = gameObject:Get_Component(an)
       local current  = state:Get_Name()
 
@@ -90,12 +91,24 @@ return {
       timers:Update(dt)
     end
     
+    
     -----------------------
-    -- On_Entity_Collision --
+    -- On_Collision_With_Entity --
     -----------------------
-    function component:On_Entity_Collision(_pTable)
-      
-    end    
+    function component:On_Collision_With_Entity(_pTable)
+      --if(not state:Compare("DEATH")) then
+        local other
+        for i = 1, #_pTable do
+          other = _pTable[i]
+          if(other.name == "bullet") then
+            if(self:Hurt(other:Get_Component(ch).damage)) then
+              self:Kill()
+            end
+            other.Destroy()
+          end
+        end
+      --end
+    end   
     
     return component
   end

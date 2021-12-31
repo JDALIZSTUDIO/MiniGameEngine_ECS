@@ -1,6 +1,6 @@
 return {
   new = function()
-    local f_controller = Locator:Get_Service("f_controller")
+    local f_controller = Locator:Get_Service("f_character")
     local component    = f_controller.new()
           component.isReady = true
           component.radius  = 32

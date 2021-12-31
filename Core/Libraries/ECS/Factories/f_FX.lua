@@ -8,9 +8,9 @@ return {
     local expired = false
 
     ------------------
-    -- Update_Logic --
+    -- On_Update --
     ------------------
-    function component:Update_Logic(dt)
+    function component:On_Update(dt)
         if(expired) then return end
         local animator = self.gameObject:Get_Component(an)
         if(animator == nil or animator.currentAnimation == nil) then return end

@@ -102,7 +102,7 @@ return {
         -- Update --
         ------------
         function Class:Update(dt)
-            animator:Animate(dt, self.animations)
+            animator:On_Animation(dt, self.animations)
         end
 
         ----------------

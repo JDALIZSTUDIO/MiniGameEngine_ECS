@@ -89,7 +89,7 @@ return {
 
         if(collideX or collideY) then
           local character = _pEntity:Get_Component(ch)
-          if(character ~= nil) then character:On_Tile_Collision(nil) end            
+          if(character ~= nil) then character:On_Collision_With_Tilemap(nil) end            
         end  
       end
     end

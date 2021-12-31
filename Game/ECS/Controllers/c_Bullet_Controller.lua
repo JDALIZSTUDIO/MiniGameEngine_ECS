@@ -1,6 +1,6 @@
 return {
   new = function(_pParamaters)
-    local f_controller = Locator:Get_Service("f_controller")
+    local f_controller = Locator:Get_Service("f_character")
     local params       = _pParamaters or {}
     
     local component             = f_controller.new()
@@ -59,9 +59,9 @@ return {
     end
 
     ------------------
-    -- Update_Logic --
+    -- On_Update --
     ------------------
-    function component:Update_Logic(dt)
+    function component:On_Update(dt)
         local transform = self.gameObject:Get_Component(tr) 
         local dist = transform.position:Distance_To(origin)
         if(dist > self.maxDistance) then 
@@ -73,16 +73,16 @@ return {
     end
 
     -----------------------
-    -- On_Entity_Collision --
+    -- On_Collision_With_Entity --
     -----------------------
-    function component:On_Entity_Collision(_pTable)
+    function component:On_Collision_With_Entity(_pTable)
         --self.gameObject:Destroy()        
     end
     
     ---------------------
-    -- On_Tile_Collision --
+    -- On_Collision_With_Tilemap --
     ---------------------
-    function component:On_Tile_Collision(_pTileID)
+    function component:On_Collision_With_Tilemap(_pTileID)
         self.gameObject:Destroy()
         --self:Create_Impact()
     end

@@ -13,6 +13,9 @@ return {
     -- Load --
     ----------
     function system:Load(_pEntity)
+      local renderer = _pEntity:Get_Component(sr) 
+            renderer:Load()
+
       if(isDebug) then print("Systems, loaded:      Sprite_Renderer by ".._pEntity.name) end
     end
     
@@ -20,48 +23,15 @@ return {
     -- Draw --
     ----------
     function system:Draw(_pEntity)
-      local dropShadow   = _pEntity:Get_Component(ds)
-      local transform    = _pEntity:Get_Component(tr)
-      local renderer     = _pEntity:Get_Component(sr)      
+      local renderer   = _pEntity:Get_Component(sr)      
       if(renderer.active == false) then return end
       
+      local dropShadow = _pEntity:Get_Component(ds)
+      local transform  = _pEntity:Get_Component(tr)
       if(dropShadow ~= nil) then
-        love.graphics.setColor(0, 0, 0, dropShadow.alpha)
-      
-        love.graphics.draw(
-          renderer.sprite.image, 
-          transform.position.x + dropShadow.offset.x, 
-          transform.position.y + dropShadow.offset.y, 
-          rad(transform.rotation), 
-          transform.scale.x, 
-          transform.scale.y, 
-          renderer.sprite.halfW, 
-          renderer.sprite.halfH,
-          0,
-          0
-        )
-      end
-      
-      if(renderer.shader ~= nil) then 
-        if(renderer.shader.active) then renderer.shader:Set() end 
-      end
-      
-      love.graphics.setColor(1, 1, 1, renderer.alpha)
-      
-      love.graphics.draw(
-        renderer.sprite.image, 
-        transform.position.x, 
-        transform.position.y, 
-        rad(transform.rotation), 
-        transform.scale.x, 
-        transform.scale.y, 
-        renderer.sprite.halfW, 
-        renderer.sprite.halfH,
-        0,
-        0
-      )
-                       
-      if(renderer.shader ~= nil) then renderer.shader:UnSet() end
+        renderer:Draw_Dropshadow(transform, dropShadow)
+      end      
+      renderer:Draw(transform)
     end
     
     return system  

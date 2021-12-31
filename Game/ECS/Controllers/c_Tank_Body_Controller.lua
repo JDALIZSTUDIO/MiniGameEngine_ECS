@@ -31,9 +31,9 @@ return {
     local smokeDuration = 0.15
 
     -------------
-    -- Animate --
+    -- On_Animation --
     -------------
-    function component:Animate()
+    function component:On_Animation()
       local animator  = self.gameObject:Get_Component(an)
       if(moving) then
         animator:Play("move")
@@ -59,9 +59,9 @@ return {
     end
     
     -------------------
-    -- Process_Input --
+    -- On_Input --
     -------------------
-    function component:Process_Input(dt)
+    function component:On_Input(dt)
       local rigidbody = self.gameObject:Get_Component(rb)
 
       local force = acceleration
@@ -89,9 +89,9 @@ return {
     end
 
     ------------------
-    -- Update_Logic --
+    -- On_Update --
     ------------------
-    function component:Update_Logic(dt)
+    function component:On_Update(dt)
       if(moving and timers:Is_Finished(smokeStr)) then
         local rigid      = self.gameObject:Get_Component(rb)
         local transform  = self.gameObject:Get_Component(tr)
@@ -115,16 +115,16 @@ return {
     end
     
     -----------------------
-    -- On_Entity_Collision --
+    -- On_Collision_With_Entity --
     -----------------------
-    function component:On_Entity_Collision(_pTable)
+    function component:On_Collision_With_Entity(_pTable)
       
     end
     
     ---------------------
-    -- On_Tile_Collision --
+    -- On_Collision_With_Tilemap --
     ---------------------
-    function component:On_Tile_Collision(_pTileID)
+    function component:On_Collision_With_Tilemap(_pTileID)
       
     end    
     

@@ -15,9 +15,10 @@ return {
     local floor   = math.floor
     local newQuad = love.graphics.newQuad
 
-    local an = "animator"
-    local sr = "spriteRenderer"
-    local tr = "transform"
+    local rad = math.rad
+    local an  = "animator"
+    local sr  = "spriteRenderer"
+    local tr  = "transform"
 
     local insert  = table.insert 
 
@@ -33,6 +34,8 @@ return {
             finished      = false,
             frameWidth    = _pFrameW,
             frameHeight   = _pFrameH,
+            halfW         = _pFrameW * 0.5,
+            halfH         = _pFrameH * 0.5,
             isLoop        = loop,
             name          = _pID,
             offset        = Vector2.new(-_pOffsetX or 0, -_pOffsetY or 0),
@@ -131,7 +134,43 @@ return {
         end
       end      
     end
+    
+    ----------
+    -- Draw --
+    ----------
+    function component:Draw(_ptransform)
+      love.graphics.setColor(1, 1, 1, self.alpha)
+      love.graphics.draw(
+        self.currentAnimation.sprite.image, 
+        self.currentAnimation.quadData[self.currentFrame], 
+        _ptransform.position.x + self.currentAnimation.offset.x, 
+        _ptransform.position.y + self.currentAnimation.offset.y,
+        rad(_ptransform.rotation),
+        _ptransform.scale.x,
+        _ptransform.scale.y,
+        self.currentAnimation.halfW,
+        self.currentAnimation.halfH
+      ) 
+    end
   
+    ---------------------
+    -- Draw_Dropshadow --
+    ---------------------
+    function component:Draw_Dropshadow(_ptransform, _pShadow)
+      love.graphics.setColor(0, 0, 0, _pShadow.alpha)
+        love.graphics.draw(
+          self.currentAnimation.sprite.image, 
+          self.currentAnimation.quadData[self.currentFrame], 
+          _ptransform.position.x + self.currentAnimation.offset.x + _pShadow.offset.x, 
+          _ptransform.position.y + self.currentAnimation.offset.y + _pShadow.offset.y,
+          rad(_ptransform.rotation),
+          _ptransform.scale.x,
+          _ptransform.scale.y,
+          self.currentAnimation.halfW,
+          self.currentAnimation.halfH
+        )
+    end
+
     return component
   end
 }

@@ -17,8 +17,7 @@ return {
     function data:SendUniforms()
       local uniform
       for key, value in pairs(self.uniforms) do
-        self.shader:send(key, value)
-        
+        self.shader:send(key, value)        
       end
     end
     

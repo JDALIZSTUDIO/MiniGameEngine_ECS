@@ -1,6 +1,6 @@
 return {
   new = function()
-    local f_controller = Locator:Get_Service("f_controller")
+    local f_controller = Locator:Get_Service("f_character")
     local component    = f_controller.new()
       
     local an = "animator"
@@ -14,9 +14,9 @@ return {
     local state  = nil
 
     -------------
-    -- Animate --
+    -- On_Animation --
     -------------
-    function component:Animate()
+    function component:On_Animation()
       local animator = self.gameObject:Get_Component(an)
       if(state:Compare("HURT")) then
         if(animator:Is_Finished("hurt")) then 
@@ -76,9 +76,9 @@ return {
     end
     
     -----------------------
-    -- On_Entity_Collision --
+    -- On_Collision_With_Entity --
     -----------------------
-    function component:On_Entity_Collision(_pTable)
+    function component:On_Collision_With_Entity(_pTable)
       if(not state:Compare("DEATH")) then
         local other
         for i = 1, #_pTable do
@@ -95,9 +95,9 @@ return {
     end
     
     ------------------
-    -- Update_Logic --
+    -- On_Update --
     ------------------
-    function component:Update_Logic(dt)
+    function component:On_Update(dt)
       local current = state:Get_Name()
       if(current == "DEATH") then
         local animator = self.gameObject:Get_Component(an)

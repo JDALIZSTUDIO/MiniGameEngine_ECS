@@ -19,7 +19,8 @@ return {
             -- Body --
             _pEntity.name = "enemyTank"
             _pEntity:Add_Component(require('Game/ECS/Controllers/c_Enemy_Tank_Controller').new())
-
+            _pEntity:Add_Component(require('Core/Libraries/ECS/Components/Effectors/c_Health').new())
+            
             local transformBody = _pEntity:Add_Component(require('Core/Libraries/ECS/Components/Movement/c_Transform').new(_pX, _pY, 0))
 
             _pEntity:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Bounding_Box').new(0, 0, 24, 24))

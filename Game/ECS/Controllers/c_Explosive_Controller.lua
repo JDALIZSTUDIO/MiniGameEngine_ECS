@@ -23,17 +23,20 @@ return {
     -- Explode --
     -------------
     function component:Explode()
-        local spr_explosion = Locator:Get_Service("spriteLoader"):Get_Sprite("explosion1")
-        local emitter   = self.gameObject:Get_Component(fx)
-              emitter:Emit(spr_explosion, 
-                           100, 
-                           100, 
-                           0, 
-                           0, 
-                           1, 
-                           1, 
-                           59, 
-                           1)
+        local spr_explosion = Locator:Get_Service("spriteLoader"):Get_Sprite("explosionBig1")
+        local emitter       = self.gameObject:Get_Component(fx)
+              emitter:Emit(
+                spr_explosion, 
+                200, 
+                200, 
+                0, 
+                0, 
+                1, 
+                1, 
+                60, 
+                1,
+                120
+        )
         
         local effector = self.gameObject:Get_Component(ae)
         if(effector == nil) then return end

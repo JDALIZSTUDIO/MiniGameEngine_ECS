@@ -3,24 +3,11 @@ return {
     local f_component = Locator:Get_Service("f_component")
     local component   = f_component.new("characterController")
 
-    -------------
-    -- Animate --
-    -------------
-    function component:Animate()  
-    
-    end
-    
     ----------
     -- Hurt --
     ----------
     function component:Hurt(_pDamage)
-      local health = self.gameObject:Get_Component("health")
-      if(health == nil) then return false end
-      if(health:Hurt(_pDamage)) then
-        return true
-      end
-      self:On_Damage()
-      return false
+      
     end    
     
     ----------
@@ -37,6 +24,13 @@ return {
       
     end    
 
+    ------------------
+    -- On_Animation --
+    ------------------
+    function component:On_Animation()  
+    
+    end
+    
     ---------------
     -- On_Damage --
     ---------------
@@ -51,10 +45,10 @@ return {
     
     end
 
-    -------------------
-    -- Process_Input --
-    -------------------
-    function component:Process_Input(dt)  
+    --------------
+    -- On_Input --
+    --------------
+    function component:On_Input(dt)  
       
     end
 
@@ -62,15 +56,15 @@ return {
     -- Update --
     ------------
     function component:Update(dt)
-      self:Process_Input(dt)
-      self:Update_Logic(dt)
-      self:Animate()
+      self:On_Input(dt)
+      self:On_Update(dt)
+      self:On_Animation()
     end
     
-    ------------------
-    -- Update_Logic --
-    ------------------
-    function component:Update_Logic(dt)  
+    ---------------
+    -- On_Update --
+    ---------------
+    function component:On_Update(dt)  
       
     end
     
@@ -88,17 +82,17 @@ return {
       
     end
 
-    -----------------------
-    -- On_Entity_Collision --
-    -----------------------
-    function component:On_Entity_Collision(_pTable)
+    ------------------------------
+    -- On_Collision_With_Entity --
+    ------------------------------
+    function component:On_Collision_With_Entity(_pTable)
       
     end
     
-    ---------------------
-    -- On_Tile_Collision --
-    ---------------------
-    function component:On_Tile_Collision(_pTileID)
+    -------------------------------
+    -- On_Collision_With_Tilemap --
+    -------------------------------
+    function component:On_Collision_With_Tilemap(_pTileID)
       
     end
     

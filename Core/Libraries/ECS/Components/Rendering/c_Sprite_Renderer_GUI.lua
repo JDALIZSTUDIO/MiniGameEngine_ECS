@@ -9,7 +9,7 @@ return {
             component.surfacePing = nil
             component.surfacePong = nil
             
-            function component:SetShader(_pShader)
+            function component:Set_Shader(_pShader)
               self.shader = _pShader
             end
         

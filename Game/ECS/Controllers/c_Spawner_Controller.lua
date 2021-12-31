@@ -5,13 +5,14 @@ return {
           
     local gameObject
     local lstTanks   = {}
-    local maxTanks   = 4
+    local maxTanks   = 0
     local state      = nil
     local timers     = nil
     local tName      = "spawn"
     local tDuration  = 4
 
     local an         = "animator"
+    local ch         = "characterController"
     local tr         = "transform"
 
     local insert     = table.insert
@@ -19,10 +20,36 @@ return {
 
     local factory
 
-    -------------
-    -- Animate --
-    -------------
-    function component:Animate()
+    --------------
+    -- Clean_Up --
+    --------------
+    function component:Clean_Up()
+      local tank
+      for i = #lstTanks, 1, -1 do
+        tank = lstTanks[i]
+        if(tank == nil) then remove(lstTanks, i) end
+      end
+    end
+
+    ----------
+    -- Load --
+    ----------
+    function component:Load()
+      factory    = require('Game/ECS/Factories/f_Enemies').new()
+      gameObject = self.gameObject 
+
+      state = require('Core/Libraries/State_Machine').new({"WAITOPEN", "WAITCLOSE", "OPENING", "CLOSING", "OPEN", "CLOSED"})
+      timers = require('Core/Libraries/Timers').new()
+
+      timers:Add_Timer(tName, tDuration)
+      timers:Start(tName)
+      state:Set("CLOSED")
+    end
+    
+    ------------------
+    -- On_Animation --
+    ------------------
+    function component:On_Animation()
       local animator = gameObject:Get_Component(an)
       local current  = state:Get_Name()
 
@@ -52,58 +79,34 @@ return {
     end
 
     --------------
-    -- Clean_Up --
+    -- On_Input --
     --------------
-    function component:Clean_Up()
-      local tank
-      for i = #lstTanks, 1, -1 do
-        tank = lstTanks[i]
-        if(tank == nil) then remove(lstTanks, i) end
-      end
-    end
-
-    ----------
-    -- Load --
-    ----------
-    function component:Load()
-      factory    = require('Game/ECS/Factories/f_Enemies').new()
-      gameObject = self.gameObject 
-
-      state = require('Core/Libraries/State_Machine').new({"WAITOPEN", "WAITCLOSE", "OPENING", "CLOSING", "OPEN", "CLOSED"})
-      timers = require('Core/Libraries/Timers').new()
-
-      timers:Add_Timer(tName, tDuration)
-      timers:Start(tName)
-      state:Set("CLOSED")
-    end
-    
-    -------------------
-    -- Process_Input --
-    -------------------
-    function component:Process_Input()  
+    function component:On_Input()  
       
     end
 
-    ----------------
-    -- Spawn_Tank --
-    ----------------
-    function component:Spawn_Tank()
-      local transform = gameObject:Get_Component(tr)
-      local tank = gameObject.ECS:Create()
-
-      factory:Init_Tank(
-        tank, 
-        transform.position.x, 
-        transform.position.y
-      )
-
-      insert(lstTanks, tank)
-    end
-
-    ------------------
-    -- Update_Logic --
-    ------------------
-    function component:Update_Logic(dt)
+    ------------------------------
+    -- On_Collision_With_Entity --
+    ------------------------------
+    function component:On_Collision_With_Entity(_pTable)
+      --if(not state:Compare("DEATH")) then
+        local other
+        for i = 1, #_pTable do
+          other = _pTable[i]
+          if(other.name == "bullet") then
+            if(self:Hurt(other:Get_Component(ch).damage)) then
+              self:Kill()
+            end
+            other.Destroy()
+          end
+        end
+      --end
+    end  
+    
+    ---------------
+    -- On_Update --
+    ---------------
+    function component:On_Update(dt)
       local animator = gameObject:Get_Component(an)
       local current  = state:Get_Name()
 
@@ -130,15 +133,24 @@ return {
         end
       end
       timers:Update(dt)
-    end
-    
-    -----------------------
-    -- On_Entity_Collision --
-    -----------------------
-    function component:On_Entity_Collision(_pTable)
-      
     end    
     
+    ----------------
+    -- Spawn_Tank --
+    ----------------
+    function component:Spawn_Tank()
+      local transform = gameObject:Get_Component(tr)
+      local tank = gameObject.ECS:Create()
+
+      factory:Init_Tank(
+        tank, 
+        transform.position.x, 
+        transform.position.y
+      )
+
+      insert(lstTanks, tank)
+    end
+
     return component
   end
 }

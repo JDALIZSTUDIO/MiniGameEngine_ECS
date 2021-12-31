@@ -3,9 +3,9 @@ return {
         local Class = {}
 
         -------------
-        -- Animate --
+        -- On_Animation --
         -------------
-        function Class:Animate(dt, _pTable)
+        function Class:On_Animation(dt, _pTable)
             local animation, current
             for key, value in pairs(_pTable) do
                 animation = value

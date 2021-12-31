@@ -3,7 +3,6 @@ return {
     local f_system = Locator:Get_Service("f_system")
     local system   = f_system.new({"transform", "animator"})
     
-    local rad = math.rad
     local an  = "animator"
     local ds  = "dropShadow"
     local tr  = "transform"
@@ -59,48 +58,16 @@ return {
     ----------
     -- Draw --
     ----------
-    function system:Draw(_pEntity)
-      
+    function system:Draw(_pEntity)      
       local animator = _pEntity:Get_Component(an)
       if(animator.active == false) then return end
-      
-      local current  = animator.currentAnimation
-      if current == nil then return end
 
       local dropShadow = _pEntity:Get_Component(ds)
       local transform  = _pEntity:Get_Component(tr)
-
       if(dropShadow ~= nil) then        
-        love.graphics.setColor(0, 0, 0, dropShadow.alpha)
-
-        love.graphics.draw(
-          current.sprite.image, 
-          current.quadData[animator.currentFrame], 
-          transform.position.x + current.offset.x + dropShadow.offset.x, 
-          transform.position.y + current.offset.y + dropShadow.offset.y,
-          rad(transform.rotation),
-          transform.scale.x,
-          transform.scale.y,
-          current.frameWidth  * 0.5,
-          current.frameHeight * 0.5
-        )
-
-      end
-      
-      love.graphics.setColor(1, 1, 1, animator.alpha)
-
-      love.graphics.draw(
-        current.sprite.image, 
-        current.quadData[animator.currentFrame], 
-        transform.position.x + current.offset.x, 
-        transform.position.y + current.offset.y,
-        rad(transform.rotation),
-        transform.scale.x,
-        transform.scale.y,
-        current.frameWidth  * 0.5,
-        current.frameHeight * 0.5
-      ) 
-
+        animator:Draw_Dropshadow(transform, dropShadow)
+      end      
+      animator:Draw(transform)
       love.graphics.setColor(1, 1, 1, 1)
     end
     
