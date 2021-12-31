@@ -102,7 +102,7 @@ return {
           other = _pTable[i]
           if(other.name == "bullet") then
             if(self:Hurt(other:Get_Component(ch).damage)) then
-              self:Kill()
+              self:On_Kill()
             end
             other.Destroy()
           end

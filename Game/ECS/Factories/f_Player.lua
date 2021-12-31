@@ -19,6 +19,8 @@ return {
         -- Init_Player --
         -----------------
         function Class:Init_Player(_pEntity, _pX, _pY)
+            local trailLen   = 10
+            local trailAlpha = 0.05
             local spr_body   = spriteLoader:Get_Sprite("tank_beige")
             local spr_cannon = spriteLoader:Get_Sprite("tank_cannon")
 
@@ -31,6 +33,7 @@ return {
             _pEntity:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Rigid_Body').new({maxForce = 100}))
             _pEntity:Add_Component(require('Core/Libraries/ECS/Components/Lighting/c_Fog_Remover').new())
             _pEntity:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_DropShadow').new(4, 4))
+            _pEntity:Add_Component(require('Core/Libraries/ECS/Components/FX/c_Trail_Emitter_Animator').new(trailLen, trailAlpha))
 
             local anim = _pEntity:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_Animator').new())
                     anim:Add("idle", spr_body, 96, 96, 0, 0, 1, 1, 2, 1)
@@ -50,6 +53,7 @@ return {
 
             cannon:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Bounding_Box').new(0, 0, 32, 32))
             cannon:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_DropShadow').new(4, 4))
+            cannon:Add_Component(require('Core/Libraries/ECS/Components/FX/c_Trail_Emitter_SpriteRenderer').new(trailLen, trailAlpha))
             cannon:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_Sprite_Renderer').new(spr_cannon))
 
             transformBody:Add_Child(transformCannon)

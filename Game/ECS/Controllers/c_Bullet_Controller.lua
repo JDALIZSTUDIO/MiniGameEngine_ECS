@@ -8,6 +8,7 @@ return {
           component.maxDistance = 192
           component.maxSpeed    = 260
           component.owner       = params.owner or nil
+          component.rSpeed      = 0
 
     local origin
     local toDestroy = false
@@ -63,6 +64,8 @@ return {
     ------------------
     function component:On_Update(dt)
         local transform = self.gameObject:Get_Component(tr) 
+              transform.rotation = transform.rotation + self.rSpeed
+
         local dist = transform.position:Distance_To(origin)
         if(dist > self.maxDistance) then 
             if(toDestroy == false) then

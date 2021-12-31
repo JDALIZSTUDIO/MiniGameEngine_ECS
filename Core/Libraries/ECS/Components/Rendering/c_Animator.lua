@@ -1,7 +1,7 @@
 return {
   new = function()
-    local f_component                = Locator:Get_Service("f_component")
-    local component                  = f_component.new("animator")
+    local f_component = Locator:Get_Service("f_component")
+    local component   = f_component.new("animator")
           component.alpha            = 1
           component.animations       = {}
           component.currentAnimation = nil
@@ -11,9 +11,9 @@ return {
           component.surfacePing      = nil
           component.surfacePong      = nil
     
-    local max     = math.max
-    local floor   = math.floor
-    local newQuad = love.graphics.newQuad
+    local max         = math.max
+    local floor       = math.floor
+    local newQuad     = love.graphics.newQuad
 
     local rad = math.rad
     local an  = "animator"
@@ -25,7 +25,20 @@ return {
     ---------
     -- Add --
     ---------
-    function component:Add(_pID, _pSprite, _pFrameW, _pFrameH, _pOffsetX, _pOffsetY, _pStartX, _pStartY, _pEndX, _pEndY, _pSpeed, _pLoop)
+    function component:Add(
+      _pID, 
+      _pSprite, 
+      _pFrameW, 
+      _pFrameH, 
+      _pOffsetX, 
+      _pOffsetY, 
+      _pStartX, 
+      _pStartY, 
+      _pEndX, 
+      _pEndY, 
+      _pSpeed, 
+      _pLoop
+    )
       local loop = _pLoop
       if(loop == nil) then loop = true end
 
@@ -82,16 +95,16 @@ return {
     ---------------
     -- Set_Alpha --
     ---------------
-    function component:Set_Alpha(_pAlpha)
-      component.alpha = _pAlpha
-      local transform = component.gameObject:Get_Component(tr)
-      local child, renderer
+    function component:Set_Alpha(_pValue)
+      self.alpha = _pValue
+      local transform = self.gameObject:Get_Component(tr)
+      local cTransform, cRenderer, cAnimator
       for i = 1, #transform.children do
-        child = transform.children[i].transform.gameObject
-        renderer = child:Get_Component(an)
-        if(renderer ~= nil) then renderer.alpha = _pAlpha end
-        renderer = child:Get_Component(sr)
-        if(renderer ~= nil) then renderer.alpha = _pAlpha end
+        cTransform = transform.children[i].transform
+        cRenderer  = cTransform.gameObject:Get_Component(sr)
+        if(cRenderer ~= nil) then cRenderer.alpha = self.alpha end
+        cAnimator  = cTransform.gameObject:Get_Component(an)
+        if(cAnimator ~= nil) then cAnimator.alpha = self.alpha end
       end
     end
 
@@ -157,7 +170,7 @@ return {
     -- Draw_Dropshadow --
     ---------------------
     function component:Draw_Dropshadow(_ptransform, _pShadow)
-      love.graphics.setColor(0, 0, 0, _pShadow.alpha)
+      love.graphics.setColor(0, 0, 0, _pShadow.alpha * self.alpha)
         love.graphics.draw(
           self.currentAnimation.sprite.image, 
           self.currentAnimation.quadData[self.currentFrame], 

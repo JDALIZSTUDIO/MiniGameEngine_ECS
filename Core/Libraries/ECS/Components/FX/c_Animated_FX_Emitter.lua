@@ -29,8 +29,8 @@ return {
             local explosion = self.gameObject.ECS:Create()
                   explosion:Add_Component(f_FX.new())
                   explosion:Add_Component(require('Core/Libraries/ECS/Components/FX/c_Animated_FX_Controller').new())
-                local t = explosion:Add_Component(require('Core/Libraries/ECS/Components/Movement/c_Transform').new(transform.position.x, 
-                                                                                                                    transform.position.y, 
+                local t = explosion:Add_Component(require('Core/Libraries/ECS/Components/Movement/c_Transform').new(transform.position.x + _pOffsetX, 
+                                                                                                                    transform.position.y + _pOffsetY, 
                                                                                                                     rnd(359)))
 
                 t.scale:Set(

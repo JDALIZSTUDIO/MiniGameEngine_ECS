@@ -44,9 +44,9 @@ return {
     end
 
     ----------
-    -- Kill --
+    -- On_Kill --
     ----------
-    function component:Kill()
+    function component:On_Kill()
       local animator = self.gameObject:Get_Component(an)
       local collider = self.gameObject:Get_Component(bc)
       local rigid = self.gameObject:Get_Component(rb)      
@@ -85,7 +85,7 @@ return {
           other = _pTable[i]
           if(other.name == "bullet") then
             if(self:Hurt(other:Get_Component(ch).damage)) then
-              self:Kill()
+              self:On_Kill()
               self:Explode()
             end
             other.Destroy()

@@ -20,7 +20,7 @@ return {
             local body = _pEntity:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Simple_Body').new())
                 body.isSolid = false
                  
-            _pEntity:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_Trail_Emitter').new())
+            _pEntity:Add_Component(require('Core/Libraries/ECS/Components/FX/c_Trail_Emitter_SpriteRenderer').new())
             _pEntity:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_Sprite_Renderer').new(spr_bullet))
             _pEntity.name = "bullet"
         end

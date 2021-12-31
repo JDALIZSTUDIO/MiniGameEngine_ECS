@@ -1,5 +1,14 @@
 return {
     new = function()
+        --[[
+            t = time 
+            b = start value
+            c = change (end value - start value)
+            d = duration
+            a = amplitude
+            p = periode
+        ]]--
+        
         local abs  = math.abs     
         local asin = math.asin
         local cos  = math.cos
@@ -220,30 +229,139 @@ return {
             return -(a * pow(2, 10 * t) * sin((t * d - s) * (2 * pi) / p)) + b
         end
 
+        --------------------
+        -- easeoutElastic --
+        --------------------
+        local function easeOutElastic(t, b, c, d, a, p)
+            if t == 0 then return b end
+            
+            t = t / d
+            
+            if t == 1 then return b + c end
+            
+            if not p then p = d * 0.3 end
+            
+            local s
+            
+            if not a or a < abs(c) then
+                a = c
+                s = p / 4
+            else
+                s = p / (2 * pi) * asin(c/a)
+            end
+            
+            return a * pow(2, -10 * t) * sin((t * d - s) * (2 * pi) / p) + c + b
+        end
+
+        ----------------------
+        -- easeInOutElastic --
+        ----------------------
+        local function easeInOutElastic(t, b, c, d, a, p)
+            if t == 0 then return b end
+            
+            t = t / d * 2
+            
+            if t == 2 then return b + c end
+            
+            if not p then p = d * (0.3 * 1.5) end
+            if not a then a = 0 end
+            
+            local s
+            
+            if not a or a < abs(c) then
+                a = c
+                s = p / 4
+            else
+                s = p / (2 * pi) * asin(c / a)
+            end
+            
+            if t < 1 then
+                t = t - 1
+                return -0.5 * (a * pow(2, 10 * t) * sin((t * d - s) * (2 * pi) / p)) + b
+            else
+                t = t - 1
+                return a * pow(2, -10 * t) * sin((t * d - s) * (2 * pi) / p ) * 0.5 + c + b
+            end
+        end
+
+        ----------------------
+        -- easeOutInElastic --
+        ----------------------
+        local function easeOutInElastic(t, b, c, d, a, p)
+            if t < d / 2 then
+                return easeOutElastic(t * 2, b, c / 2, d, a, p)
+            else
+                return easeInElastic((t * 2) - d, b + c / 2, c / 2, d, a, p)
+            end
+        end
+
+        -------------------
+        -- easeOutBounce --
+        -------------------
+        local function easeOutBounce(t, b, c, d)
+            t = t / d
+            if t < 1 / 2.75 then
+                return c * (7.5625 * t * t) + b
+            elseif t < 2 / 2.75 then
+                t = t - (1.5 / 2.75)
+                return c * (7.5625 * t * t + 0.75) + b
+            elseif t < 2.5 / 2.75 then
+                t = t - (2.25 / 2.75)
+                return c * (7.5625 * t * t + 0.9375) + b
+            else
+                t = t - (2.625 / 2.75)
+                return c * (7.5625 * t * t + 0.984375) + b
+            end
+        end
+        
+        ------------------
+        -- easeInBounce --
+        ------------------
+        local function easeInBounce(t, b, c, d)
+            return c - easeOutBounce(d - t, 0, c, d) + b
+        end
+
+        ---------------------
+        -- easeInOutBounce --
+        ---------------------
+        local function easeInOutBounce(t, b, c, d)
+            if t < d / 2 then
+              return easeInBounce(t * 2, 0, c, d) * 0.5 + b
+            else
+              return easeOutBounce(t * 2 - d, 0, c, d) * 0.5 + c * .5 + b
+            end
+        end          
+
         local Class = {
-            linear         = linear,
-            easeInQuad     = easeInQuad,
-            easeOutQuad    = easeOutQuad,
-            easeInOutQuad  = easeInOutQuad,
-            easeInCubic    = easeInCubic,
-            easeOutCubic   = easeOutCubic,
-            easeInOutCubic = easeInOutCubic,
-            easeInQuart    = easeInQuart,
-            easeOutQuart   = easeOutQuart,
-            easeInOutQuart = easeInOutQuart,
-            easeInQuint    = easeInQuint,
-            easeOutQuint   = easeOutQuint,
-            easeInOutQuint = easeInOutQuint,
-            easeInSine     = easeInSine,
-            easeOutSine    = easeOutSine,
-            easeInOutSine  = easeInOutSine,
-            easeInExpo     = easeInExpo,
-            easeOutExpo    = easeOutExpo,
-            easeInOutExpo  = easeInOutExpo,
-            easeInCirc     = easeInCirc,
-            easeOutCirc    = easeOutCirc,
-            easeInOutCirc  = easeInOutCirc,
-            easeInElastic  = easeInElastic
+            linear           = linear,
+            easeInQuad       = easeInQuad,
+            easeOutQuad      = easeOutQuad,
+            easeInOutQuad    = easeInOutQuad,
+            easeInCubic      = easeInCubic,
+            easeOutCubic     = easeOutCubic,
+            easeInOutCubic   = easeInOutCubic,
+            easeInQuart      = easeInQuart,
+            easeOutQuart     = easeOutQuart,
+            easeInOutQuart   = easeInOutQuart,
+            easeInQuint      = easeInQuint,
+            easeOutQuint     = easeOutQuint,
+            easeInOutQuint   = easeInOutQuint,
+            easeInSine       = easeInSine,
+            easeOutSine      = easeOutSine,
+            easeInOutSine    = easeInOutSine,
+            easeInExpo       = easeInExpo,
+            easeOutExpo      = easeOutExpo,
+            easeInOutExpo    = easeInOutExpo,
+            easeInCirc       = easeInCirc,
+            easeOutCirc      = easeOutCirc,
+            easeInOutCirc    = easeInOutCirc,
+            easeInElastic    = easeInElastic,
+            easeOutElastic   = easeOutElastic,
+            easeInOutElastic = easeInOutElastic,
+            easeOutInElastic = easeOutInElastic,
+            easeOutBounce    = easeOutBounce,
+            easeInBounce     = easeInBounce,
+            easeInOutBounce  = easeInOutBounce
         }        
         
         function Class:New_Auto_Tween(_pFunc, _pStart, _pTarget, _pDuration)

@@ -1,7 +1,7 @@
 return {
     new = function(_pImagePath)
         local f_component = Locator:Get_Service("f_component")
-        local f_emitter   = Locator:Get_Service("f_emitter") --require('Core/Libraries/ECS/Parents/p_Particle_Emitter')        
+        local f_emitter   = Locator:Get_Service("f_emitter")
         local component   = f_component.new("particleSystem")
               component.emitters = {}
         

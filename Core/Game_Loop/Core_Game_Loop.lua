@@ -53,6 +53,7 @@ return {
       Locator:Add_Service("spriteLoader",  require('Core/Libraries/Sprite_Loader').new())
       Locator:Add_Service("camera",        require('Core/Libraries/Camera/Camera').new())
       Locator:Add_Service("transition",    require('Core/Libraries/Transition').new())
+      Locator:Add_Service("timers",        require('Core/Libraries/Timers'))
       
       self:On_Load_Services()
     end

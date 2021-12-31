@@ -5,20 +5,24 @@ return {
           
     local gameObject
     local lstTanks   = {}
-    local maxTanks   = 0
+    local maxTanks   = 1
     local state      = nil
     local timers     = nil
     local tName      = "spawn"
     local tDuration  = 4
 
     local an         = "animator"
+    local bb         = "boundingBox"
     local ch         = "characterController"
     local tr         = "transform"
 
     local insert     = table.insert
     local remove     = table.remove
-
-    local factory
+    local rnd        = math.random
+    local lerp       = Lerp
+    
+    local tExplo     = 0.2
+    local f_enemies
 
     --------------
     -- Clean_Up --
@@ -35,10 +39,20 @@ return {
     -- Load --
     ----------
     function component:Load()
-      factory    = require('Game/ECS/Factories/f_Enemies').new()
+      f_enemies  = require('Game/ECS/Factories/f_Enemies').new()      
       gameObject = self.gameObject 
 
-      state = require('Core/Libraries/State_Machine').new({"WAITOPEN", "WAITCLOSE", "OPENING", "CLOSING", "OPEN", "CLOSED"})
+      state = require('Core/Libraries/State_Machine').new(
+        {
+          "WAITOPEN", 
+          "WAITCLOSE", 
+          "OPENING", 
+          "CLOSING", 
+          "OPEN", 
+          "CLOSED", 
+          "DEATH"
+        }
+      )
       timers = require('Core/Libraries/Timers').new()
 
       timers:Add_Timer(tName, tDuration)
@@ -78,29 +92,59 @@ return {
       end
     end
 
-    --------------
-    -- On_Input --
-    --------------
-    function component:On_Input()  
-      
+    -------------
+    -- On_Kill --
+    -------------
+    function component:On_Kill() 
+      local bBox      = self.gameObject:Get_Component(bb)
+      local transform = self.gameObject:Get_Component(tr)
+      local burst     = self.gameObject.ECS:Create()
+            burst:Add_Component(require('Core/Libraries/ECS/Components/Movement/c_Transform').new(
+                transform.position.x, 
+                transform.position.y, 
+                0
+              )
+            )   
+
+      burst:Add_Component(require('Core/Libraries/ECS/Components/FX/c_Animated_FX_Emitter').new())
+      local controller = burst:Add_Component(require('Core/Libraries/ECS/Components/Controllers/c_FX_Burst_Controller').new())
+      local params = {
+        sprite     = Locator:Get_Service("spriteLoader"):Get_Sprite("explosion2"),
+        width      = 100,
+        height     = 100,
+        col1       = 1,
+        lig1       = 1,
+        col2       = 60,
+        lig2       = 1
+      }
+      controller:Start(
+        params,
+        {
+          width  = 64,
+          height = 64
+        },
+        tExplo,
+        rnd(3, 5)
+      )
+      state:Set("DEATH")
     end
 
     ------------------------------
     -- On_Collision_With_Entity --
     ------------------------------
     function component:On_Collision_With_Entity(_pTable)
-      --if(not state:Compare("DEATH")) then
+      if(not state:Compare("DEATH")) then
         local other
         for i = 1, #_pTable do
           other = _pTable[i]
           if(other.name == "bullet") then
             if(self:Hurt(other:Get_Component(ch).damage)) then
-              self:Kill()
+              self:On_Kill()
             end
             other.Destroy()
           end
         end
-      --end
+      end
     end  
     
     ---------------
@@ -131,6 +175,13 @@ return {
             end
           end
         end
+      elseif(current == "DEATH") then
+        local alpha = lerp(animator.alpha, 0, 0.05)
+        if(alpha <= 0.01) then
+          alpha = 0
+          self.gameObject:Destroy()
+        end
+        animator:Set_Alpha(alpha)
       end
       timers:Update(dt)
     end    
@@ -142,7 +193,7 @@ return {
       local transform = gameObject:Get_Component(tr)
       local tank = gameObject.ECS:Create()
 
-      factory:Init_Tank(
+      f_enemies:Init_Tank(
         tank, 
         transform.position.x, 
         transform.position.y

@@ -28,7 +28,7 @@ return {
         end
         
         if(dropShadow ~= nil) then
-          love.graphics.setColor(0, 0, 0, dropShadow.alpha)
+          love.graphics.setColor(0, 0, 0, dropShadow.alpha * renderer.alpha)
         
           love.graphics.draw(
             renderer.sprite.image, 

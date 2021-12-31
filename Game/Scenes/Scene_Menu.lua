@@ -9,7 +9,7 @@ return {
     local insert = table.insert
     local easing
     local amount   = 0
-    local duration = 0.1
+    local duration = 5
     local tween
 
     ----------
@@ -174,8 +174,8 @@ return {
         element    = struct.element
         position   = element:Get_Position()
         element:Set_Position(
-          easing.easeInOutCubic(amount, position.x, struct.endX - position.x, duration),
-          easing.easeInOutCubic(amount, position.y, struct.endY - position.y, duration)
+          easing.easeInOutQuad(amount, position.x, struct.endX - position.x, duration),
+          easing.easeInOutQuad(amount, position.y, struct.endY - position.y, duration)
         )
 
         amount = amount + dt

@@ -17,9 +17,9 @@ return {
     end    
 
     ----------
-    -- Kill --
+    -- On_Kill --
     ----------
-    function component:Kill()
+    function component:On_Kill()
 
     end
     

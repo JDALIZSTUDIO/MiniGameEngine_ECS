@@ -20,52 +20,18 @@ return {
     ------------
     function system:Update(dt, _pEntity)
       local emitter = _pEntity:Get_Component(te)
-      if(emitter.active == false) then return end
-      
-      emitter:Update(dt, _pEntity)
-      
+      if(emitter.active == false) then return end      
+      emitter:Update(dt)      
     end
     
     ----------
     -- Draw --
     ----------
     function system:Draw(_pEntity)
-      local emitter   = _pEntity:Get_Component(te)
-      local renderer  = _pEntity:Get_Component(sr)
-      local transform = _pEntity:Get_Component(tr)
+      local emitter = _pEntity:Get_Component(te)      
+      emitter:Draw()
       
-      if(emitter.active == false) then return end
-      if(renderer.active == false) then return end
-      
-      if(renderer ~= nil) then
-        local length = #emitter.trail
-          if(length < 1) then return end
-          
-          local alpha, pos
-          for i = 1, length do            
-            alpha = i / length * renderer.alpha * 0.2
-            love.graphics.setColor(0.5, 0.5, 0.5, alpha)
-            
-            trail = emitter.trail[i]
-            love.graphics.draw(
-              renderer.sprite.image, 
-              trail.x, 
-              trail.y, 
-              math.rad(trail.rotation), 
-              transform.scale.x, 
-              transform.scale.y, 
-              renderer.sprite.halfW, 
-              renderer.sprite.halfH,
-              0,
-              0
-            )
-        end
-        
-        renderer  = _pEntity:Get_Component(an)
-        if(renderer ~= nil) then
-          
-        end        
-      end
+      love.graphics.setColor(1, 1, 1, 1)
     end
     
     return system 

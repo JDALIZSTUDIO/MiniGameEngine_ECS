@@ -13,7 +13,10 @@ return {
             nil
           }          
     
-    local rad = math.rad
+    local rad       = math.rad
+    local an = "spriteRenderer"
+    local tr = "transform"
+    local sr = "spriteRenderer" 
 
     ----------
     -- Load --
@@ -27,6 +30,22 @@ return {
           self.sprite.height
         )
         surface:setFilter("linear", "linear", 16)
+      end
+    end
+
+    ---------------
+    -- Set_Alpha --
+    ---------------
+    function component:Set_Alpha(_pValue)
+      self.alpha = _pValue
+      local transform = self.gameObject:Get_Component(tr)
+      local cTransform, cRenderer, cAnimator
+      for i = 1, #transform.children do
+        cTransform = transform.children[i].transform
+        cRenderer  = cTransform.gameObject:Get_Component(sr)
+        if(cRenderer ~= nil) then cRenderer.alpha = self.alpha end
+        cAnimator  = cTransform.gameObject:Get_Component(an)
+        if(cAnimator ~= nil) then cAnimator.alpha = self.alpha end
       end
     end
 
@@ -71,7 +90,7 @@ return {
     -- Draw_Dropshadow --
     ---------------------
     function component:Draw_Dropshadow(_ptransform, _pShadow)
-      love.graphics.setColor(0, 0, 0, _pShadow.alpha)      
+      love.graphics.setColor(0, 0, 0, _pShadow.alpha * self.alpha)      
       love.graphics.draw(
         self.sprite.image, 
         _ptransform.position.x + _pShadow.offset.x, 
