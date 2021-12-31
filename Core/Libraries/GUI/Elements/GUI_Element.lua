@@ -19,6 +19,13 @@ return {
         if(self.alpha == _pScalar) then return end
         self.alpha = self:Lerp(self.alpha, _pScalar, _pSpeed)
       end
+      
+      ------------------
+      -- Get_Position --
+      ------------------
+      function Class:Get_Position()
+        return self.position
+      end      
 
       ----------
       -- Lerp --
@@ -34,6 +41,16 @@ return {
         
       end
 
+      ----------------------
+      -- Set_Target_Scale --
+      ----------------------
+      function Class:Set_Position(_px, _pY)
+        self.position = {
+          x = _pX,
+          y = _pY
+        }
+      end
+      
       ----------------------
       -- Set_Target_Scale --
       ----------------------

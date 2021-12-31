@@ -8,6 +8,8 @@ return {
         function Class:On_Load_Assets()
             local spriteLoader = Locator:Get_Service("spriteLoader")
                   -- GUI --
+                  spriteLoader:Add_Sprite("bg_intro",        "Game/Images/Logo/BG.png")
+                  spriteLoader:Add_Sprite("logo_intro",      "Game/Images/Logo/Logo.png")
                   -- UI --
                   spriteLoader:Add_Sprite("crosshair",       "Game/Images/UI/spr_crosshair.png")
                   -- Projectiles --    
@@ -79,8 +81,8 @@ return {
         function Class:On_Load_Scenes()
             local scene_manager = Locator:Get_Service("sceneManager")
             --scene_manager:Add("Scene_Logo",       'Game/Scenes/Scene_Logo')
-            --scene_manager:Add("Scene_Menu",       'Game/Scenes/Scene_Menu')
-            scene_manager:Add("Test_Gameplay",    'TESTS/Scenes/Scene_Test_Gameplay')
+            scene_manager:Add("Scene_Menu",       'Game/Scenes/Scene_Menu')
+            --scene_manager:Add("Test_Gameplay",    'TESTS/Scenes/Scene_Test_Gameplay')
             --scene_manager:Add("Test_Lighting",    'TESTS/Scenes/Scene_Test_Lighting')
             --scene_manager:Add("Test_Tilemap",     'TESTS/Scenes/Scene_Test_Tilemap')
             --scene_manager:Add("Test_Camera_Look", 'TESTS/Scenes/Scene_Test_Camera_Look')

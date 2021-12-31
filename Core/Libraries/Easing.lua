@@ -1,18 +1,24 @@
 return {
     new = function()
-        local easing = {}
-        
+        local abs  = math.abs     
+        local asin = math.asin
+        local cos  = math.cos
+        local pi   = math.pi
+        local pow  = math.pow
+        local sin  = math.sin
+        local sqrt = math.sqrt
+
         ------------
         -- linear --
         ------------
-        function easing:linear(t, b, c, d)
+        local function linear(t, b, c, d)
             return c*t/d + b
         end
 
         ----------------
         -- easeInQuad --
         ----------------
-        function easing:easeInQuad(t, b, c, d)
+        local function easeInQuad(t, b, c, d)
             t = t / d
             return c*t*t + b
         end
@@ -20,7 +26,7 @@ return {
         -----------------
         -- easeOutQuad --
         -----------------
-        function easing:easeOutQuad(t, b, c, d)
+        local function easeOutQuad(t, b, c, d)
             t = t / d
             return -c * t*(t-2) + b
         end
@@ -28,7 +34,7 @@ return {
         -------------------
         -- easeInOutQuad --
         -------------------
-        function easing:easeInOutQuad(t, b, c, d)
+        local function easeInOutQuad(t, b, c, d)
             t = t / d/2
             if (t < 1) then return c/2*t*t + b end
             t = t - 1
@@ -38,7 +44,7 @@ return {
         -----------------
         -- easeInCubic --
         -----------------
-        function easing:easeInCubic(t, b, c, d)
+        local function easeInCubic(t, b, c, d)
             t = t / d
             return c*t*t*t + b
         end
@@ -46,7 +52,7 @@ return {
         ------------------
         -- easeOutCubic --
         ------------------
-        function easing:easeOutCubic(t, b, c, d)
+        local function easeOutCubic(t, b, c, d)
             t = t / d
             t = t - 1
             return c*(t*t*t + 1) + b
@@ -55,7 +61,7 @@ return {
         --------------------
         -- easeInOutCubic --
         --------------------
-        function easing:easeInOutCubic(t, b, c, d)
+        local function easeInOutCubic(t, b, c, d)
             t = t / d/2
             if (t < 1) then return c/2*t*t*t + b end
             t = t - 2
@@ -65,7 +71,7 @@ return {
         -----------------
         -- easeInQuart --
         -----------------
-        function easing:easeInQuart(t, b, c, d)
+        local function easeInQuart(t, b, c, d)
             t = t / d
             return c*t*t*t*t + b
         end
@@ -73,7 +79,7 @@ return {
         ------------------
         -- easeOutQuart --
         ------------------
-        function easing:easeOutQuart(t, b, c, d)
+        local function easeOutQuart(t, b, c, d)
             t = t / d
             t = t - 1
             return -c * (t*t*t*t - 1) + b
@@ -82,7 +88,7 @@ return {
         --------------------
         -- easeInOutQuart --
         --------------------
-        function easing:easeInOutQuart(t, b, c, d)
+        local function easeInOutQuart(t, b, c, d)
             t = t / d/2
             if (t < 1) then return c/2*t*t*t*t + b end
             t = t - 2
@@ -92,7 +98,7 @@ return {
         -----------------
         -- easeInQuint --
         -----------------
-        function easing:easeInQuint(t, b, c, d)
+        local function easeInQuint(t, b, c, d)
             t = t / d
             return c*t*t*t*t*t + b
         end
@@ -100,7 +106,7 @@ return {
         ------------------
         -- easeOutQuint --
         ------------------
-        function easing:easeOutQuint(t, b, c, d)
+        local function easeOutQuint(t, b, c, d)
             t = t / d
             t = t - 1
             return c*(t*t*t*t*t + 1) + b
@@ -109,7 +115,7 @@ return {
         --------------------
         -- easeInOutQuint --
         --------------------
-        function easing:easeInOutQuint(t, b, c, d)
+        local function easeInOutQuint(t, b, c, d)
             t = t / d/2
             if (t < 1) then return c/2*t*t*t*t*t + b end
             t = t - 2
@@ -119,75 +125,174 @@ return {
         ----------------
         -- easeInSine --
         ----------------
-        function easing:easeInSine(t, b, c, d)
-            return -c * math.cos(t/d * (math.pi/2)) + c + b
+        local function easeInSine(t, b, c, d)
+            return -c * cos(t/d * (pi/2)) + c + b
         end
 
         -----------------
         -- easeOutSine --
         -----------------
-        function easing:easeOutSine(t, b, c, d)
-            return c * math.sin(t/d * (math.pi/2)) + b
+        local function easeOutSine(t, b, c, d)
+            return c * sin(t/d * (pi/2)) + b
         end
 
         -------------------
         -- easeInOutSine --
         -------------------
-        function easing:easeInOutSine(t, b, c, d)
-            return -c/2 * (math.cos(math.pi*t/d) - 1) + b
+        local function easeInOutSine(t, b, c, d)
+            return -c/2 * (cos(pi*t/d) - 1) + b
         end
 
         ----------------
         -- easeInExpo --
         ----------------
-        function easing:easeInExpo(t, b, c, d)
-            return c * math.pow( 2, 10 * (t/d - 1) ) + b
+        local function easeInExpo(t, b, c, d)
+            return c * pow( 2, 10 * (t/d - 1) ) + b
         end
 
         -----------------
         -- easeOutExpo --
         -----------------
-        function easeOutExpo(t, b, c, d)
-            return c * ( -math.pow( 2, -10 * t/d ) + 1 ) + b
+        local function easeOutExpo(t, b, c, d)
+            return c * ( -pow( 2, -10 * t/d ) + 1 ) + b
         end
 
         -------------------
         -- easeInOutExpo --
         -------------------
-        function easeInOutExpo(t, b, c, d)
+        local function easeInOutExpo(t, b, c, d)
             t = t / d/2
-            if (t < 1) then return c/2 * math.pow( 2, 10 * (t - 1) ) + b end
+            if (t < 1) then return c/2 * pow( 2, 10 * (t - 1) ) + b end
             t = t - 1
-            return c/2 * ( -math.pow( 2, -10 * t) + 2 ) + b
+            return c/2 * ( -pow( 2, -10 * t) + 2 ) + b
         end
 
         ----------------
         -- easeInCirc --
         ----------------
-        function easeInCirc(t, b, c, d)
+        local function easeInCirc(t, b, c, d)
             t = t / d
-            return -c * (math.sqrt(1 - t*t) - 1) + b
+            return -c * (sqrt(1 - t*t) - 1) + b
         end
 
         -----------------
         -- easeOutCirc --
         -----------------
-        function easeOutCirc(t, b, c, d)
+        local function easeOutCirc(t, b, c, d)
             t = t / d
             t = t - 1
-            return c * math.sqrt(1 - t*t) + b
+            return c * sqrt(1 - t*t) + b
         end
 
         -------------------
         -- easeInOutCirc --
         -------------------
-        function easeInOutCirc(t, b, c, d)
+        local function easeInOutCirc(t, b, c, d)
             t = t / d/2
-            if (t < 1) then return -c/2 * (Math.sqrt(1 - t*t) - 1) + b end
+            if (t < 1) then return -c/2 * (sqrt(1 - t*t) - 1) + b end
             t = t - 2
-            return c/2 * (math.sqrt(1 - t*t) + 1) + b
+            return c/2 * (sqrt(1 - t*t) + 1) + b
         end
 
-        return easing
+        -------------------
+        -- easeInElastic --
+        -------------------
+        local function easeInElastic(t, b, c, d, a, p)
+            if t == 0 then return b end
+
+            t = t / d
+
+            if t == 1  then return b + c end
+
+            if not p then p = d * 0.3 end
+
+            local s
+
+            if not a or a < abs(c) then
+                a = c
+                s = p / 4
+            else
+                s = p / (2 * pi) * asin(c/a)
+            end
+
+            t = t - 1
+
+            return -(a * pow(2, 10 * t) * sin((t * d - s) * (2 * pi) / p)) + b
+        end
+
+        local Class = {
+            linear         = linear,
+            easeInQuad     = easeInQuad,
+            easeOutQuad    = easeOutQuad,
+            easeInOutQuad  = easeInOutQuad,
+            easeInCubic    = easeInCubic,
+            easeOutCubic   = easeOutCubic,
+            easeInOutCubic = easeInOutCubic,
+            easeInQuart    = easeInQuart,
+            easeOutQuart   = easeOutQuart,
+            easeInOutQuart = easeInOutQuart,
+            easeInQuint    = easeInQuint,
+            easeOutQuint   = easeOutQuint,
+            easeInOutQuint = easeInOutQuint,
+            easeInSine     = easeInSine,
+            easeOutSine    = easeOutSine,
+            easeInOutSine  = easeInOutSine,
+            easeInExpo     = easeInExpo,
+            easeOutExpo    = easeOutExpo,
+            easeInOutExpo  = easeInOutExpo,
+            easeInCirc     = easeInCirc,
+            easeOutCirc    = easeOutCirc,
+            easeInOutCirc  = easeInOutCirc,
+            easeInElastic  = easeInElastic
+        }        
+        
+        function Class:New_Auto_Tween(_pFunc, _pStart, _pTarget, _pDuration)
+            local tween = {
+                duration = _pDuration or 1,
+                finshed  = false,
+                func     = _pFunc,
+                start    = _pStart  or 0,
+                target   = _pTarget or 0,
+                time     = 0,
+            }
+    
+            function tween:Get_Value(_pTime)
+                if(self.time >= self.duration) then
+                    self.time     = self.duration
+                    self.finished = true
+                end
+                return self.func(_pTime, self.start, (self.target - self.start), self.duration)
+            end
+            return tween
+        end
+
+        function Class:New_Tween(_pFunc, _pStart, _pTarget, _pDuration)
+            local tween = {
+                duration = _pDuration or 1,
+                finshed  = false,
+                func     = _pFunc,
+                start    = _pStart  or 0,
+                target   = _pTarget or 0,
+                time     = 0,
+            }
+    
+            function tween:Get_Value()
+                return self.func(self.time, self.start, (self.target - self.start), self.duration)
+            end
+
+            function tween:Update(dt)
+                if(not self.finished) then
+                    self.time = self.time + dt
+                    if(self.time >= self.duration) then
+                        self.time     = self.duration
+                        self.finished = true
+                    end
+                end
+            end
+
+            return tween
+        end
+
+        return Class
     end 
 }

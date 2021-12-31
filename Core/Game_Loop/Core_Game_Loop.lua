@@ -39,7 +39,7 @@ return {
     --------------------
     function Class:_Load_Services()
       Locator:Add_Service("aspect",        require('Core/Libraries/Aspect').new())
-      Locator:Add_Service("easing",        require('Core/Libraries/Easing'))
+      Locator:Add_Service("easing",        require('Core/Libraries/Easing').new())
       Locator:Add_Service("f_entity",      require('Core/Libraries/ECS/Factories/f_Entity'))
       Locator:Add_Service("f_component",   require('Core/Libraries/ECS/Factories/f_Component'))
       Locator:Add_Service("f_system",      require('Core/Libraries/ECS/Factories/f_System'))
