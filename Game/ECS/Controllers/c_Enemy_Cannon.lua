@@ -18,7 +18,7 @@ return {
         local cos         = math.cos
         local sin         = math.sin
         local smoothAngle = Smooth_Angle
-        local rSpeed      = 3
+        local rSpeed      = 1
         
         ---------
         -- Aim --

@@ -52,6 +52,7 @@ return {
       Locator:Add_Service("f_emitter",     require('Core/Libraries/ECS/Factories/f_Particle_Emitter'))
       Locator:Add_Service("fog_of_war",    require('Core/Libraries/Lighting/Fog_Of_War'))
       Locator:Add_Service("GUI",           require('Core/Libraries/GUI/GUI_Controller').new())
+      Locator:Add_Service("pathFinding",   require('Core/Libraries/Pathfinding/PathFinder').new())
       Locator:Add_Service("sceneManager",  require('Core/Libraries/Scenes/Scene_Manager').new())
       Locator:Add_Service("scene_parent",  require('Core/Libraries/Scenes/Scene_Parent'))
       Locator:Add_Service("spriteLoader",  require('Core/Libraries/Sprite_Loader').new())

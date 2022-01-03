@@ -80,8 +80,8 @@ return {
         --------------------
         function Class:On_Load_Scenes()
             local scene_manager = Locator:Get_Service("sceneManager")
-            --scene_manager:Add("Scene_Logo",       'Game/Scenes/Scene_Logo')
-            --scene_manager:Add("Scene_Menu",       'Game/Scenes/Scene_Menu')
+            scene_manager:Add("Scene_Logo",       'Game/Scenes/Scene_Logo')
+            scene_manager:Add("Scene_Menu",       'Game/Scenes/Scene_Menu')
             scene_manager:Add("Test_Gameplay",    'TESTS/Scenes/Scene_Test_Gameplay')
             --scene_manager:Add("Test_Lighting",    'TESTS/Scenes/Scene_Test_Lighting')
             --scene_manager:Add("Test_Tilemap",     'TESTS/Scenes/Scene_Test_Tilemap')

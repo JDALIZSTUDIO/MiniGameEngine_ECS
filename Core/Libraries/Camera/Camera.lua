@@ -2,7 +2,7 @@ return {
   new = function(_pX, _pY)
     local aspect   = Locator:Get_Service("aspect")
     local Class    = {
-          active   = false,
+          active   = true,
           clamped  = false,
           follower = nil,
           offset   = { x = 0, y = 0 },

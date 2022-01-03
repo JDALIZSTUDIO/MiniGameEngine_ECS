@@ -3,7 +3,7 @@ return {
         local Class  = {
             active   = true,
             ahead    = { x = 0, y = 0 },
-            isLook   = false,
+            isLook   = true,
             maxDist  = 64,
             minDist  = 160,
             position = { 

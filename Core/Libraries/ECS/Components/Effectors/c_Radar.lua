@@ -10,7 +10,7 @@ return {
                 component.color_detect = {1, 0, 0}
                 component.isDetect     = false
                 component.segments     = 32
-                component.speed        = 0.1
+                component.speed        = 0.05
                 component.viewAngle    = math.rad(45)
                 component.viewDistance = 128
         
@@ -54,10 +54,13 @@ return {
                 if(inSight) then
                     self.isDetect = true
                     return true
+                else
+                    self.isDetect = false
+                    return false
                 end
-                return false
             else
                 self.isDetect = false
+                return false
             end
             return false
         end
