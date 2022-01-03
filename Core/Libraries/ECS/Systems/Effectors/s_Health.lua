@@ -9,33 +9,33 @@ return {
         -- Load --
         ----------
         function system:Load(_pEntity)
-        local component = _pEntity:Get_Component(he)
-              component:Load(_pEntity)
-        if(isDebug) then print("Systems, loaded:      s_Health by ".._pEntity.name) end
+            local component = _pEntity:Get_Component(he)
+                  component:Load()
+            if(isDebug) then print("Systems, loaded:      s_Health by ".._pEntity.name) end
         end
 
         ------------
         -- Update --
         ------------
         function system:Update(dt, _pEntity)
-        local component = _pEntity:Get_Component(he)
-              component:Update(dt, _pEntity)
+            local component = _pEntity:Get_Component(he)
+                  component:Update(dt)
         end
 
         ----------
         -- Draw --
         ----------
         function system:Draw(_pEntity)
-        local component = _pEntity:Get_Component(he)
-              component:Draw(_pEntity)
+            local component = _pEntity:Get_Component(he)
+                  component:Draw()
         end
 
         --------------
         -- Draw_GUI --
         --------------
         function system:Draw_GUI(_pEntity)
-        local component = _pEntity:Get_Component(he)
-              component:Draw_GUI(_pEntity)
+            local component = _pEntity:Get_Component(he)
+                  component:Draw_GUI()
         end
 
         return system 

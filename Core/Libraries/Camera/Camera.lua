@@ -1,11 +1,15 @@
 return {
-  new = function()
+  new = function(_pX, _pY)
     local aspect   = Locator:Get_Service("aspect")
     local Class    = {
+          active   = false,
           clamped  = false,
           follower = nil,
           offset   = { x = 0, y = 0 },
-          position = { x = 0, y = 0 },
+          position = { 
+            x = _pX or 0, 
+            y = _pY or 0 
+          },
           rotation = 0,
           shaker   = nil,
           scale    = { x = 1, y = 1 },
@@ -14,12 +18,23 @@ return {
 
     local clamp = Clamp
     local floor = math.floor
-
+  
     ------------
     -- Attach --
     ------------
     function Class:Attach(_pObj)
       self.target = _pObj
+    end
+
+    ----------------
+    -- Attach_Ext --
+    ----------------
+    function Class:Attach_Ext(_pObj, _pX, _pY)
+      self.target = _pObj
+      self.follower:Set_Position(
+        _pX, 
+        _pY
+      )
     end
     
     ------------
@@ -49,8 +64,10 @@ return {
     -- Look_At --
     -------------
     function Class:Look_At(_pX, _pY)
-      self.position.x = floor(_pX) or 0
-      self.position.y = floor(_pY) or 0
+      self.position = {
+        x = floor(_pX),
+        y = floor(_pY)
+      }
     end
 
     ---------
@@ -93,16 +110,18 @@ return {
       self.offset = {
         x = aspect.screen.width  * 0.5,
         y = aspect.screen.height * 0.5
-      }
-      
+      }      
+
       self.shaker:Update(dt)
 
-      if(self.target ~= nil) then
-        self.follower:Follow_Target(self.target)
-        self.position.x = self.follower.position.x
-        self.position.y = self.follower.position.y  
-      else
-        self.follower:Set_Position(self.position)
+      if(self.active) then
+        if(self.target ~= nil) then
+          self.follower:Follow_Target(self.target)
+          self.position.x = self.follower.position.x
+          self.position.y = self.follower.position.y  
+        else
+          self.follower:Set_Position(self.position)
+        end
       end
 
       if(self.clamped) then

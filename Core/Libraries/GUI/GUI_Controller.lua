@@ -23,7 +23,7 @@ return {
             insert(self.lstElements, _pElement)
             return _pElement
         end
-        
+                
         ----------
         -- Load --
         ----------
@@ -42,7 +42,7 @@ return {
             for i = #self.lstElements, 1, -1 do
                 element = self.lstElements[i]
                 if(element.expired) then
-                    remove(self.lstelements, element)
+                    remove(self.lstElements, i)
                 else
                     element.Update(dt)
                 end
@@ -53,7 +53,9 @@ return {
         -- UnLoad --
         ------------
         function Class:UnLoad()
-            self.lstElements = {}
+            for i = 1, #self.lstElements do
+                self.lstElements[i].expired = true
+            end
         end
         
         ----------
@@ -64,6 +66,9 @@ return {
                 self.lstElements[i].Draw()
             end
         end
+
+        Class:Load()
+
         return Class
     end
 }

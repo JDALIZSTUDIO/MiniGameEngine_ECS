@@ -27,15 +27,15 @@ return {
 
     local rSpeed        = 6
     local time          = 0
-    local duration      = .3
+    local duration      = .1
     
     local timers        = nil
     local smokeStr      = "smoke"
     local smokeDuration = 0
-
-    -------------
+  
+    ------------------
     -- On_Animation --
-    -------------
+    ------------------
     function component:On_Animation()
       local animator  = self.gameObject:Get_Component(an)
       if(moving) then
@@ -49,7 +49,7 @@ return {
     -- Load --
     ----------
     function component:Load()
-      timers = require('Core/Libraries/Timers').new()
+      timers = Locator:Get_Service("timers").new()
       timers:Add_Timer(smokeStr, smokeDuration)
 
       local rigid = self.gameObject:Get_Component(rb)
@@ -91,9 +91,9 @@ return {
       end
     end
 
-    ------------------
+    ---------------
     -- On_Update --
-    ------------------
+    ---------------
     function component:On_Update(dt)
       if(moving) then
         if(time >= duration) then
@@ -109,7 +109,7 @@ return {
 
           local partSystem = self.gameObject:Get_Component(ps)
           local emitter    = partSystem:Get_Emitter(smokeStr)
-                emitter:Emit(position.x, position.y, rnd(3, 5))
+                emitter:Emit(position.x, position.y, rnd(2, 5))
 
           time = 0
         end

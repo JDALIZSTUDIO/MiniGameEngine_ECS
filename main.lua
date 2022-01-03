@@ -2,13 +2,14 @@ if pcall(require, "lldebugger") then
   require("lldebugger").start()
 end
 
---love.graphics.setDefaultFilter("nearest")
+love.graphics.setDefaultFilter("nearest")
 io.stdout:setvbuf('no')
 love.window.maximize(false)
 math.randomseed(os.time())
 isDebug = false
 
 local game = nil
+GAME_NAME = "tank n spank!"
 
 Locator = nil
 
@@ -17,7 +18,7 @@ Locator = nil
 ----------
 function love.load()
   Locator = require('Core/Libraries/Service_Locator').new()
-  game    = require('Game/Default_Game').new("New_Game")
+  game    = require('Game/Default_Game').new("tank n spank!")
   game:Load()
 end
 

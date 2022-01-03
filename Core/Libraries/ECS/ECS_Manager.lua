@@ -62,6 +62,27 @@ return {
       
     end
 
+    ----------------
+    -- Pause_Game --
+    ----------------
+    function Class:Pause_Game()
+      local ch = "characterController"
+      for i = 1, #self.entities do  
+        self.entities[i].active = false          
+      end
+    end
+
+    
+    -----------------
+    -- Resume_Game --
+    -----------------
+    function Class:Resume_Game()
+      local ch = "characterController"
+      for i = 1, #self.entities do  
+        self.entities[i].active = true          
+      end
+    end
+
     --------------
     -- Register --
     --------------

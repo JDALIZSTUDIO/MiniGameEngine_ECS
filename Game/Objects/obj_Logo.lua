@@ -27,10 +27,19 @@ return {
     -- Load --
     ----------
     function obj:Load()
-      timers     = require('Core/Libraries/Timers').new()
+      timers     = Locator:Get_Service("timers").new()
       timers:Add_Timer(h_aber, 1)
       
-      self.state = require('Core/Libraries/State_Machine').new({"MOVE", "STOP", "WAIT", "ABERRATION", "TO_NEXT", "DONE"})
+      self.state = Locator:Get_Service("state_machine").new(
+        {
+          "MOVE", 
+          "STOP", 
+          "WAIT", 
+          "ABERRATION", 
+          "TO_NEXT", 
+          "DONE"
+        }
+      )
       self.state:Set("MOVE")  
       
       self.shader_aber = require("Core/Libraries/Shader").new("Core/Shaders/shd_Chromatic_Aberration.fs")

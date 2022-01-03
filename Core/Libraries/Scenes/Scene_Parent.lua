@@ -81,8 +81,7 @@ return {
         aspect.screen.height * 0.5
       )
       
-      self.GUI = require('Core/Libraries/GUI/GUI_Controller').new()
-      self.GUI:Load()
+      self.GUI = Locator:Get_Service("GUI")
 
       self:Awake()
       
@@ -134,10 +133,10 @@ return {
     -- _Draw_GUI --
     --------------
     function Scene:_Draw_GUI()
+      self:Draw_GUI()
       if(self.GUI ~= nil) then
         self.GUI:Draw()    
       end
-      self:Draw_GUI()
     end
 
     return Scene

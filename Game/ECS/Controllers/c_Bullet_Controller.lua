@@ -69,7 +69,7 @@ return {
         local dist = transform.position:Distance_To(origin)
         if(dist > self.maxDistance) then 
             if(toDestroy == false) then
-                component.gameObject.Destroy() 
+                component.gameObject:Destroy() 
                 toDestroy = true
             end
         end

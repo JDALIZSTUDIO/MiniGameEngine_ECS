@@ -1,19 +1,29 @@
 return {
     new = function(_pName)
-        local Scene = require('Core/Libraries/Scenes/Scene_Parent').new(_pName)
+        local Scene = Locator:Get_Service("scene_parent").new(_pName)
         
         local camera
         local ECS
-        local FOW
+        local Fog
         local Tilemap
         
+        local state
         local solid = 241
         local void  = 225
 
         local floor = math.floor
-
         local fEnemies, fEnvironment, fPlayer
+        local message
+        local objectives_destroyed = 0
         
+        
+        ----------------------------------
+        -- handlers.Objective_Destroyed --
+        ----------------------------------
+        function love.handlers.Objective_Destroyed()
+            objectives_destroyed = objectives_destroyed + 1
+        end
+
         ----------------------------
         -- handlers.Set_Collision --
         ----------------------------
@@ -42,6 +52,21 @@ return {
             fPlayer:Init_Cursor(cursor)                  
         end
 
+        ----------------
+        -- Pause_Game --
+        ----------------
+        function Pause_Game()
+            camera.active = false
+            ECS:Pause_Game()
+        end
+
+        -----------------
+        -- Resume_Game --
+        -----------------
+        function Resume_Game()
+            camera.active = true 
+            ECS:Resume_Game()
+        end
 
         ------------------
         -- Load_Objects --
@@ -57,7 +82,13 @@ return {
                     local player = ECS:Create()
                         player.name = obj.name                    
                     fPlayer:Init_Player(player, x, y)                
-                FOW:Add(player)
+                Fog:Add(player)
+
+                local pos = player:Get_Component("transform").position
+                camera:Look_At(
+                    pos.x,
+                    pos.y
+                )
 
                 elseif(obj.name == "spawner") then
                     local spawner = ECS:Create()
@@ -87,6 +118,8 @@ return {
                          
                 end
             end
+            
+            Load_Cursor()
         end
 
         ------------------
@@ -109,6 +142,7 @@ return {
             ECS:Register(require('Core/Libraries/ECS/Systems/Rendering/s_Sprite_Renderer').new())
             ECS:Register(require('Core/Libraries/ECS/Systems/Rendering/s_Sprite_Renderer_GUI').new())
             ECS:Register(require('Core/Libraries/ECS/Systems/Rendering/s_Box_Renderer').new())
+            ECS:Register(require('Core/Libraries/ECS/Systems/Effectors/s_Radar').new())
             ECS:Register(require('Core/Libraries/ECS/Systems/FX/s_Particle_System').new())
             --ECS:Register(require('Core/Libraries/ECS/Systems/FX/s_Love_Particle_System').new())
         end
@@ -121,24 +155,37 @@ return {
             fEnemies     = require('Game/ECS/Factories/f_Enemies').new()
             fEnvironment = require('Game/ECS/Factories/f_Environment').new()
             fPlayer      = require('Game/ECS/Factories/f_Player').new()
+            state        = Locator:Get_Service("state_machine").new(
+                {
+                    "START",
+                    "GAMEPLAY",
+                    "VICTORY",
+                    "DEFEAT",
+                    "NEXT",
+                    "WAIT"
+                }
+            )
+            state:Set("GAMEPLAY")
 
             love.mouse.setVisible(false)
 
-            ECS     = require('Core/Libraries/ECS/ECS_Manager').new()
-            Tilemap = require('Core/Libraries/Tilemap/Tilemap').new()
-
+            ECS     = Locator:Get_Service("ecs").new()
+            Tilemap = Locator:Get_Service("tilemap").new()
             Tilemap:Load('Game/Tilemaps/Maps/level01', "/Game/Tilemaps/Maps/")            
-            
-            FOW  = require('Core/Libraries/Lighting/Fog_Of_War').new()
             
             local fW = Tilemap.map.width  * Tilemap.map.tilewidth
             local fH = Tilemap.map.height * Tilemap.map.tileheight
-
-            FOW:Load(fW, fH, {24/255, 20/255, 37/255, 1})
+            Fog      = Locator:Get_Service("fog_of_war").new()            
+            Fog:Load(fW, fH, {24/255, 20/255, 37/255, 1})
             
-            Load_Cursor()
+            local str = "level "..tostring(LEVEL)..", get ready!"
+            message = require('Game/Objects/obj_Message_Gameplay').new(
+                str
+            )
+            
             Load_Objects()
             Load_Systems()
+            --Pause_Game()
         end
 
         ------------
@@ -147,10 +194,24 @@ return {
         function Scene:Update(dt)
             if(love.keyboard.isDown("space")) then camera:Shake(2, 10) end
 
+            local current = state:Get_Name()
+            if(current == "START") then
+                message:Update(dt)
+                if(message.finished) then
+                    Resume_Game()
+                    state:Set("GAMEPLAY") 
+                end
+            elseif(current == "GAMEPLAY") then
+            elseif(current == "VICTORY") then
+            elseif(current == "DEFEAT") then
+            elseif(current == "NEXT") then
+            elseif(current == "WAIT") then
+            end
+
             ECS:Update(dt)
-            FOW:Update(dt)
+            Fog:Update(dt)
             Tilemap:Update(dt)
-            FOW:Set()
+            Fog:Set()
         end
 
         ----------
@@ -160,7 +221,7 @@ return {
             Tilemap:DrawBack()
                 ECS:Draw()
             Tilemap:DrawFront()
-            FOW:Draw()
+            Fog:Draw()
         end
 
         --------------
@@ -168,6 +229,12 @@ return {
         --------------
         function Scene:Draw_GUI()
             ECS:Draw_GUI()
+            message:Draw_GUI()
+            love.graphics.print(
+                "objectives: "..tostring(objectives_destroyed),
+                20,
+                20
+            )
         end
 
         return Scene

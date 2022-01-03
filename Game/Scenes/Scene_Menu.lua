@@ -10,6 +10,8 @@ return {
     local easing
     local amount   = 0
     local duration = 5
+    local shader
+    local scroller
     local tween
 
     ----------
@@ -19,9 +21,17 @@ return {
       aspect = Locator:Get_Service("aspect")
       camera = Locator:Get_Service("camera")
       easing = Locator:Get_Service("easing")
+      shader = Locator:Get_Service("shaders").new(
+        "Core/Shaders/shd_alpha_radial.fs"
+      )
+
       camera:Look_At(
         love.graphics.getWidth()  * 0.5, 
         love.graphics.getHeight() * 0.5
+      )
+
+      scroller = require('Game/Objects/obj_Background_Scroller').new(
+        Locator:Get_Service("spriteLoader"):Get_Sprite("scrolling")
       )
       
       ----------------
@@ -62,9 +72,10 @@ return {
       ------------------
       -- GUI_elements --
       ------------------
+
       local spriteFont = love.graphics.newImageFont(
-        'Game/Images/SpriteFonts/spr_Kromasky.png',
-        ' abcdefghijklmnopqrstuvwxyz0123456789!?:;,è./+%ç@à#'
+        'Game/Images/SpriteFonts/IMPACT1_n32.png',
+        ' abcdefghijklmnopqrstuvwxyz!?[].'
       )
       
       local endX, endY, startX, StartY
@@ -80,11 +91,11 @@ return {
           self.GUI.element.spriteFont.new(
             startX, 
             startY, 
-            "my game", 
+            GAME_NAME, 
             spriteFont, 
             { 
-              x = 3, 
-              y = 3 
+              x = 2, 
+              y = 2 
             }
           )
         ),  
@@ -181,21 +192,27 @@ return {
         amount = amount + dt
         if(amount >= duration) then amount = duration end
       end
+
+      scroller:Update(dt)
     end
 
-    function Scene:Draw()      
+    function Scene:Draw_GUI()
       local scaleX = love.graphics.getWidth()  / background.image:getWidth()
       local scaleY = love.graphics.getHeight() / background.image:getHeight()
+      scroller:Draw()
       
+      shader:Set()
       love.graphics.setColor(1, 1, 1, 1)
-          love.graphics.draw(
-            background.image, 
-            0, 
-            0, 
-            0, 
-            scaleX, 
-            scaleY
-          )
+      love.graphics.draw(
+        background.image, 
+        0, 
+        0, 
+        0, 
+        scaleX, 
+        scaleY
+      )
+      shader:UnSet()
+      
     end
 
     return Scene

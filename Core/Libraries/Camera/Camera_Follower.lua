@@ -1,10 +1,15 @@
 return {
     new = function(_pCamera)
-        local Class = {
+        local Class  = {
+            active   = true,
             ahead    = { x = 0, y = 0 },
-            isLook   = true,
+            isLook   = false,
             maxDist  = 64,
-            position = { x = 0, y = 0 },         
+            minDist  = 160,
+            position = { 
+                x = _pCamera.position.x,
+                y = _pCamera.position.y 
+            },         
             speed    = 0.05
         }  
 
@@ -17,7 +22,8 @@ return {
         -------------------
         -- Follow_Target --
         -------------------
-        function Class:Follow_Target(_pTarget)  
+        function Class:Follow_Target(_pTarget)
+            if(not self.active) then return end
             local lerp = Lerp
             if(self.isLook) then
                 local w = love.graphics.getWidth()
@@ -26,7 +32,7 @@ return {
                 local mx, my = camera:Screen_To_World(sx, sy)
                 if(sx > 0 and sx < w and
                    sy > 0 and sy < h) then
-                    local dir    = _pTarget.position:Direction_To({x = mx, y = my})
+                    local dir    = _pTarget.position:Direction_From({x = mx, y = my})
                     local dist   = _pTarget.position:Distance_To({x = mx, y = my})
                     local result = min(dist, self.maxDist)
                     self.ahead = {
@@ -48,9 +54,11 @@ return {
         ------------------
         -- Set_Position --
         ------------------
-        function Class:Set_Position(_pPosition)
-            self.position.x = _pPosition.x
-            self.position.y = _pPosition.y
+        function Class:Set_Position(_pX, _pY)
+            self.position = {
+                x = _pX,
+                y = _pY
+            }
         end
 
         return Class

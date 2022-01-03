@@ -28,8 +28,8 @@
         -- Load --
         ----------
         function CDStart:Load()
-          timers = require('Core/Libraries/Timers').new()
-          state  = require('Core/Libraries/State_Machine').new({"WAIT", "COUNT", "FINISH", "END"})          
+          timers = Locator:Get_Service("timers").new()
+          state  = Locator:Get_Service("state_machine").new({"WAIT", "COUNT", "FINISH", "END"})          
           GUI    = require('Core/Libraries/GUI/GUI_Factory')          
           
           timers:Add_Timer("wait",  1)

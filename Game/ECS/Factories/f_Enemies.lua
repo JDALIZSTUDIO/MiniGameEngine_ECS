@@ -33,7 +33,8 @@ return {
             -- Cannon --
             local cannon = _pEntity.ECS:Create()
                   cannon.name = "cannon"
-
+                  cannon:Add_Component(require('Game/ECS/Controllers/c_Enemy_Cannon').new())
+                  cannon:Add_Component(require('Core/Libraries/ECS/Components/Effectors/c_Radar').new())
             local transformCannon = cannon:Add_Component(require('Core/Libraries/ECS/Components/Movement/c_Transform').new(_pX, _pY, 0))
                                     cannon:Add_Component(require('Core/Libraries/ECS/Components/Collisions/c_Bounding_Box').new(0, 0, 32, 32))
                                     cannon:Add_Component(require('Core/Libraries/ECS/Components/Rendering/c_Sprite_Renderer').new(spr_cannon))

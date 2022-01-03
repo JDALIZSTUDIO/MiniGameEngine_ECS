@@ -44,16 +44,16 @@ return {
     
     end
 
-    -------------------
+    --------------
     -- On_Input --
-    -------------------
+    --------------
     function component:On_Input(dt)  
       
     end
     
-    ------------------
+    ---------------
     -- On_Update --
-    ------------------
+    ---------------
     function component:On_Update(dt)  
       
     end
@@ -62,6 +62,10 @@ return {
     -- Update --
     ------------
     function component:Update(dt)
+      if(not self.active or 
+         not self.gameObject.active) then 
+        return 
+      end
       self:On_Input(dt)
       self:On_Update(dt)
       self:On_Animation()

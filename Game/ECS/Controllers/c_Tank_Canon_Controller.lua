@@ -22,6 +22,21 @@ return {
     local tDuration  = 0.2
     
     local projectiles
+  
+    ---------
+    -- Aim --
+    ---------
+    function component:Aim_At(_pX, _pY, _pSpeed, dt)  
+        local transform = self.gameObject:Get_Component(tr)
+        local dx =   _pX - transform.position.x
+        local dy = -(_pY - transform.position.y)
+        transform.rotation = deg(smoothAngle(
+          rad(transform.rotation),
+          atan2(dx, dy),
+          _pSpeed,
+          dt
+        ))
+    end
 
     ----------
     -- Load --
@@ -29,7 +44,7 @@ return {
     function component:Load()
         camera      = Locator:Get_Service("camera")
         projectiles = require('Game/ECS/Factories/f_Projectiles').new()
-        timers      = require('Core/Libraries/Timers').new()
+        timers      = Locator:Get_Service("timers").new()
         timers:Add_Timer(tName, tDuration)
         timers:Start(tName)
     end
@@ -61,20 +76,13 @@ return {
         return false
     end
     
-    ------------
-    -- Update --
-    ------------
-    function component:Update(dt)
-        local transform = self.gameObject:Get_Component(tr)
-        local mx, my    = camera:Screen_To_World(love.mouse.getPosition())
-        local dx =   mx - transform.position.x
-        local dy = -(my - transform.position.y)
-        transform.rotation = deg(smoothAngle(
-          rad(transform.rotation),
-          atan2(dx, dy),
-          rSpeed,
-          dt
-        ))      
+    ---------------
+    -- On_Update --
+    ---------------
+    function component:On_Update(dt)
+        
+        local mx, my = camera:Screen_To_World(love.mouse.getPosition())
+        self:Aim_At(mx, my, rSpeed, dt)    
 
         if(love.mouse.isDown(1)) then
             self:Shoot()

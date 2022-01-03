@@ -2,8 +2,8 @@ return {
   new = function()
     local f_controller  = Locator:Get_Service("f_controller")
     local Controller    = f_controller.new()
-          local state   = require('Core/Libraries/State_Machine').new({"NONE"})
-          local timers  = require('Core/Libraries/Timers')
+          local state   = Locator:Get_Service("state_machine").new({"NONE"})
+          local timers  = Locator:Get_Service("timers")
           local timer   = nil                
           local target  = nil
           local counter = 3

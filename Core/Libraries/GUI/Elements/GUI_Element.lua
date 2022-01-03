@@ -41,9 +41,9 @@ return {
         
       end
 
-      ----------------------
-      -- Set_Target_Scale --
-      ----------------------
+      ------------------
+      -- Set_Position --
+      ------------------
       function Class:Set_Position(_px, _pY)
         self.position = {
           x = _pX,

@@ -1,9 +1,9 @@
 return {
   new = function()
-    local f_character = Locator:Get_Service("f_character")
-    local component   = f_character.new()
+    local f_character      = Locator:Get_Service("f_character")
+    local component        = f_character.new()
+          component.target = nil
           
-    local gameObject
     local lstTanks   = {}
     local maxTanks   = 1
     local state      = nil
@@ -12,6 +12,7 @@ return {
     local tDuration  = 4
 
     local an         = "animator"
+    local he         = "health"
     local bb         = "boundingBox"
     local ch         = "characterController"
     local tr         = "transform"
@@ -20,7 +21,8 @@ return {
     local remove     = table.remove
     local rnd        = math.random
     local lerp       = Lerp
-    
+
+    local nbExploMin, nbExploMax = 5, 10
     local tExplo     = 0.2
     local f_enemies
 
@@ -39,11 +41,11 @@ return {
     -- Load --
     ----------
     function component:Load()
-      f_enemies  = require('Game/ECS/Factories/f_Enemies').new()      
-      gameObject = self.gameObject 
-
-      state = require('Core/Libraries/State_Machine').new(
+      f_enemies  = require('Game/ECS/Factories/f_Enemies').new() 
+      state = Locator:Get_Service("state_machine").new(
         {
+          "INIT",
+          "WAIT",
           "WAITOPEN", 
           "WAITCLOSE", 
           "OPENING", 
@@ -53,18 +55,17 @@ return {
           "DEATH"
         }
       )
-      timers = require('Core/Libraries/Timers').new()
+      timers = Locator:Get_Service("timers").new()
 
       timers:Add_Timer(tName, tDuration)
-      timers:Start(tName)
-      state:Set("CLOSED")
+      state:Set("INIT")
     end
-    
+      
     ------------------
     -- On_Animation --
     ------------------
     function component:On_Animation()
-      local animator = gameObject:Get_Component(an)
+      local animator = self.gameObject:Get_Component(an)
       local current  = state:Get_Name()
 
       if(current == "WAIT") then
@@ -96,7 +97,8 @@ return {
     -- On_Kill --
     -------------
     function component:On_Kill() 
-      local bBox      = self.gameObject:Get_Component(bb)
+      local bBox      = self.gameObject:Get_Component(bb)      
+      local health    = self.gameObject:Get_Component(he)
       local transform = self.gameObject:Get_Component(tr)
       local burst     = self.gameObject.ECS:Create()
             burst:Add_Component(require('Core/Libraries/ECS/Components/Movement/c_Transform').new(
@@ -124,8 +126,10 @@ return {
           height = 64
         },
         tExplo,
-        rnd(3, 5)
+        rnd(nbExploMin, nbExploMax)
       )
+      love.event.push("Objective_Destroyed")
+      health.active = false
       state:Set("DEATH")
     end
 
@@ -141,20 +145,28 @@ return {
             if(self:Hurt(other:Get_Component(ch).damage)) then
               self:On_Kill()
             end
-            other.Destroy()
+            other:Destroy()
           end
         end
       end
     end  
-    
+      
     ---------------
     -- On_Update --
     ---------------
     function component:On_Update(dt)
-      local animator = gameObject:Get_Component(an)
+      local animator = self.gameObject:Get_Component(an)
       local current  = state:Get_Name()
 
-      if(current == "WAIT") then
+      if(current == "INIT") then
+        local other = self.gameObject:Find_Other("player")
+        if(other ~= nil) then
+            self.target = other            
+            timers:Start(tName)
+            state:Set("WAIT")
+        end
+
+      elseif(current == "WAIT") then
         if(timers:Is_Finished(tName)) then
           state:Set("OPENING")
         end
@@ -184,14 +196,14 @@ return {
         animator:Set_Alpha(alpha)
       end
       timers:Update(dt)
-    end    
+    end
     
     ----------------
     -- Spawn_Tank --
     ----------------
     function component:Spawn_Tank()
-      local transform = gameObject:Get_Component(tr)
-      local tank = gameObject.ECS:Create()
+      local transform = self.gameObject:Get_Component(tr)
+      local tank      = self.gameObject.ECS:Create()
 
       f_enemies:Init_Tank(
         tank, 

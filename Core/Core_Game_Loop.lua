@@ -8,9 +8,9 @@ return {
     
     local colorBG      = {24/255, 20/255, 37/255, 1}
     local fullscreen   = false
-    local screenScale  = 4
-    local screenWidth  = 360
-    local screenHeight = 180
+    local screenScale  = 2
+    local screenWidth  = 640
+    local screenHeight = 360
     
     local aspect, camera, scene_manager, surface, transition, vignette, vignetteSX, vignetteSY
     
@@ -40,6 +40,7 @@ return {
     function Class:_Load_Services()
       Locator:Add_Service("aspect",        require('Core/Libraries/Aspect').new())
       Locator:Add_Service("easing",        require('Core/Libraries/Easing').new())
+      Locator:Add_Service("ecs",           require('Core/Libraries/ECS/ECS_Manager'))
       Locator:Add_Service("f_entity",      require('Core/Libraries/ECS/Factories/f_Entity'))
       Locator:Add_Service("f_component",   require('Core/Libraries/ECS/Factories/f_Component'))
       Locator:Add_Service("f_system",      require('Core/Libraries/ECS/Factories/f_System'))
@@ -49,9 +50,15 @@ return {
       Locator:Add_Service("f_particle",    require('Core/Libraries/ECS/Factories/f_Particle'))
       Locator:Add_Service("f_Part_Params", require('Core/Libraries/ECS/Factories/f_Particle_Parameters'))
       Locator:Add_Service("f_emitter",     require('Core/Libraries/ECS/Factories/f_Particle_Emitter'))
+      Locator:Add_Service("fog_of_war",    require('Core/Libraries/Lighting/Fog_Of_War'))
+      Locator:Add_Service("GUI",           require('Core/Libraries/GUI/GUI_Controller').new())
       Locator:Add_Service("sceneManager",  require('Core/Libraries/Scenes/Scene_Manager').new())
+      Locator:Add_Service("scene_parent",  require('Core/Libraries/Scenes/Scene_Parent'))
       Locator:Add_Service("spriteLoader",  require('Core/Libraries/Sprite_Loader').new())
+      Locator:Add_Service("state_machine", require('Core/Libraries/State_Machine'))
       Locator:Add_Service("camera",        require('Core/Libraries/Camera/Camera').new())
+      Locator:Add_Service("shaders",       require('Core/Libraries/Shader'))
+      Locator:Add_Service("tilemap",       require('Core/Libraries/Tilemap/Tilemap'))
       Locator:Add_Service("transition",    require('Core/Libraries/Transition').new())
       Locator:Add_Service("timers",        require('Core/Libraries/Timers'))
       
@@ -151,8 +158,7 @@ return {
           aspect:UnSet()
         end      
         
-      vignette:Draw()
-      
+      vignette:Draw()      
       scene_manager:Draw_GUI()  
       transition:Draw()
     end

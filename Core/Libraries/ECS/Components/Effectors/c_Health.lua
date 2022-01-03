@@ -12,7 +12,7 @@ return {
             
       
       local aspect    = nil
-      local alpha     = 1
+      local alpha     = 0
       local camera    = nil
       local state     = nil
       local timers    = nil
@@ -32,8 +32,8 @@ return {
       function component:Load()
         aspect = Locator:Get_Service("aspect")
         camera = Locator:Get_Service("camera")
-        state  = require('Core/Libraries/State_Machine').new({"SHOW", "HIDE"})
-        timers = require('Core/Libraries/Timers').new()
+        state  = Locator:Get_Service("state_machine").new({"SHOW", "HIDE"})
+        timers = Locator:Get_Service("timers").new()
 
         state:Set("HIDE")
         timers:Add_Timer(tName, tDuration)
@@ -91,6 +91,11 @@ return {
       -- Update --
       ------------
       function component:Update(dt)
+        if(not self.active) then
+            alpha = lerp(alpha, 0, 0.2)
+          return
+        end
+
         local current = state:Get_Name()
         if(current == "SHOW") then
           if(alpha < 0.99) then            

@@ -19,7 +19,7 @@ return {
         -- Init_Player --
         -----------------
         function Class:Init_Player(_pEntity, _pX, _pY)
-            local trailLen   = 10
+            local trailLen   = 15
             local trailAlpha = 0.05
             local spr_body   = spriteLoader:Get_Sprite("tank_beige")
             local spr_cannon = spriteLoader:Get_Sprite("tank_cannon")
@@ -42,7 +42,7 @@ return {
             --_pEntity:Add_Component(require('Core/Libraries/ECS/Components/FX/c_Love_Particle_System').new())
             _pEntity:Add_Component(require('Core/Libraries/ECS/Components/FX/c_Particle_System').new())
 
-            camera:Attach(transformBody)
+            camera:Attach_Ext(transformBody, _pX, _pY)
 
             local cannon = _pEntity.ECS:Create()
 

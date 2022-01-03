@@ -20,17 +20,15 @@ return {
     -- Add_Child --
     ---------------
     function component:Add_Child(_pTransform, _pOffsetX, _pOffsetY)
-
-      _pTransform.parent = self
-
       local child = {
         transform = _pTransform,
         offset    = Vector2.new(_pOffsetX or 0, _pOffsetY or 0)
       }
       
+      _pTransform.parent = self
       insert(self.children, child)
     end
-    
+
     -----------------------
     -- Get_Cell_Position --
     -----------------------

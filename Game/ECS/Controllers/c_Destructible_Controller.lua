@@ -29,7 +29,7 @@ return {
     -- Load --
     ----------
     function component:Load()
-      state  = require('Core/Libraries/State_Machine').new({"IDLE", "HURT", "DEATH", "DEAD"})
+      state  = Locator:Get_Service("state_machine").new({"IDLE", "HURT", "DEATH", "DEAD"})
       state:Set("IDLE")
 
       --local transform = self.gameObject:Get_Component(tr)
@@ -48,9 +48,11 @@ return {
     ----------
     function component:On_Kill()
       local animator = self.gameObject:Get_Component(an)
+      local health   = self.gameObject:Get_Component(he)
       local collider = self.gameObject:Get_Component(bc)
-      local rigid = self.gameObject:Get_Component(rb)      
+      local rigid    = self.gameObject:Get_Component(rb)    
       animator:Play("death")
+      health.active   = false
       collider.active = false
       rigid.active    = false
       state:Set("DEATH")
@@ -71,7 +73,7 @@ return {
     -- On_Destroy --
     ----------------
     function component:On_Destroy()  
-      local transform = self.gameObject:Get_Component(tr)
+      --local transform = self.gameObject:Get_Component(tr)
       --love.event.push("UnSet_Collision", {x = transform.position.x, y = transform.position.y})
     end
     
@@ -88,7 +90,7 @@ return {
               self:On_Kill()
               self:Explode()
             end
-            other.Destroy()
+            other:Destroy()
           end
         end
       end

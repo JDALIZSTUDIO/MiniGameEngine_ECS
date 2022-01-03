@@ -89,7 +89,7 @@ Vector2.new = function(_pX, _pY)
         return atan2(0 - self.y, 0 - self.x)
     end
 
-    function vec2:Direction_To(_pVector2)
+    function vec2:Direction_From(_pVector2)
         return atan2(_pVector2.y - self.y, _pVector2.x - self.x)
     end
 

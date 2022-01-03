@@ -10,6 +10,7 @@ return {
                   -- GUI --
                   spriteLoader:Add_Sprite("bg_intro",         "Game/Images/Logo/BG.png")
                   spriteLoader:Add_Sprite("logo_intro",       "Game/Images/Logo/Logo.png")
+                  spriteLoader:Add_Sprite("scrolling",        "Game/Images/GUI/tile_aqua_1.png")
                   -- UI -- 
                   spriteLoader:Add_Sprite("crosshair",        "Game/Images/UI/spr_crosshair.png")
                   -- Projectiles --     
